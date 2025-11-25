@@ -307,20 +307,20 @@
 
             <!-- INFOGRAFÍA 3: CINE Y PRODUCCIÓN -->
             <div class="slide">
-                <div class="infographic-card bg-audioBlue relative overflow-hidden">
+                <div class="infographic-card bg-[#D6F1FF] relative overflow-hidden">
                     <!-- Logo Culturas Header -->
                     <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/blanco_culturas.png" alt="Culturas" class="h-10">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
                     </div>
 
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -top-20 -right-20 z-0 opacity-20 pointer-events-none">
-                        <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Camara_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-45">
+                    <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Azul/CCDP_Icono_Gota_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
 
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto pt-16">
 
-                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center">
+                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center text-audioBlue">
                             Hacer cine en Colombia será <br>
                             <span class="bg-white text-audioBlue px-2">más fácil.</span>
                         </h2>
@@ -379,10 +379,10 @@
 
             <!-- INFOGRAFÍA 4: PATRIMONIO VIVO -->
             <div class="slide">
-                <div class="infographic-card bg-danzaOrange relative overflow-hidden">
+                <div class="infographic-card bg-[#FFE4D6] relative overflow-hidden">
                     <!-- Logo Culturas Header -->
                     <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/blanco_culturas.png" alt="Culturas" class="h-10">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
                     </div>
 
                     <!-- Overflowing Background Icon -->
@@ -390,9 +390,9 @@
                         <img src="assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
 
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto pt-16">
 
-                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center">
+                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center text-danzaOrange">
                             El patrimonio deja de ser cosas viejas <br>
                             <span class="bg-white text-danzaOrange px-2">para ser vida.</span>
                         </h2>
@@ -412,7 +412,7 @@
                             </div>
 
                             <!-- Card 2 -->
-                            <div class="interactive-point bg-orange-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-orange-700 hover:scale-[1.02] transition-transform" onclick="openModal('Enfoque Biocultural', 'Se reconoce que la cultura no existe sin la naturaleza. La ley integra la protección de los ecosistemas como parte fundamental de la preservación de las tradiciones y saberes ancestrales.')">
+                            <div class="interactive-point bg-[#2E5C55] text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-green-800 hover:scale-[1.02] transition-transform" onclick="openModal('Enfoque Biocultural', 'Se reconoce que la cultura no existe sin la naturaleza. La ley integra la protección de los ecosistemas como parte fundamental de la preservación de las tradiciones y saberes ancestrales.')">
                                 <div class="flex justify-between items-center mb-2">
                                     <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Enfoque Biocultural <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
                                     <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png" alt="Naturaleza" class="w-8 h-8 object-contain">
@@ -571,10 +571,10 @@
         const mainHeader = document.getElementById('mainHeader');
         
         // Colores de fondo para cada slide (basados en la paleta)
-        // 0: Amarillo, 1: Verde, 2: Azul, 3: Naranja, 4: Magenta Intenso (Fondo)
-        const bgColors = ['#F3C746', '#ABEFD1', '#5BC6FB', '#F08C78', '#E940B4'];
+        // 0: Amarillo, 1: Verde Saturated, 2: Azul Saturated, 3: Naranja Saturated, 4: Magenta Intenso (Fondo)
+        const bgColors = ['#F3C746', '#0D9488', '#5BC6FB', '#F08C78', '#E940B4'];
         // Colores de texto para el título (para contraste)
-        const textColors = ['#886FFF', '#886FFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
+        const textColors = ['#886FFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
         
         let currentSlide = 0;
         const totalSlides = 5;
