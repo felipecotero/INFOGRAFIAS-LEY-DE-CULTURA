@@ -117,11 +117,11 @@
             }
     </style>
 </head>
-<body class="bg-gray-100 h-screen flex flex-col overflow-hidden">
+<body class="bg-artesPurple h-screen flex flex-col overflow-hidden">
 
-    <div class="text-center py-4 flex-shrink-0 z-10 bg-gray-100 shadow-sm">
-        <h1 class="font-title text-2xl md:text-3xl text-artesPurple font-bold">Galería Ley 630</h1>
-        <p class="font-sans text-xs text-gray-500">Desliza para ver más • Toca los puntos para ampliar</p>
+    <div class="text-center py-4 flex-shrink-0 z-10 bg-artesPurple shadow-sm">
+        <h1 class="font-title text-2xl md:text-3xl text-white font-bold">Galería Ley 630</h1>
+        <p class="font-sans text-xs text-white/80">Desliza para ver más • Toca los puntos para ampliar</p>
     </div>
 
     <!-- Slider Container -->
@@ -133,12 +133,19 @@
             <!-- INFOGRAFÍA 1: EL MAPA DE LA DIGNIDAD -->
             <div class="slide">
                 <div class="infographic-card bg-creamBg">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <div class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-5">
+                        </div>
+                    </div>
+
                     <!-- Header Background Shape -->
                     <div class="absolute top-0 right-0 w-[80%] h-[60%] bg-artesPurple rounded-bl-[150px] z-0"></div>
                     <div class="absolute top-[-50px] left-[-50px] w-40 h-40 bg-sonidosYellow rounded-full opacity-50 z-0"></div>
 
                     <!-- Content Container -->
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
                         <!-- Title -->
                         <h2 class="font-title text-3xl font-black text-white leading-tight mb-2 drop-shadow-md">
                             ¿Vives del Arte?<br>
@@ -188,15 +195,10 @@
                         </div>
                     </div>
 
-                    <!-- Footer (Franja Protectora) -->
-                    <div class="absolute bottom-0 w-full h-14 bg-creamBg border-t border-gray-200 flex items-center justify-between px-6 z-20">
-                        <div class="flex items-center gap-2">
-                            <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="w-10 h-10 object-contain">
-                        </div>
-                        <div class="h-8 w-px bg-gray-300 mx-2"></div>
-                        <div class="text-right">
-                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-6 mx-auto" />
-                        </div>
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-center gap-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
             </div>
@@ -204,11 +206,18 @@
             <!-- INFOGRAFÍA 2: TU MUNICIPIO, TU CULTURA -->
             <div class="slide">
                 <div class="infographic-card bg-palabrasGreen/20">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <div class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-5">
+                        </div>
+                    </div>
+
                     <!-- Background Elements -->
                     <div class="absolute -right-20 top-20 w-60 h-60 border-[20px] border-palabrasGreen rounded-full opacity-30"></div>
                     <div class="absolute bottom-20 left-0 w-full h-40 bg-audioBlue opacity-10 skew-y-[-6deg]"></div>
 
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
                         <!-- Title -->
                         <h2 class="font-title text-3xl font-black text-teal-900 leading-tight mb-4">
                             Recursos que llegan a <span class="text-audioBlue drop-shadow-sm">tu barrio</span>.
@@ -255,14 +264,9 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="absolute bottom-0 w-full h-14 bg-creamBg border-t border-gray-200 flex items-center justify-between px-6 z-20">
-                        <div class="flex items-center gap-2">
-                            <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="w-10 h-10 object-contain">
-                        </div>
-                        <div class="h-8 w-px bg-gray-300 mx-2"></div>
-                        <div class="text-right">
-                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-6 mx-auto" />
-                        </div>
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-center gap-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
             </div>
@@ -270,10 +274,17 @@
             <!-- INFOGRAFÍA 3: CINE Y PRODUCCIÓN -->
             <div class="slide">
                 <div class="infographic-card bg-audioBlue">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <div class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-5">
+                        </div>
+                    </div>
+
                     <!-- Background Texture -->
                     <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
                     
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
                         <div class="bg-white/10 backdrop-blur-md absolute top-[-20%] right-[-20%] w-60 h-60 rounded-full"></div>
 
                         <h2 class="font-title text-3xl font-black leading-none mb-6">
@@ -314,14 +325,9 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="absolute bottom-0 w-full h-14 bg-creamBg border-t border-gray-200 flex items-center justify-between px-6 z-20">
-                        <div class="flex items-center gap-2">
-                            <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="w-10 h-10 object-contain">
-                        </div>
-                        <div class="h-8 w-px bg-gray-300 mx-2"></div>
-                        <div class="text-right">
-                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-6 mx-auto" />
-                        </div>
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-center gap-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
             </div>
@@ -329,8 +335,14 @@
             <!-- INFOGRAFÍA 4: PATRIMONIO VIVO -->
             <div class="slide">
                 <div class="infographic-card bg-creamBg border-t-8 border-danzaOrange">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <div class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-5">
+                        </div>
+                    </div>
                     
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
                         <!-- Abstract Bird Hug shape -->
                         <div class="absolute top-20 right-[-50px] w-48 h-96 bg-danzaOrange rounded-l-[100px] opacity-20 z-0"></div>
 
@@ -365,14 +377,9 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="absolute bottom-0 w-full h-14 bg-creamBg border-t border-gray-200 flex items-center justify-between px-6 z-20">
-                        <div class="flex items-center gap-2">
-                            <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="w-10 h-10 object-contain">
-                        </div>
-                        <div class="h-8 w-px bg-gray-300 mx-2"></div>
-                        <div class="text-right">
-                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-6 mx-auto" />
-                        </div>
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-center gap-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
             </div>
@@ -380,8 +387,14 @@
             <!-- INFOGRAFÍA 5: MITOS VS REALIDADES -->
             <div class="slide">
                 <div class="infographic-card bg-teatroMagenta">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <div class="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-5">
+                        </div>
+                    </div>
                     
-                    <div class="relative z-10 flex flex-col h-full overflow-y-auto">
+                    <div class="relative z-10 flex flex-col h-full overflow-y-auto pt-16">
                         <!-- Header -->
                         <div class="p-6 bg-white rounded-b-[40px] shadow-lg mb-4 text-center flex-shrink-0">
                             <h2 class="font-title text-2xl font-black text-teatroMagenta uppercase">
@@ -433,14 +446,9 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="absolute bottom-0 w-full h-14 bg-creamBg border-t border-gray-200 flex items-center justify-between px-6 z-20">
-                        <div class="flex items-center gap-2">
-                            <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="w-10 h-10 object-contain">
-                        </div>
-                        <div class="h-8 w-px bg-gray-300 mx-2"></div>
-                        <div class="text-right">
-                            <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-6 mx-auto" />
-                        </div>
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-center gap-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
             </div>
