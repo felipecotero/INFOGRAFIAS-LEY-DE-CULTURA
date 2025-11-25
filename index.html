@@ -115,6 +115,21 @@
                 font-style: normal;
                 font-display: swap;
             }
+
+            /* Textura de papel desgastado / Ruido */
+            .infographic-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+                opacity: 0.3;
+                mix-blend-mode: overlay;
+                pointer-events: none;
+                z-index: 5;
+            }
     </style>
 </head>
 <body class="bg-sonidosYellow h-screen flex flex-col overflow-hidden transition-colors duration-500 ease-in-out" id="mainBody">
@@ -125,7 +140,7 @@
     </div>
 
     <!-- Slider Container -->
-    <div class="flex-1 relative w-full max-w-md mx-auto h-full overflow-hidden pb-6">
+    <div class="flex-1 relative w-full md:max-w-6xl mx-auto h-full overflow-hidden pb-6 px-0 md:px-8">
         
         <!-- Slides Wrapper -->
         <div id="slider" class="slider-viewport h-full">
@@ -153,7 +168,7 @@
                         
                         <!-- Main Visual Metaphor -->
                         <div class="my-4 flex justify-center">
-                            <div class="bg-white p-4 rounded-2xl shadow-lg w-full flex items-center gap-4 border-l-4 border-artesPurple">
+                            <div class="bg-white p-4 rounded-2xl shadow-lg w-full md:w-2/3 lg:w-1/2 flex items-center gap-4 border-l-4 border-artesPurple">
                                 <div class="bg-artesPurple p-2 rounded-full text-white">
                                     <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Ojo_Sin_Marco.png" alt="Reconocimiento" class="w-10 h-10 object-contain">
                                 </div>
@@ -246,7 +261,7 @@
                             </div>
                             
                             <!-- Nodes -->
-                            <div class="grid grid-cols-1 gap-3 w-full z-10">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full z-10">
                                 <!-- Node 1 -->
                                 <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-audioBlue shadow-sm flex items-center gap-3" onclick="openModal('Estampilla Procultura (Art. 48)', 'El Artículo 48 permite aumentar la Estampilla Procultura del 2% al 2.5%. Esto significa más recursos propios directos para las Alcaldías y Gobernaciones, permitiendo mayor inversión local en cultura sin depender exclusivamente del gobierno central.')">
                                     <div class="bg-audioBlue p-1 rounded text-white w-10 h-10 flex items-center justify-center">
@@ -325,7 +340,7 @@
                             <span class="bg-white text-audioBlue px-2">más fácil.</span>
                         </h2>
 
-                        <div class="flex-1 grid grid-cols-1 gap-4">
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
                             <!-- Card 1 -->
                             <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Fondo FDC Recargado (Art. 53)', 'El 50% de los aportes que realizan las grandes productoras (contraprestación Ley 1556) se transferirán directamente al Fondo para el Desarrollo Cinematográfico (FDC). Esto inyecta liquidez fresca para financiar historias nacionales.')">
                                 <div class="flex justify-between items-center mb-2">
@@ -397,7 +412,7 @@
                             <span class="bg-white text-danzaOrange px-2">para ser vida.</span>
                         </h2>
 
-                        <div class="flex-1 grid grid-cols-1 gap-4">
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
                             <!-- Card 1 -->
                             <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Patrimonio Vivo (Art. 4)', 'Se redefine el patrimonio no solo como monumentos, sino como la relación viva entre las comunidades y su territorio. Se protege el entorno cultural y natural donde suceden las tradiciones.')">
                                 <div class="flex justify-between items-center mb-2">
@@ -469,7 +484,7 @@
                             <span class="bg-white text-teatroMagenta px-2">es eficiencia.</span>
                         </h2>
 
-                        <div class="flex-1 grid grid-cols-1 gap-4">
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
                             <!-- Card 1 -->
                             <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Eficiencia (Art. 2)', 'Mito: La ley crea más trámites. Realidad: La ley simplifica procesos al integrar el Sistema Nacional de Cultura, eliminando duplicidades y permitiendo que los recursos fluyan más rápido a los territorios.')">
                                 <div class="flex justify-between items-center mb-2">
