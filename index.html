@@ -140,28 +140,24 @@
                         </div>
                     </div>
 
-                    <!-- Header Background Shape -->
-                    <div class="absolute top-0 right-0 w-[80%] h-[60%] bg-artesPurple rounded-bl-[150px] z-0"></div>
-                    <div class="absolute top-[-50px] left-[-50px] w-40 h-40 bg-sonidosYellow rounded-full opacity-50 z-0"></div>
-
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -bottom-20 -right-20 z-0 opacity-10 pointer-events-none">
-                        <img src="assets/img/Iconos_Rosa/CCDP_Icono_Pincel_Sin_Marco.png" alt="Fondo" class="w-96 h-96 object-contain transform rotate-12">
+                    <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Rosa/CCDP_Icono_Resistencia_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
 
                     <!-- Content Container -->
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
                         <!-- Title -->
-                        <h2 class="font-title text-3xl font-black text-white leading-tight mb-2 drop-shadow-md">
+                        <h2 class="font-title text-3xl font-black text-artesPurple leading-tight mb-2 drop-shadow-sm">
                             ¿Vives del Arte?<br>
                             <span class="text-sonidosYellow">La Ley 630</span> es para ti.
                         </h2>
                         
                         <!-- Main Visual Metaphor -->
                         <div class="my-4 flex justify-center">
-                            <div class="bg-white p-4 rounded-2xl shadow-lg w-full flex items-center gap-4">
+                            <div class="bg-white p-4 rounded-2xl shadow-lg w-full flex items-center gap-4 border-l-4 border-artesPurple">
                                 <div class="bg-artesPurple p-2 rounded-full text-white">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Pincel_Sin_Marco.png" alt="Reconocimiento" class="w-10 h-10 object-contain">
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Ojo_Sin_Marco.png" alt="Reconocimiento" class="w-10 h-10 object-contain">
                                 </div>
                                 <div>
                                     <p class="font-subtitle font-bold text-artesPurple text-lg">Reconocimiento</p>
@@ -172,15 +168,15 @@
 
                         <!-- Points list -->
                         <div class="space-y-4 flex-1">
-                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50" onclick="openModal('Seguridad Social Flexible (Art. 42)', 'El texto obliga a los administradores del sistema de seguridad social a diseñar y garantizar mecanismos flexibles para la afiliación y desafiliación de trabajadores con ingresos intermitentes. El Fondo FONCULTURA podrá destinar recursos para apoyar o subsidiar los aportes, transformando la seguridad social de una carga a un derecho accesible.')">
+                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors" onclick="openModal('Seguridad Social Flexible (Art. 42)', 'El texto obliga a los administradores del sistema de seguridad social a diseñar y garantizar mecanismos flexibles para la afiliación y desafiliación de trabajadores con ingresos intermitentes. El Fondo FONCULTURA podrá destinar recursos para apoyar o subsidiar los aportes, transformando la seguridad social de una carga a un derecho accesible.')">
                                 <div class="min-w-[40px] h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1">
-                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Gota_Sin_Marco.png" alt="Seguridad Social" class="w-full h-full object-contain">
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Corazon_Sin_Marco.png" alt="Seguridad Social" class="w-full h-full object-contain">
                                 </div>
                                 <div>
                                     <p class="font-sans text-sm text-gray-800"><strong>Seguridad Social Flexible:</strong> Paga salud y pensión solo cuando tengas ingresos. El sistema se adapta a ti (Art. 42).</p>
                                 </div>
                             </div>
-                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50" onclick="openModal('Sujeto Cultural Ampliado (Art. 4)', 'El Artículo 4 redefine quién es considerado un agente cultural. Ya no se limita al artista convencional. Incluye explícitamente a portadores de patrimonio, sabedores, gestores, cocineras tradicionales, artesanos rurales y líderes comunitarios, democratizando el acceso a los recursos públicos.')">
+                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors" onclick="openModal('Sujeto Cultural Ampliado (Art. 4)', 'El Artículo 4 redefine quién es considerado un agente cultural. Ya no se limita al artista convencional. Incluye explícitamente a portadores de patrimonio, sabedores, gestores, cocineras tradicionales, artesanos rurales y líderes comunitarios, democratizando el acceso a los recursos públicos.')">
                                 <div class="min-w-[40px] h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1">
                                     <img src="assets/img/Iconos_Rosa/CCDP_Icono_Olla_Sin_Marco.png" alt="Sujeto Ampliado" class="w-full h-full object-contain">
                                 </div>
@@ -188,9 +184,9 @@
                                     <p class="font-sans text-sm text-gray-800"><strong>Sujeto Ampliado:</strong> Cocineras, artesanos y líderes comunitarios ahora tienen los mismos derechos que los artistas (Art. 4).</p>
                                 </div>
                             </div>
-                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50" onclick="openModal('Subsidio Real (FONCULTURA)', 'El Fondo FONCULTURA se fortalece para apoyar directamente la sostenibilidad de los agentes culturales. No es solo reconocimiento simbólico, es apoyo financiero real para cubrir brechas históricas en la protección social del sector.')">
+                            <div class="interactive-point flex items-start gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors" onclick="openModal('Subsidio Real (FONCULTURA)', 'El Fondo FONCULTURA se fortalece para apoyar directamente la sostenibilidad de los agentes culturales. No es solo reconocimiento simbólico, es apoyo financiero real para cubrir brechas históricas en la protección social del sector.')">
                                 <div class="min-w-[40px] h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1">
-                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Sol_Sin_Marco.png" alt="Subsidio" class="w-full h-full object-contain">
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Gota_Sin_Marco.png" alt="Subsidio" class="w-full h-full object-contain">
                                 </div>
                                 <div>
                                     <p class="font-sans text-sm text-gray-800"><strong>Subsidio Real:</strong> El fondo FONCULTURA apoyará tus aportes.</p>
@@ -224,13 +220,9 @@
                         </div>
                     </div>
 
-                    <!-- Background Elements -->
-                    <div class="absolute -right-20 top-20 w-60 h-60 border-[20px] border-palabrasGreen rounded-full opacity-30"></div>
-                    <div class="absolute bottom-20 left-0 w-full h-40 bg-audioBlue opacity-10 skew-y-[-6deg]"></div>
-
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -bottom-10 -left-20 z-0 opacity-10 pointer-events-none">
-                        <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png" alt="Fondo" class="w-96 h-96 object-contain transform -rotate-12">
+                    <div class="absolute -bottom-10 -left-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
@@ -270,7 +262,7 @@
                                 <!-- Node 3 -->
                                 <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-teal-600 shadow-sm flex items-center gap-3" onclick="openModal('Economía Popular (Art. 61)', 'La ley reconoce y fomenta las economías populares y sistemas productivos comunitarios. Permite que los recursos del Estado lleguen a organizaciones barriales y rurales sin la exigencia de formalidades empresariales excluyentes que a menudo actúan como barreras.')">
                                     <div class="bg-teal-600 p-1 rounded text-white w-10 h-10 flex items-center justify-center">
-                                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Resistencia_Sin_Marco.png" alt="Economía Popular" class="w-8 h-8 object-contain">
+                                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Tambor.png" alt="Economía Popular" class="w-8 h-8 object-contain">
                                     </div>
                                     <div>
                                         <h4 class="font-subtitle font-bold text-teal-900 text-sm flex items-center gap-1">Economía Popular <i data-lucide="info" class="w-3 h-3 text-teal-600"></i></h4>
@@ -303,16 +295,12 @@
                         </div>
                     </div>
 
-                    <!-- Background Texture -->
-                    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -top-20 -right-20 z-0 opacity-10 pointer-events-none">
-                        <img src="assets/img/Iconos_Azul/CCDP_Icono_Ojo_Sin_Marco.png" alt="Fondo" class="w-96 h-96 object-contain transform rotate-45">
+                    <div class="absolute -top-20 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Camara_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-45">
                     </div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
-                        <div class="bg-white/10 backdrop-blur-md absolute top-[-20%] right-[-20%] w-60 h-60 rounded-full"></div>
 
                         <h2 class="font-title text-3xl font-black leading-none mb-6">
                             Hacer cine en Colombia será <br>
@@ -333,7 +321,7 @@
                             <div class="interactive-point bg-blue-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-blue-700 hover:scale-[1.02] transition-transform" onclick="openModal('Inversión Democrática', 'Se flexibilizan los requisitos de inversión mínima para acceder a beneficios tributarios (FFC y CINA), eliminando la barrera rígida de los 1.800 salarios mínimos. Esto permite que producciones más pequeñas y nacionales accedan a los incentivos.')">
                                 <div class="flex justify-between items-center mb-2">
                                     <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Inversión Democrática <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Inversión" class="w-8 h-8 object-contain">
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Edificios_Sin_Marco.png" alt="Inversión" class="w-8 h-8 object-contain">
                                 </div>
                                 <p class="font-sans text-sm">Menos requisitos para acceder a beneficios tributarios. No necesitas ser Hollywood.</p>
                             </div>
@@ -361,57 +349,56 @@
 
             <!-- INFOGRAFÍA 4: PATRIMONIO VIVO -->
             <div class="slide">
-                <div class="infographic-card bg-creamBg border-t-8 border-danzaOrange relative overflow-hidden">
+                <div class="infographic-card bg-danzaOrange relative overflow-hidden">
                     <!-- Logo Culturas Header -->
                     <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
                         <div class="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-100">
                             <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-8">
                         </div>
                     </div>
-                    
+
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -bottom-20 -right-20 z-0 opacity-10 pointer-events-none">
-                        <img src="assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="Fondo" class="w-96 h-96 object-contain transform -rotate-12">
+                    <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
 
-                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
-                        <!-- Abstract Bird Hug shape -->
-                        <div class="absolute top-20 right-[-50px] w-48 h-96 bg-danzaOrange rounded-l-[100px] opacity-20 z-0"></div>
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
 
-                        <h2 class="font-title text-3xl font-black text-gray-800 mb-6 z-10">
-                            Cuidar lo nuestro ahora tiene <span class="text-danzaOrange underline decoration-4 underline-offset-4">recompensa</span>.
+                        <h2 class="font-title text-3xl font-black leading-none mb-6">
+                            El patrimonio deja de ser cosas viejas <br>
+                            <span class="bg-white text-danzaOrange px-2">para ser vida.</span>
                         </h2>
 
-                        <!-- Central Visual -->
-                        <div class="relative w-full h-40 mb-6 rounded-2xl overflow-hidden bg-orange-100 flex items-center justify-center border-2 border-danzaOrange border-dashed">
-                            <div class="text-center">
-                                <img src="assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="Patrimonio Vivo" class="w-20 h-20 mx-auto mb-2 object-contain">
-                                <span class="font-subtitle text-danzaOrange font-bold text-sm uppercase tracking-widest">Patrimonio Privado</span>
+                        <div class="flex-1 grid grid-cols-1 gap-4">
+                            <!-- Card 1 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Patrimonio Vivo (Art. 4)', 'Se redefine el patrimonio no solo como monumentos, sino como la relación viva entre las comunidades y su territorio. Se protege el entorno cultural y natural donde suceden las tradiciones.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-danzaOrange flex items-center gap-2">Patrimonio Vivo <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Naranja/CCDP_Icono_Casa_Sin_Marco.png" alt="Hogar" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Protegemos la relación viva entre la gente y su territorio, no solo los edificios (Art. 4).</p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="interactive-point bg-orange-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-orange-700 hover:scale-[1.02] transition-transform" onclick="openModal('Enfoque Biocultural', 'Se reconoce que la cultura no existe sin la naturaleza. La ley integra la protección de los ecosistemas como parte fundamental de la preservación de las tradiciones y saberes ancestrales.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Enfoque Biocultural <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Hoja_Sin_Marco.png" alt="Naturaleza" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">La cultura no existe sin la naturaleza. Protegemos ambas como una unidad.</p>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Saber es Poder', 'Se crea el Inventario de Patrimonios Vitales, permitiendo que las comunidades identifiquen y registren sus propias manifestaciones culturales para protegerlas, sin depender de declaratorias burocráticas centralistas.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-danzaOrange flex items-center gap-2">Saber es Poder <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Naranja/CCDP_Icono_Espiral_Sin_Marco.png" alt="Saberes" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Las comunidades registran sus propios patrimonios sin burocracia centralista.</p>
                             </div>
                         </div>
-
-                        <!-- List -->
-                        <ul class="space-y-4 z-10">
-                            <li class="interactive-point flex gap-4 p-2 rounded-lg hover:bg-orange-50" onclick="openModal('Patrimonio Privado (Art. 5)', 'Se habilita legalmente el uso de estímulos públicos para la protección del Patrimonio Cultural de titularidad privada si tiene beneficio social. Esto soluciona el problema histórico de no poder invertir en casonas patrimoniales en riesgo por ser de particulares.')">
-                                <div class="bg-danzaOrange text-white rounded-full p-1 w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Montanas_Sin_Marco.png" alt="Territorio" class="w-6 h-6 object-contain">
-                                </div>
-                                <p class="font-sans text-sm text-gray-700"><strong>¿Tienes casa patrimonial?</strong> El Estado ahora puede invertir en ella si tiene un beneficio social (Art. 5).</p>
-                            </li>
-                            <li class="interactive-point flex gap-4 p-2 rounded-lg hover:bg-orange-50" onclick="openModal('Incentivos Fiscales (Art. 8)', 'El Artículo 8 otorga a los propietarios de Bienes de Interés Cultural (BIC) una deducción del 165% en el impuesto de renta por gastos de mantenimiento y conservación. Un poderoso incentivo para preservar la memoria arquitectónica.')">
-                                <div class="bg-danzaOrange text-white rounded-full p-1 w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Incentivos" class="w-6 h-6 object-contain">
-                                </div>
-                                <p class="font-sans text-sm text-gray-700"><strong>Incentivos Fiscales:</strong> Deducción del 165% en renta para quienes inviertan en cuidar la memoria (Art. 8).</p>
-                            </li>
-                            <li class="interactive-point flex gap-4 p-2 rounded-lg hover:bg-orange-50" onclick="openModal('Enfoque Biocultural (Art. 3)', 'La ley introduce el enfoque biocultural, vinculando la cultura con el territorio y la biodiversidad. Adopta una postura de protección de la diversidad y reparación histórica, alineándose con los estándares internacionales de derechos culturales.')">
-                                <div class="bg-danzaOrange text-white rounded-full p-1 w-8 h-8 flex items-center justify-center flex-shrink-0 mt-1">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Mascota_Sin_Marco.png" alt="Biocultural" class="w-6 h-6 object-contain">
-                                </div>
-                                <p class="font-sans text-sm text-gray-700"><strong>Enfoque Biocultural:</strong> Protegemos la cultura unida a la naturaleza y el territorio.</p>
-                            </li>
-                        </ul>
-                        <div class="h-16"></div>
+                        
+                        <div class="h-16"></div> <!-- Spacer for footer -->
                     </div>
 
                     <!-- Footer -->
@@ -431,61 +418,49 @@
                             <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-8">
                         </div>
                     </div>
-                    
+
                     <!-- Overflowing Background Icon -->
-                    <div class="absolute -bottom-20 -right-20 z-0 opacity-10 pointer-events-none">
-                        <img src="assets/img/Iconos_Rosa/CCDP_Icono_Libro_Sin_Marco.png" alt="Fondo" class="w-96 h-96 object-contain transform rotate-12">
+                    <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
 
-                    <div class="relative z-10 flex flex-col h-full overflow-y-auto pt-16">
-                        <!-- Header -->
-                        <div class="p-6 bg-white rounded-b-[40px] shadow-lg mb-4 text-center flex-shrink-0">
-                            <h2 class="font-title text-2xl font-black text-teatroMagenta uppercase">
-                                ¿Mitos o Realidades?
-                            </h2>
-                            <p class="font-sans text-xs text-gray-500 mt-1">Hablemos claro sobre la Ley 630</p>
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-white overflow-y-auto pt-16">
+
+                        <h2 class="font-title text-3xl font-black leading-none mb-6">
+                            No es burocracia, <br>
+                            <span class="bg-white text-teatroMagenta px-2">es eficiencia.</span>
+                        </h2>
+
+                        <div class="flex-1 grid grid-cols-1 gap-4">
+                            <!-- Card 1 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Eficiencia (Art. 2)', 'Mito: La ley crea más trámites. Realidad: La ley simplifica procesos al integrar el Sistema Nacional de Cultura, eliminando duplicidades y permitiendo que los recursos fluyan más rápido a los territorios.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-teatroMagenta flex items-center gap-2">Eficiencia <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Cometa_Sin_Marco.png" alt="Agilidad" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">No creamos más trámites, los simplificamos para que la plata llegue rápido (Art. 2).</p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="interactive-point bg-pink-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-pink-700 hover:scale-[1.02] transition-transform" onclick="openModal('Inversión Real', 'Mito: Es gasto sin retorno. Realidad: Por cada peso invertido en cultura, se generan retornos sociales y económicos multiplicadores. La ley garantiza fuentes de financiación estables (estampillas, FDC).')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Inversión Real <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Edificios_Sin_Marco.png" alt="Inversión" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">La cultura no es un gasto, es una inversión con retorno social y económico garantizado.</p>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Derecho Fundamental', 'Mito: La cultura es un adorno. Realidad: La ley reconoce la cultura como un derecho fundamental, al mismo nivel que la salud o la educación, obligando al Estado a garantizar su acceso.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-teatroMagenta flex items-center gap-2">Derecho Fundamental <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Bandera_Sin_Marco.png" alt="Derechos" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">La cultura no es un adorno, es un derecho tan importante como la salud.</p>
+                            </div>
                         </div>
-
-                        <!-- Table Content -->
-                        <div class="flex-1 px-4 space-y-3 mb-16">
-                            
-                            <!-- Item 1 -->
-                            <div class="interactive-point bg-white/10 p-3 rounded-lg border border-white/20 hover:bg-white/20 transition-colors" onclick="openModal('Mito: Burocracia vs Eficiencia', 'Falso. El Artículo 79 busca la eficiencia administrativa, eliminando trámites inútiles y digitalizando el sector. No crea burocracia, descentraliza el poder hacia los territorios y los Consejos de Cultura.')">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="x-circle" class="text-red-200 w-4 h-4"></i>
-                                    <span class="font-subtitle font-bold text-red-100 text-xs uppercase">Mito: Burocracia</span>
-                                </div>
-                                <div class="flex items-start gap-2">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Libro_Sin_Marco.png" alt="Eficiencia" class="w-6 h-6 flex-shrink-0 object-contain">
-                                    <p class="font-sans text-sm text-white font-semibold">Es Eficiencia. Se eliminan trámites inútiles y se digitaliza el sector (Art. 79). <span class="text-xs underline opacity-80 ml-1">Ver más</span></p>
-                                </div>
-                            </div>
-
-                            <!-- Item 2 -->
-                            <div class="interactive-point bg-white/10 p-3 rounded-lg border border-white/20 hover:bg-white/20 transition-colors" onclick="openModal('Mito: Gasto vs Inversión', 'Es inversión con retorno. El Bono Cultura y los incentivos al cine y patrimonio dinamizan la economía local, el turismo y generan empleo joven. Es una apuesta de responsabilidad fiscal con alto impacto social.')">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="x-circle" class="text-red-200 w-4 h-4"></i>
-                                    <span class="font-subtitle font-bold text-red-100 text-xs uppercase">Mito: Gasto sin fondo</span>
-                                </div>
-                                <div class="flex items-start gap-2">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Inversión" class="w-6 h-6 flex-shrink-0 object-contain">
-                                    <p class="font-sans text-sm text-white font-semibold">Es Inversión. El cine y el arte generan empleo joven y mueven turismo. <span class="text-xs underline opacity-80 ml-1">Ver más</span></p>
-                                </div>
-                            </div>
-
-                            <!-- Item 3 -->
-                            <div class="interactive-point bg-white/10 p-3 rounded-lg border border-white/20 hover:bg-white/20 transition-colors" onclick="openModal('Mito: Ideología vs Derecho', 'Es cumplimiento constitucional. La ley garantiza derechos y pluralismo, protegiendo a todos los cultores sin discriminación por origen o pensamiento, alineándose con los mandatos de la Constitución del 91.')">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="x-circle" class="text-red-200 w-4 h-4"></i>
-                                    <span class="font-subtitle font-bold text-red-100 text-xs uppercase">Mito: Es Ideología</span>
-                                </div>
-                                <div class="flex items-start gap-2">
-                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Resistencia_Sin_Marco.png" alt="Derecho" class="w-6 h-6 flex-shrink-0 object-contain">
-                                    <p class="font-sans text-sm text-white font-semibold">Es Derecho. Garantiza que nadie sea discriminado por su origen o piel. <span class="text-xs underline opacity-80 ml-1">Ver más</span></p>
-                                </div>
-                            </div>
-
-                        </div>
+                        
+                        <div class="h-16"></div> <!-- Spacer for footer -->
                     </div>
 
                     <!-- Footer -->
@@ -494,9 +469,7 @@
                         <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
                     </div>
                 </div>
-            </div>
-
-        </div>
+            </div>        </div>
 
         <!-- Navigation Buttons -->
         <button id="prevBtn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur text-artesPurple p-2 rounded-full shadow-lg z-30 hover:bg-white hidden">
@@ -548,8 +521,8 @@
         const mainHeader = document.getElementById('mainHeader');
         
         // Colores de fondo para cada slide (basados en la paleta)
-        // 0: Amarillo, 1: Naranja, 2: Verde, 3: Azul, 4: Verde
-        const bgColors = ['#F3C746', '#F08C78', '#ABEFD1', '#5BC6FB', '#ABEFD1'];
+        // 0: Amarillo, 1: Verde, 2: Azul, 3: Naranja, 4: Magenta
+        const bgColors = ['#F3C746', '#ABEFD1', '#5BC6FB', '#F08C78', '#E940B4'];
         
         let currentSlide = 0;
         const totalSlides = 5;
