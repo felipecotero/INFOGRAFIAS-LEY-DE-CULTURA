@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografías Artes para la Paz - Ley 630</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,700;0,6..12,800&family=Merriweather+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+        <!-- Preload fuente LANCEAPLP (local desde assets) -->
+        <link rel="preload" href="assets/fonts/FrenteNacional.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        artesPurple: '#886FFF',
+                        sonidosYellow: '#F3C746',
+                        audioBlue: '#5BC6FB',
+                        teatroMagenta: '#E940B4',
+                        danzaOrange: '#F08C78',
+                        palabrasGreen: '#ABEFD1',
+                        creamBg: '#FFF5EB',
+                        darkText: '#1A1A1A'
+                    },
+                    fontFamily: {
+                        title: ['FrenteNacional', 'serif'],
+                        subtitle: ['Merriweather Sans', 'sans-serif'],
+                        sans: ['Nunito Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos personalizados para formas orgánicas */
+        .organic-shape {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+        .bird-curve {
+            border-top-left-radius: 100px;
+            border-bottom-left-radius: 20px;
+        }
+        .infographic-card {
+            width: 100%;
+            height: 100%; /* Ocupar altura del slide */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 1.5rem; /* Rounded-2xl */
+            /* Safari Fixes */
+            transform: translateZ(0);
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            mask-image: radial-gradient(white, black);
+        }
+
+        /* Estilos para el slider */
+        .slider-viewport {
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+            display: flex;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        .slider-viewport::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        .slide {
+            scroll-snap-align: center;
+            flex: 0 0 100%;
+            min-width: 100%; /* Safari fix */
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Animación del modal */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        /* Cursor interactivo */
+        .interactive-point {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .interactive-point:active {
+            transform: scale(0.98);
+        }
+
+            /* Fuente local LANCEAPLP */
+            @font-face {
+                font-family: 'FrenteNacional';
+                src: url('assets/fonts/FrenteNacional.woff2') format('woff2');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+
+            /* Textura de papel desgastado / Ruido */
+            .infographic-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* Simplified SVG for better compatibility */
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+                opacity: 0.3;
+                mix-blend-mode: overlay;
+                pointer-events: none;
+                z-index: 5;
+            }
+    </style>
+</head>
+<!-- Use h-[100dvh] for mobile safari viewport fix -->
+<body class="bg-sonidosYellow h-[100dvh] flex flex-col overflow-hidden transition-colors duration-500 ease-in-out" id="mainBody">
+
+    <div class="text-center py-4 flex-shrink-0 z-10 shadow-sm transition-colors duration-500 ease-in-out px-4" id="mainHeader">
+        <h1 class="font-title text-3xl md:text-5xl text-artesPurple font-bold transition-colors duration-500 leading-tight" id="headerTitle">AGENDA POPULAR CULTURAL PARA LA PAZ</h1>
+        <p class="font-sans text-xs text-artesPurple transition-colors duration-500 mt-2" id="headerSubtitle">EJES ESTRATÉGICOS Y LÍNEAS DE ACCIÓN PRIORIZADAS</p>
+    </div>
+
+    <!-- Slider Container -->
+    <div class="flex-1 relative w-full md:max-w-6xl mx-auto h-full overflow-hidden pb-6 px-0 md:px-8">
+        
+        <!-- Slides Wrapper -->
+        <div id="slider" class="slider-viewport h-full">
+
+            <!-- INFOGRAFÍA 1: EL MAPA DE LA DIGNIDAD -->
+            <div class="slide">
+                <div class="infographic-card bg-creamBg relative overflow-hidden">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
+                    </div>
+
+                    <!-- Overflowing Background Icon -->
+                    <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Rosa/CCDP_Icono_Resistencia_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
+                    </div>
+                    <!-- New Background Image (Left) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                        <img src="assets/background/7_SOMOS.png" alt="Fondo Decorativo" class="w-[1500px] h-[1500px] max-w-none object-contain object-top transform -rotate-12 sepia hue-rotate-[250deg] saturate-[2.5]">
+                    </div>
+
+                    <!-- Content Container -->
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
+                        <!-- Title -->
+                        <h2 class="font-title text-3xl font-black text-artesPurple leading-tight mb-2 drop-shadow-sm text-center">
+                            1. Cultura para la paz<br>
+                            <span class="text-sonidosYellow">y el fortalecimiento del tejido social</span>
+                        </h2>
+                        
+                        <!-- Main Visual Metaphor -->
+                        <div class="my-4 flex justify-center">
+                            <div class="bg-white p-4 rounded-2xl shadow-lg w-full md:w-2/3 lg:w-1/2 flex items-center gap-4 border-l-4 border-artesPurple">
+                                <div class="bg-artesPurple p-2 rounded-full text-white w-14 h-14 flex items-center justify-center shrink-0">
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Ojo_Sin_Marco.png" alt="Reconocimiento" class="w-10 h-10 object-contain">
+                                </div>
+                                <div>
+                                    <p class="font-subtitle font-bold text-artesPurple text-lg">Principio Transversal</p>
+                                    <p class="font-sans text-sm text-gray-600 leading-tight">Fomentar la cultura de paz como principio transversal para la transformación social y territorial.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Points list -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 content-start">
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent" onclick="openModal('Diálogo Intercultural', 'Promover espacios permanentes de diálogo intercultural e intergeneracional, favoreciendo el encuentro de saberes urbanos, rurales, ancestrales y populares.')">
+                                <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Corazon_Sin_Marco.png" alt="Diálogo" class="w-full h-full object-contain">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-sans text-sm text-gray-800"><strong>Diálogo Intercultural:</strong> Espacios permanentes de encuentro de saberes urbanos, rurales y ancestrales.</p>
+                                    <div class="flex justify-end items-center gap-1 mt-1 text-artesPurple">
+                                        <span class="text-xs font-bold">Ver más</span>
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent" onclick="openModal('Saberes Ancestrales', 'Salvaguardar y dignificar los saberes y prácticas ancestrales y tradicionales, combatiendo su estigmatización y exclusión histórica.')">
+                                <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Olla_Sin_Marco.png" alt="Saberes" class="w-full h-full object-contain">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-sans text-sm text-gray-800"><strong>Saberes Ancestrales:</strong> Dignificar prácticas tradicionales combatiendo su estigmatización.</p>
+                                    <div class="flex justify-end items-center gap-1 mt-1 text-artesPurple">
+                                        <span class="text-xs font-bold">Ver más</span>
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent" onclick="openModal('Procesos Comunitarios', 'Fortalecer los procesos comunitarios de formación artística y cultural garantizando su continuidad mediante dotación, infraestructura, herramientas pedagógicas y reconocimiento institucional.')">
+                                <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Gota_Sin_Marco.png" alt="Formación" class="w-full h-full object-contain">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-sans text-sm text-gray-800"><strong>Procesos Comunitarios:</strong> Fortalecer la formación artística con dotación e infraestructura.</p>
+                                    <div class="flex justify-end items-center gap-1 mt-1 text-artesPurple">
+                                        <span class="text-xs font-bold">Ver más</span>
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div class="mt-4 mb-16 text-center">
+                            <span class="bg-artesPurple text-white px-6 py-2 rounded-full font-subtitle font-bold text-sm inline-block shadow-lg">
+                                Transformación social y territorial
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFOGRAFÍA 2: TU MUNICIPIO, TU CULTURA -->
+            <div class="slide">
+                <div class="infographic-card bg-palabrasGreen/20 relative overflow-hidden">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
+                    </div>
+
+                    <!-- Overflowing Background Icon -->
+                    <div class="absolute -bottom-10 -left-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform -rotate-12">
+                    </div>
+                    <!-- New Background Image (Right) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                        <img src="assets/background/3_PACIFICO.png" alt="Fondo Decorativo" class="w-[1500px] h-[1500px] max-w-none object-contain object-top transform rotate-12 sepia hue-rotate-[150deg] saturate-[2.5]">
+                    </div>
+
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto pt-16">
+                        <!-- Title -->
+                        <h2 class="font-title text-3xl font-black text-teal-900 leading-tight mb-4 text-center">
+                            2. Participación, democracia cultural <span class="text-audioBlue drop-shadow-sm">y descentralización</span>.
+                        </h2>
+                        
+                        <!-- Map Graphic Abstraction -->
+                        <div class="flex-1 flex flex-col justify-center items-center relative my-2 min-h-[200px]">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                                <img src="assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png" alt="Territorio" class="w-48 h-48 object-contain opacity-50">
+                            </div>
+                            
+                            <!-- Nodes -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full z-10">
+                                <!-- Node 1 -->
+                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-audioBlue shadow-sm flex items-center gap-3" onclick="openModal('Democratización y Descentralización', 'Democratizar y descentralizar el acceso a las artes, las culturas y los saberes a través de procesos de formación, circulación e investigación en los territorios.')">
+                                    <div class="bg-audioBlue p-1 rounded text-white w-10 h-10 flex items-center justify-center">
+                                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Acceso" class="w-8 h-8 object-contain">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-subtitle font-bold text-teal-900 text-sm flex items-center gap-1">Acceso Democrático <i data-lucide="info" class="w-3 h-3 text-audioBlue"></i></h4>
+                                        <p class="font-sans text-xs text-gray-700">Democratizar y descentralizar el acceso a las artes y saberes en los territorios.</p>
+                                        <div class="flex justify-end items-center gap-1 mt-1 text-audioBlue">
+                                            <span class="text-[10px] font-bold">Ver más</span>
+                                            <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Node 2 -->
+                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-palabrasGreen shadow-sm flex items-center gap-3" onclick="openModal('Participación Incidente', 'Garantizar la participación incidente de las comunidades culturales en la toma de decisiones públicas, fortaleciendo los espacios políticos y de representación (consejos municipales, departamentales y sectoriales de cultura).')">
+                                    <div class="bg-palabrasGreen p-1 rounded text-teal-900 w-10 h-10 flex items-center justify-center">
+                                        <img src="assets/img/Iconos_Azul/CCDP_Icono_Megafono_Sin_Marco.png" alt="Voz" class="w-8 h-8 object-contain">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-subtitle font-bold text-teal-900 text-sm flex items-center gap-1">Participación Incidente <i data-lucide="info" class="w-3 h-3 text-teal-700"></i></h4>
+                                        <p class="font-sans text-xs text-gray-700">Decisiones públicas con participación real de las comunidades culturales.</p>
+                                        <div class="flex justify-end items-center gap-1 mt-1 text-teal-700">
+                                            <span class="text-[10px] font-bold">Ver más</span>
+                                            <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Node 3 -->
+                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-teal-600 shadow-sm flex items-center gap-3" onclick="openModal('Estrategia Nacional', 'Consolidar una estrategia nacional para la participación efectiva de organizaciones, artistas, cultores y sabedores en la construcción de agendas culturales territoriales.')">
+                                    <div class="bg-teal-600 p-1 rounded text-white w-10 h-10 flex items-center justify-center">
+                                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Tambor.png" alt="Estrategia" class="w-8 h-8 object-contain">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-subtitle font-bold text-teal-900 text-sm flex items-center gap-1">Estrategia Nacional <i data-lucide="info" class="w-3 h-3 text-teal-600"></i></h4>
+                                        <p class="font-sans text-xs text-gray-700">Participación efectiva en la construcción de agendas culturales.</p>
+                                        <div class="flex justify-end items-center gap-1 mt-1 text-teal-600">
+                                            <span class="text-[10px] font-bold">Ver más</span>
+                                            <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Node 4 -->
+                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-teal-800 shadow-sm flex items-center gap-3" onclick="openModal('Veedurías Multiactor', 'Crear mecanismos comunitarios de regulación, observación, vigilancia y control mediante veedurías multiactor.')">
+                                    <div class="bg-teal-800 p-1 rounded text-white w-10 h-10 flex items-center justify-center">
+                                        <img src="assets/img/Iconos_Azul/CCDP_Icono_Ojo_Sin_Marco.png" alt="Control" class="w-8 h-8 object-contain">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-subtitle font-bold text-teal-900 text-sm flex items-center gap-1">Control Comunitario <i data-lucide="info" class="w-3 h-3 text-teal-800"></i></h4>
+                                        <p class="font-sans text-xs text-gray-700">Mecanismos de vigilancia y control mediante veedurías.</p>
+                                        <div class="flex justify-end items-center gap-1 mt-1 text-teal-800">
+                                            <span class="text-[10px] font-bold">Ver más</span>
+                                            <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-16 mt-2 text-center">
+                            <p class="font-subtitle text-teal-900 italic text-sm">"Democracia cultural desde los territorios"</p>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFOGRAFÍA 3: CINE Y PRODUCCIÓN -->
+            <div class="slide">
+                <div class="infographic-card bg-[#D6F1FF] relative overflow-hidden">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
+                    </div>
+
+                    <!-- Overflowing Background Icon -->
+                    <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Azul/CCDP_Icono_Gota_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
+                    </div>
+                    <!-- New Background Image (Left) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                        <img src="assets/background/10_MAQUILLAJE.png" alt="Fondo Decorativo" class="w-[1500px] h-[1500px] max-w-none object-contain object-top transform -rotate-12 sepia hue-rotate-[200deg] saturate-[2.5]">
+                    </div>
+
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto pt-16">
+
+                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center text-audioBlue">
+                            3. Recursos, sostenibilidad <br>
+                            <span class="bg-white text-audioBlue px-2">e infraestructura.</span>
+                        </h2>
+
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
+                            <!-- Card 1 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Acceso y Formación', 'Democratizar el acceso a recursos mediante procesos de formación y capacitación para comunidades. Flexibilización de términos de referencia y requerimientos según la realidad territorial.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-audioBlue flex items-center gap-2">Acceso y Formación <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Azul/CCDP_Icono_Gota_Sin_Marco.png" alt="Formación" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Formación para comunidades y flexibilización de requisitos según la realidad territorial.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-audioBlue">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="interactive-point bg-blue-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-blue-700 hover:scale-[1.02] transition-transform" onclick="openModal('Infraestructura y Descentralización', 'Descentralización efectiva de la inversión. Crear, fortalecer y salvaguardar la infraestructura cultural, garantizando su acceso y función patrimonial en cada territorio.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Infraestructura <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Edificios_Sin_Marco.png" alt="Infraestructura" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Descentralización de la inversión y fortalecimiento de la infraestructura cultural en territorios.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-yellow-300">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Sostenibilidad y Vida Digna', 'Garantizar la autosostenibilidad de los procesos culturales comunitarios. Garantizar que la comunidad artística y cultural tenga las condiciones para la creación (trabajo, recursos, espacios, seguridad social) y una vida digna.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-audioBlue flex items-center gap-2">Vida Digna <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Azul/CCDP_Icono_Ojo_Sin_Marco.png" alt="Sostenibilidad" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Garantizar autosostenibilidad, condiciones para la creación y seguridad social.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-audioBlue">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="h-16"></div> <!-- Spacer for footer -->
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFOGRAFÍA 4: PATRIMONIO VIVO -->
+            <div class="slide">
+                <div class="infographic-card bg-[#FFE4D6] relative overflow-hidden">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
+                    </div>
+
+                    <!-- Overflowing Background Icon -->
+                    <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform -rotate-12">
+                    </div>
+                    <!-- New Background Image (Left) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                        <img src="assets/background/6_DANZAS.png" alt="Fondo Decorativo" class="w-[1500px] h-[1500px] max-w-none object-contain object-top transform rotate-12 sepia hue-rotate-[330deg] saturate-[2.5]">
+                    </div>
+
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto pt-16">
+
+                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center text-danzaOrange">
+                            4. Política pública, derechos <br>
+                            <span class="bg-white text-danzaOrange px-2">culturales y legislación.</span>
+                        </h2>
+
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
+                            <!-- Card 1 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Plan Nacional de Cultura', 'Impulsar y defender el cumplimiento del Plan Nacional de Cultura articulado a los planes de desarrollo nacional, departamentales y municipales.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-danzaOrange flex items-center gap-2">Plan Nacional <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Naranja/CCDP_Icono_Edificios_Sin_Marco.png" alt="Plan" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Defender el cumplimiento del Plan Nacional de Cultura articulado a planes de desarrollo.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-danzaOrange">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="interactive-point bg-[#2E5C55] text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-green-800 hover:scale-[1.02] transition-transform" onclick="openModal('Ley General de Cultura', 'Impulsar la aprobación y actualización de la Ley General de Cultura.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Ley de Cultura <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png" alt="Ley" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Impulsar la aprobación y actualización de la Ley General de Cultura.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-yellow-300">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Transversalidad', 'Garantizar que la dimensión cultural sea transversal a todas las actuaciones institucionales del gobierno nacional, regional y local.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-danzaOrange flex items-center gap-2">Transversalidad <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Naranja/CCDP_Icono_Libro_Sin_Marco.png" alt="Transversalidad" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">La cultura debe ser transversal a todas las actuaciones del gobierno.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-danzaOrange">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="h-16"></div> <!-- Spacer for footer -->
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFOGRAFÍA 5: MITOS VS REALIDADES -->
+            <div class="slide">
+                <div class="infographic-card bg-[#F4BFE0] relative overflow-hidden">
+                    <!-- Logo Culturas Header -->
+                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
+                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
+                    </div>
+
+                    <!-- Overflowing Background Icon -->
+                    <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
+                        <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png" alt="Fondo" class="w-[500px] h-[500px] object-contain transform rotate-12">
+                    </div>
+                    <!-- New Background Image (Left) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                        <img src="assets/background/2_B_BOY.png" alt="Fondo Decorativo" class="w-[1500px] h-[1500px] max-w-none object-contain object-top transform -rotate-12 sepia hue-rotate-[290deg] saturate-[2.5]">
+                    </div>
+
+                    <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto pt-16">
+
+                        <h2 class="font-title text-3xl font-black leading-none mb-6 text-center">
+                            5. Gestión del conocimiento, <br>
+                            <span class="bg-white text-teatroMagenta px-2">investigación y comunicación.</span>
+                        </h2>
+
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
+                            <!-- Card 1 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Mapeo y Saberes', 'Mapear y caracterizar a los artistas, cultores, sabedores y procesos culturales en los territorios. Crear un banco de saberes, conocimientos y servicios para el intercambio colaborativo entre instituciones y organizaciones culturales.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-teatroMagenta flex items-center gap-2">Mapeo y Saberes <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Cometa_Sin_Marco.png" alt="Mapeo" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Mapear artistas y crear un banco de saberes para el intercambio colaborativo.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-teatroMagenta">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="interactive-point bg-pink-900 text-white p-4 rounded-xl shadow-lg transform -rotate-1 border border-pink-700 hover:scale-[1.02] transition-transform" onclick="openModal('Comunicación Comunitaria', 'Impulsar laboratorios audiovisuales comunitarios que permitan narrar las historias locales desde las comunidades, especialmente con enfoque de infancias y juventudes.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-yellow-300 flex items-center gap-2">Comunicación <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Amarillo/CCDP_Icono_Edificios_Sin_Marco.png" alt="Comunicación" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Laboratorios audiovisuales para narrar historias locales desde las comunidades.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-yellow-300">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="interactive-point bg-white text-gray-800 p-4 rounded-xl shadow-lg transform rotate-1 hover:scale-[1.02] transition-transform" onclick="openModal('Valoración y Patrimonio', 'Romper los estándares excluyentes de valoración cultural para reconocer e incluir todas las expresiones artísticas y patrimoniales. Fomentar la protección, fortalecimiento y promoción del patrimonio material e inmaterial en los territorios.')">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="font-subtitle font-bold text-lg text-teatroMagenta flex items-center gap-2">Valoración <i data-lucide="plus-circle" class="w-4 h-4"></i></h3>
+                                    <img src="assets/img/Iconos_Rosa/CCDP_Icono_Bandera_Sin_Marco.png" alt="Patrimonio" class="w-8 h-8 object-contain">
+                                </div>
+                                <p class="font-sans text-sm">Romper estándares excluyentes y proteger el patrimonio material e inmaterial.</p>
+                                <div class="flex justify-end items-center gap-1 mt-2 text-teatroMagenta">
+                                    <span class="text-xs font-bold">Ver más</span>
+                                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="h-16"></div> <!-- Spacer for footer -->
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="absolute bottom-0 w-full h-16 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-20">
+                        <img src="assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-10 object-contain">
+                        <img src="assets/img/logo_fucsia.png" alt="Creamos Cultura de Paz" class="h-10 object-contain">
+                    </div>
+                </div>
+            </div>        </div>
+
+        <!-- Navigation Buttons -->
+        <button id="prevBtn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur text-artesPurple p-2 rounded-full shadow-lg z-30 hover:bg-white hidden">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <button id="nextBtn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur text-artesPurple p-2 rounded-full shadow-lg z-30 hover:bg-white">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Dots Indicator -->
+        <div class="absolute bottom-2 left-0 w-full flex justify-center gap-2 z-30">
+            <div class="dot w-2 h-2 rounded-full bg-artesPurple/50 transition-all duration-300 active-dot"></div>
+            <div class="dot w-2 h-2 rounded-full bg-artesPurple/50 transition-all duration-300"></div>
+            <div class="dot w-2 h-2 rounded-full bg-artesPurple/50 transition-all duration-300"></div>
+            <div class="dot w-2 h-2 rounded-full bg-artesPurple/50 transition-all duration-300"></div>
+            <div class="dot w-2 h-2 rounded-full bg-artesPurple/50 transition-all duration-300"></div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300 opacity-0" onclick="closeModal()">
+        <!-- Modal Content -->
+        <div id="modalContent" class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform transition-all duration-300 scale-90 relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <h3 id="modalTitle" class="font-title text-xl text-artesPurple font-bold mb-3 pr-6">Título del Modal</h3>
+            <div class="h-1 w-10 bg-sonidosYellow mb-4 rounded-full"></div>
+            <p id="modalBody" class="font-sans text-gray-700 text-sm leading-relaxed">
+                Contenido detallado aquí...
+            </p>
+            
+            <button onclick="closeModal()" class="mt-6 w-full bg-artesPurple text-white py-2 rounded-lg font-subtitle font-bold hover:bg-opacity-90 transition-colors">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Slider Logic
+        const slider = document.getElementById('slider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.dot');
+        const mainBody = document.getElementById('mainBody');
+        const mainHeader = document.getElementById('mainHeader');
+        
+        // Colores de fondo para cada slide (basados en la paleta)
+        // 0: Amarillo, 1: Verde Saturated, 2: Azul Saturated, 3: Naranja Saturated, 4: Magenta Intenso (Fondo)
+        const bgColors = ['#F3C746', '#0D9488', '#5BC6FB', '#F08C78', '#E940B4'];
+        // Colores de texto para el título (para contraste)
+        const textColors = ['#886FFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
+        
+        let currentSlide = 0;
+        const totalSlides = 5;
+
+        function updateSlider() {
+            const scrollAmount = slider.clientWidth * currentSlide;
+            slider.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+
+            // Update buttons visibility
+            prevBtn.classList.toggle('hidden', currentSlide === 0);
+            nextBtn.classList.toggle('hidden', currentSlide === totalSlides - 1);
+
+            // Update dots
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('bg-artesPurple', 'w-4');
+                    dot.classList.remove('bg-artesPurple/50');
+                } else {
+                    dot.classList.remove('bg-artesPurple', 'w-4');
+                    dot.classList.add('bg-artesPurple/50');
+                }
+            });
+
+            // Update Background Color
+            const newColor = bgColors[currentSlide];
+            const newTextColor = textColors[currentSlide];
+            
+            mainBody.style.backgroundColor = newColor;
+            mainHeader.style.backgroundColor = newColor;
+            
+            // Update Title Colors
+            document.getElementById('headerTitle').style.color = newTextColor;
+            document.getElementById('headerSubtitle').style.color = newTextColor;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
+        });
+
+        // Handle scroll events (for touch swipe)
+        let isScrolling;
+        slider.addEventListener('scroll', () => {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {
+                const slideWidth = slider.clientWidth;
+                currentSlide = Math.round(slider.scrollLeft / slideWidth);
+                updateSlider(); // Sync buttons and dots
+            }, 66);
+        });
+
+        // Modal Logic
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContent = document.getElementById('modalContent');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        function openModal(title, content) {
+            modalTitle.textContent = title;
+            modalBody.textContent = content;
+            
+            modalOverlay.classList.remove('hidden');
+            // Trigger reflow
+            void modalOverlay.offsetWidth;
+            
+            modalOverlay.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-90');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-90');
+            
+            setTimeout(() => {
+                modalOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Initialize slider state
+        updateSlider();
+    </script>
+</body>
+</html>
