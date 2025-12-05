@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,700;0,6..12,800&family=Merriweather+Sans:wght@300;400;700&display=swap" rel="stylesheet">
         <!-- Preload fuente LANCEAPLP (local desde assets) -->
-        <link rel="preload" href="assets/fonts/FrenteNacional.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="assets/fonts/Lance-RegularAPLP.woff2" as="font" type="font/woff2" crossorigin>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -30,7 +30,7 @@
                         darkText: '#1A1A1A'
                     },
                     fontFamily: {
-                        title: ['FrenteNacional', 'serif'],
+                        title: ['LANCEAPLP', 'serif'],
                         subtitle: ['Merriweather Sans', 'sans-serif'],
                         sans: ['Nunito Sans', 'sans-serif'],
                     }
@@ -114,8 +114,8 @@
 
             /* Fuente local LANCEAPLP */
             @font-face {
-                font-family: 'FrenteNacional';
-                src: url('assets/fonts/FrenteNacional.woff2') format('woff2');
+                font-family: 'LANCEAPLP';
+                src: url('assets/fonts/Lance-RegularAPLP.woff2') format('woff2');
                 font-weight: normal;
                 font-style: normal;
                 font-display: swap;
@@ -142,6 +142,7 @@
 <body class="bg-sonidosYellow h-[100dvh] flex flex-col overflow-hidden transition-colors duration-500 ease-in-out" id="mainBody">
 
     <div class="text-center py-4 flex-shrink-0 z-10 shadow-sm transition-colors duration-500 ease-in-out px-4" id="mainHeader">
+        <img src="assets/img/MORADO%20CULTURAS.png" alt="Ministerio de las Culturas" class="h-10 mx-auto mb-2 object-contain transition-opacity duration-500" id="headerLogo">
         <h1 class="font-title text-xl md:text-2xl text-artesPurple font-bold transition-colors duration-500 leading-tight" id="headerTitle">Importancia del fortalecimiento a la Ley General de Cultura con el Proyecto 630</h1>
         <p class="font-sans text-xs text-artesPurple transition-colors duration-500 mt-2" id="headerSubtitle">Desliza para ver más • Toca los puntos para ampliar</p>
     </div>
@@ -155,10 +156,6 @@
             <!-- INFOGRAFÍA 1: EL MAPA DE LA DIGNIDAD -->
             <div class="slide">
                 <div class="infographic-card bg-creamBg relative overflow-hidden">
-                    <!-- Logo Culturas Header -->
-                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
-                    </div>
 
                     <!-- Overflowing Background Icon -->
                     <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
@@ -249,10 +246,6 @@
             <!-- INFOGRAFÍA 2: TU MUNICIPIO, TU CULTURA -->
             <div class="slide">
                 <div class="infographic-card bg-palabrasGreen/20 relative overflow-hidden">
-                    <!-- Logo Culturas Header -->
-                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
-                    </div>
 
                     <!-- Overflowing Background Icon -->
                     <div class="absolute -bottom-10 -left-20 z-0 opacity-20 pointer-events-none">
@@ -338,10 +331,6 @@
             <!-- INFOGRAFÍA 3: CINE Y PRODUCCIÓN -->
             <div class="slide">
                 <div class="infographic-card bg-[#D6F1FF] relative overflow-hidden">
-                    <!-- Logo Culturas Header -->
-                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
-                    </div>
 
                     <!-- Overflowing Background Icon -->
                     <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
@@ -414,10 +403,6 @@
             <!-- INFOGRAFÍA 4: PATRIMONIO VIVO -->
             <div class="slide">
                 <div class="infographic-card bg-[#FFE4D6] relative overflow-hidden">
-                    <!-- Logo Culturas Header -->
-                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
-                    </div>
 
                     <!-- Overflowing Background Icon -->
                     <div class="absolute -bottom-10 -right-20 z-0 opacity-20 pointer-events-none">
@@ -490,10 +475,6 @@
             <!-- INFOGRAFÍA 5: MITOS VS REALIDADES -->
             <div class="slide">
                 <div class="infographic-card bg-[#F4BFE0] relative overflow-hidden">
-                    <!-- Logo Culturas Header -->
-                    <div class="absolute top-4 left-0 w-full flex justify-center z-30 pointer-events-none">
-                        <img src="assets/img/gris_culturas.png" alt="Culturas" class="h-10">
-                    </div>
 
                     <!-- Overflowing Background Icon -->
                     <div class="absolute -bottom-20 -right-20 z-0 opacity-20 pointer-events-none">
@@ -617,6 +598,14 @@
         const bgColors = ['#F3C746', '#0D9488', '#5BC6FB', '#F08C78', '#E940B4'];
         // Colores de texto para el título (para contraste)
         const textColors = ['#886FFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
+        // Logos
+        const logoPaths = [
+            'assets/img/MORADO%20CULTURAS.png', 
+            'assets/img/blanco_culturas.png', 
+            'assets/img/blanco_culturas.png', 
+            'assets/img/blanco_culturas.png', 
+            'assets/img/blanco_culturas.png'
+        ];
         
         let currentSlide = 0;
         const totalSlides = 5;
@@ -653,6 +642,9 @@
             // Update Title Colors
             document.getElementById('headerTitle').style.color = newTextColor;
             document.getElementById('headerSubtitle').style.color = newTextColor;
+
+            // Update Logo
+            document.getElementById('headerLogo').src = logoPaths[currentSlide];
         }
 
         nextBtn.addEventListener('click', () => {
