@@ -142,6 +142,7 @@
 <body class="bg-sonidosYellow h-[100dvh] flex flex-col overflow-hidden transition-colors duration-500 ease-in-out" id="mainBody">
 
     <div class="text-center py-4 flex-shrink-0 z-10 shadow-sm transition-colors duration-500 ease-in-out px-4" id="mainHeader">
+        <img src="../assets/img/MORADO%20CULTURAS.png" alt="Ministerio de las Culturas" class="h-10 mx-auto mb-2 object-contain transition-opacity duration-500" id="headerLogo">
         <h1 class="font-title text-3xl md:text-5xl text-artesPurple font-bold transition-colors duration-500 leading-tight" id="headerTitle">AGENDA POPULAR CULTURAL PARA LA PAZ</h1>
         <p class="font-sans text-xs text-artesPurple transition-colors duration-500 mt-2" id="headerSubtitle">EJES ESTRATÉGICOS Y LÍNEAS DE ACCIÓN PRIORIZADAS</p>
     </div>
@@ -631,6 +632,14 @@
         const bgColors = ['#F3C746', '#0D9488', '#5BC6FB', '#F08C78', '#E940B4'];
         // Colores de texto para el título (para contraste)
         const textColors = ['#886FFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'];
+        // Logos
+        const logoPaths = [
+            '../assets/img/MORADO%20CULTURAS.png', 
+            '../assets/img/blanco_culturas.png', 
+            '../assets/img/blanco_culturas.png', 
+            '../assets/img/blanco_culturas.png', 
+            '../assets/img/blanco_culturas.png'
+        ];
         
         let currentSlide = 0;
         const totalSlides = 5;
@@ -667,6 +676,9 @@
             // Update Title Colors
             document.getElementById('headerTitle').style.color = newTextColor;
             document.getElementById('headerSubtitle').style.color = newTextColor;
+
+            // Update Logo
+            document.getElementById('headerLogo').src = logoPaths[currentSlide];
         }
 
         nextBtn.addEventListener('click', () => {
