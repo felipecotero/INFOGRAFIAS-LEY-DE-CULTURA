@@ -10,6 +10,10 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        lance: ['LanceAPLP', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
                     colors: {
                         palette: {
                             dark: '#1A1A3A',
@@ -29,7 +33,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'LanceAPLP';
+            src: url('../assets/fonts/Lance-RegularAPLP.woff2') format('woff2');
+        }
         body { font-family: 'Montserrat', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'LanceAPLP', sans-serif; }
         .gradient-bg { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
         .card-glass {
             background: rgba(255, 255, 255, 0.1);
@@ -54,8 +63,8 @@
     <header class="bg-palette-yellow text-palette-dark pt-8 pb-24 px-6 rounded-b-[3rem] shadow-2xl relative overflow-hidden">
         <!-- Logos -->
         <div class="flex justify-between items-center max-w-4xl mx-auto mb-8 relative z-20">
-            <img src="../assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-20 object-contain">
-            <img src="../assets/img/blanco_culturas.png" alt="Culturas" class="h-20 object-contain drop-shadow-md">
+            <img src="../assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-24 object-contain">
+            <img src="../assets/img/blanco_culturas.png" alt="Culturas" class="h-24 object-contain drop-shadow-md">
         </div>
 
         <!-- Círculos decorativos de fondo -->
