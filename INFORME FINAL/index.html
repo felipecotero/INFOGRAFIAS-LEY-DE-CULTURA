@@ -174,14 +174,54 @@
                 </button>
 
                 <!-- STATS CARDS -->
-                <div class="grid grid-cols-2 gap-3 w-full md:w-auto order-2 md:order-1">
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-3 w-full md:w-auto order-2 md:order-1">
                     <div class="bg-gray-50 border border-gray-200 p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center">
                         <div class="text-xl font-black text-palette-dark leading-none" id="total-ben-count">0</div>
                         <div class="text-[9px] uppercase opacity-60 font-bold mt-1">Beneficiarios</div>
                     </div>
+                    <div id="muni-card" onclick="toggleImpactList('muni')" class="bg-gray-50 border border-gray-200 p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center cursor-pointer select-none">
+                        <div class="text-xl font-black text-palette-dark leading-none" id="total-muni-count">0</div>
+                        <div class="text-[9px] uppercase opacity-60 font-bold mt-1">Municipios y ciudades</div>
+                    </div>
+                    <div id="dept-card" onclick="toggleImpactList('dept')" class="bg-gray-50 border border-gray-200 p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center cursor-pointer select-none">
+                        <div class="text-xl font-black text-palette-dark leading-none" id="total-dept-count">0</div>
+                        <div class="text-[9px] uppercase opacity-60 font-bold mt-1">Departamentos</div>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center">
+                        <div class="text-sm font-black leading-none text-palette-dark" id="total-operational-count">$0</div>
+                        <div class="text-[9px] uppercase opacity-60 font-bold mt-1">Grupo Operativo (COP)</div>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center">
+                        <div class="text-sm font-black leading-none text-palette-dark" id="total-operational-costs-count">$0</div>
+                        <div class="text-[9px] uppercase opacity-60 font-bold mt-1">Gastos operativos (COP)</div>
+                    </div>
                     <div class="bg-gradient-to-br from-palette-pink to-palette-purple text-white p-2 px-4 rounded-xl text-center shadow-sm flex flex-col justify-center">
                         <div class="text-sm font-black leading-none" id="total-contribution-count">$0</div>
-                        <div class="text-[9px] uppercase opacity-80 mt-1">Inversión (COP)</div>
+                        <div class="text-[9px] uppercase opacity-80 mt-1">Inversión total (COP)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LISTADOS (se despliegan al hacer clic en Municipios/Departamentos) -->
+            <div id="impact-lists" class="hidden mt-2 bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs">
+                <div class="flex items-start justify-between gap-2">
+                    <div class="font-bold text-palette-dark">Listado de cobertura territorial</div>
+                    <button type="button" onclick="closeImpactLists()" class="text-gray-500 hover:text-gray-700">Cerrar</button>
+                </div>
+                <div id="impact-muni-panel" class="hidden mt-3">
+                    <div class="font-bold text-palette-dark mb-2">Municipios y ciudades (Colombia)</div>
+                    <div class="max-h-48 overflow-y-auto pr-2">
+                        <ul id="impact-muni-list" class="space-y-1"></ul>
+                    </div>
+                </div>
+                <div id="impact-dept-panel" class="hidden mt-3">
+                    <div class="font-bold text-palette-dark mb-2">Departamentos (Colombia)</div>
+                    <div class="max-h-48 overflow-y-auto pr-2">
+                        <ul id="impact-dept-list" class="space-y-1"></ul>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-gray-200">
+                        <div class="font-bold text-palette-dark mb-1">Procesos fuera de Colombia</div>
+                        <div id="impact-international" class="text-gray-600"></div>
                     </div>
                 </div>
             </div>
@@ -339,7 +379,7 @@
 
                 <!-- Chart 2: Centro vs Periferia -->
                 <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 shadow-sm">
-                    <h4 class="font-bold text-center mb-4 text-palette-blue text-sm uppercase tracking-wider">Impacto: Capitales vs. Municipios</h4>
+                    <h4 class="font-bold text-center mb-4 text-palette-blue text-sm uppercase tracking-wider">Impacto: 7 capitales, otras capitales y municipios</h4>
                     <div class="h-64 relative"><canvas id="chart-region"></canvas></div>
                 </div>
             </div>
@@ -352,7 +392,7 @@
                  </div>
                  <div class="bg-palette-blue/10 p-4 rounded-xl text-center border border-palette-blue/20">
                     <div class="text-2xl font-black text-palette-blue" id="stat-cities">0</div>
-                    <div class="text-[10px] uppercase font-bold opacity-60">Municipios</div>
+                    <div class="text-[10px] uppercase font-bold opacity-60">Municipios y ciudades</div>
                  </div>
                  <div class="bg-palette-yellow/10 p-4 rounded-xl text-center border border-palette-yellow/20">
                     <div class="text-2xl font-black text-palette-yellow" id="stat-events">0</div>
@@ -360,7 +400,7 @@
                  </div>
                  <div class="bg-palette-purple/10 p-4 rounded-xl text-center border border-palette-purple/20">
                     <div class="text-xl font-black text-palette-purple" id="stat-avg">$0</div>
-                    <div class="text-[10px] uppercase font-bold opacity-60">Promedio Inv.</div>
+                          <div class="text-[10px] uppercase font-bold opacity-60" title="Inversi\u00f3n promedio por organizaci\u00f3n (inversi\u00f3n de organizaciones filtradas / # organizaciones). No incluye grupo operativo ni gastos operativos.">Promedio por organizaci\u00f3n</div>
                  </div>
             </div>
         </div>
@@ -406,7 +446,7 @@
             { network: 'Red Intercultural Juvenil', name: 'KOMBILESA MI', city: 'San Basilio', lat: 10.105, lng: -75.198, contribution: 40000000, events: [{ name: 'Talleres música/lengua', type: 'FORMACIÓN', ben: 40 }] },
             { network: 'Red Intercultural Juvenil', name: 'YUKUTA SONIDO NATIVO', city: 'Inírida', lat: 3.865, lng: -67.923, contribution: 35000000, events: [{ name: 'Talleres Música', type: 'FORMACIÓN', ben: 35 }, { name: 'Festival King Yakaré', type: 'CIRCULACIÓN', ben: 450 }] },
             { network: 'Red Intercultural Juvenil', name: 'Vida-Paz', city: 'San José del Guaviare', lat: 2.572, lng: -72.645, contribution: 100000000, events: [{ name: 'Talleres Bioculturales', type: 'FORMACIÓN', ben: 100 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }] },
-            { network: 'Red Intercultural Juvenil', name: 'ARTE SHEMBASENG', city: 'Sibundoy', lat: 1.205, lng: -76.920, events: [{ name: 'Charlas y Talleres', type: 'FORMACIÓN', ben: 25 }, { name: 'Evento muralístico', type: 'CIRCULACIÓN', ben: 150 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ARTE SHEMBASENG', city: 'Sibundoy', lat: 1.205, lng: -76.920, contribution: 40000000, events: [{ name: 'Charlas y Talleres', type: 'FORMACIÓN', ben: 25 }, { name: 'Evento muralístico', type: 'CIRCULACIÓN', ben: 150 }] },
             { network: 'Red Intercultural Juvenil', name: 'D Three Studio', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 20000000, events: [{ name: 'Cypher y Funciones', type: 'CIRCULACIÓN', ben: 250 }, { name: 'Festival Batallas', type: 'CIRCULACIÓN', ben: 400 }] },
             { network: 'Red Intercultural Juvenil', name: 'MANGLARIA DIVERSA', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 40000000, events: [{ name: 'Talleres Danza/Música', type: 'FORMACIÓN', ben: 45 }, { name: 'Encuentro socialización', type: 'PUBLICO', ben: 250 }] },
             { network: 'Red Intercultural Juvenil', name: 'RITMO EXTREMO', city: 'Apartadó', lat: 7.883, lng: -76.633, contribution: 30000000, events: [{ name: 'Laboratorios Danza', type: 'FORMACIÓN', ben: 120 }, { name: 'Circulación intercambio', type: 'CIRCULACIÓN', ben: 200 }] },
@@ -422,19 +462,19 @@
             { network: 'Red Intercultural Juvenil', name: 'AMAHIA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 30000000, events: [{ name: 'Talleres rurales', type: 'FORMACIÓN', ben: 30 }, { name: 'Fiesta Infancias', type: 'PUBLICO', ben: 80 }] },
 
             // --- RED HIP HOP ---
-            { network: 'Red Hip Hop', name: '5TA CON 5TA CREW', city: 'Cúcuta', lat: 7.907, lng: -72.504, contribution: 57000000, events: [{ name: 'Proceso Pedagógico', type: 'FORMACIÓN', ben: 1000 }, { name: 'Cierre Proceso', type: 'CIRCULACIÓN' }, { name: 'Festival 5ta con 5ta', type: 'PUBLICO' }] },
-            { network: 'Red Hip Hop', name: 'SURPRISE CITY', city: 'Pasto', lat: 1.213, lng: -77.281, contribution: 57000000, events: [{ name: 'Talleres Jamondino', type: 'FORMACIÓN', ben: 3000 }, { name: 'Festival Hip Hop Paz', type: 'PUBLICO' }] },
+            { network: 'Red Hip Hop', name: '5TA CON 5TA CREW', city: 'Cúcuta', lat: 7.907, lng: -72.504, contribution: 28450000, events: [{ name: 'Proceso Pedagógico', type: 'FORMACIÓN', ben: 1000 }, { name: 'Cierre Proceso', type: 'CIRCULACIÓN' }, { name: 'Festival 5ta con 5ta', type: 'PUBLICO' }] },
+            { network: 'Red Hip Hop', name: 'SURPRISE CITY', city: 'Pasto', lat: 1.213, lng: -77.281, contribution: 28450000, events: [{ name: 'Talleres Jamondino', type: 'FORMACIÓN', ben: 3000 }, { name: 'Festival Hip Hop Paz', type: 'PUBLICO' }] },
             { network: 'Red Hip Hop', name: 'HIP HOP PEÑA', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 28450000, events: [{ name: 'Encuentros Formativos', type: 'FORMACIÓN', ben: 100 }, { name: 'Cali Ciudad Hip Hop', type: 'PUBLICO', ben: 2000 }] },
-            { network: 'Red Hip Hop', name: 'PAZ Y TERRITORIO', city: 'Ibagué', lat: 4.438, lng: -75.232, contribution: 57000000, events: [{ name: 'Sesiones Formativas', type: 'FORMACIÓN', ben: 100 }, { name: 'Ibagué Hip Hop Fest', type: 'PUBLICO', ben: 2000 }] },
-            { network: 'Red Hip Hop', name: 'CASA KOLACHO', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 57000000, events: [{ name: 'Manifiesto Fest', type: 'PUBLICO', ben: 4000 }, { name: 'Talleres Hip Hop Vida', type: 'FORMACIÓN', ben: 80 }] },
-            { network: 'Red Hip Hop', name: 'RAPJUDESCO', city: 'Bogotá', lat: 4.711, lng: -74.072, events: [{ name: 'Rap Literario', type: 'FORMACIÓN', ben: 30 }, { name: 'Producción Musical', type: 'FORMACIÓN', ben: 30 }, { name: 'Académico Festival', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Rap Judesco', type: 'PUBLICO', ben: 4000 }] },
-            { network: 'Red Hip Hop', name: 'EL CIRCULO HIP HOP', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 57000000, events: [{ name: 'Talleres Formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Lil Concep', type: 'PUBLICO', ben: 1000 }] },
+            { network: 'Red Hip Hop', name: 'PAZ Y TERRITORIO', city: 'Ibagué', lat: 4.438, lng: -75.232, contribution: 28450000, events: [{ name: 'Sesiones Formativas', type: 'FORMACIÓN', ben: 100 }, { name: 'Ibagué Hip Hop Fest', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'CASA KOLACHO', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 28450000, events: [{ name: 'Manifiesto Fest', type: 'PUBLICO', ben: 4000 }, { name: 'Talleres Hip Hop Vida', type: 'FORMACIÓN', ben: 80 }] },
+            { network: 'Red Hip Hop', name: 'RAPJUDESCO', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 28450000, events: [{ name: 'Rap Literario', type: 'FORMACIÓN', ben: 30 }, { name: 'Producción Musical', type: 'FORMACIÓN', ben: 30 }, { name: 'Académico Festival', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Rap Judesco', type: 'PUBLICO', ben: 4000 }] },
+            { network: 'Red Hip Hop', name: 'EL CIRCULO HIP HOP', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 28450000, events: [{ name: 'Talleres Formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Lil Concep', type: 'PUBLICO', ben: 1000 }] },
             { network: 'Red Hip Hop', name: 'TURA HIP HOP', city: 'Buenaventura', lat: 3.877, lng: -77.025, contribution: 28450000, events: [{ name: 'Composición Lírica', type: 'FORMACIÓN', ben: 100 }] },
-            { network: 'Red Hip Hop', name: 'CASA DEL BARDO', city: 'Medellín', lat: 6.244, lng: -75.574, events: [{ name: 'Proceso Formación', type: 'FORMACIÓN', ben: 30 }, { name: 'Circulación Artistas', type: 'CIRCULACIÓN', ben: 100 }] },
-            { network: 'Red Hip Hop', name: 'MONTAÑA RECORDS', city: 'Ocaña', lat: 8.237, lng: -73.355, events: [{ name: 'Talleres y Sistematización', type: 'FORMACIÓN', ben: 100 }, { name: 'Hip Hop Campesino', type: 'PUBLICO', ben: 1000 }] },
-            { network: 'Red Hip Hop', name: 'HIP HOP POR LA VIDA', city: 'Manizales', lat: 5.068, lng: -75.517, events: [{ name: 'Talleres Creación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Hip Hop', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'CASA DEL BARDO', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 28450000, events: [{ name: 'Proceso Formación', type: 'FORMACIÓN', ben: 30 }, { name: 'Circulación Artistas', type: 'CIRCULACIÓN', ben: 100 }] },
+            { network: 'Red Hip Hop', name: 'MONTAÑA RECORDS', city: 'Ocaña', lat: 8.237, lng: -73.355, contribution: 28450000, events: [{ name: 'Talleres y Sistematización', type: 'FORMACIÓN', ben: 100 }, { name: 'Hip Hop Campesino', type: 'PUBLICO', ben: 1000 }] },
+            { network: 'Red Hip Hop', name: 'HIP HOP POR LA VIDA', city: 'Manizales', lat: 5.068, lng: -75.517, contribution: 28450000, events: [{ name: 'Talleres Creación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Hip Hop', type: 'PUBLICO', ben: 2000 }] },
             { network: 'Red Hip Hop', name: 'EXPRESION TEJIDA', city: 'Cartagena', lat: 10.393, lng: -75.482, contribution: 28450000, events: [{ name: 'Formación Integral', type: 'FORMACIÓN', ben: 100 }, { name: 'Encuentro Nacional', type: 'PUBLICO', ben: 500 }] },
-            { network: 'Red Hip Hop', name: 'HIP HOP IPIALES', city: 'Ipiales', lat: 0.828, lng: -77.641, events: [{ name: 'Formación Hip Hop', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Binacional', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'HIP HOP IPIALES', city: 'Ipiales', lat: 0.828, lng: -77.641, contribution: 28450000, events: [{ name: 'Formación Hip Hop', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Binacional', type: 'PUBLICO', ben: 2000 }] },
             { network: 'Red Hip Hop', name: 'CASA BEAT', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 28450000, events: [{ name: 'Talleres Formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Cali Beat', type: 'PUBLICO', ben: 3000 }] },
             { network: 'Red Hip Hop', name: 'CASITA DE COLORES', city: 'San Juan de Arama', lat: 3.370, lng: -73.870, contribution: 28450000, events: [{ name: 'Experiencias Pedagógicas', type: 'FORMACIÓN', ben: 500 }, { name: 'Festival Georgina Ortiz', type: 'PUBLICO', ben: 1000 }] },
             { network: 'Red Hip Hop', name: 'POR NUESTRA TIERRA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 28450000, events: [{ name: 'Fortalecimiento Espacios', type: 'FORMACIÓN', ben: 200 }, { name: 'Festival COMPAS', type: 'PUBLICO', ben: 2000 }] },
@@ -469,10 +509,10 @@
             { network: 'Organizaciones Emergentes', name: 'Transformación Social', city: 'Barrancabermeja', lat: 7.065, lng: -73.854, contribution: 40000000, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
             { network: 'Organizaciones Emergentes', name: 'Esquina del Barrio', city: 'Ibagué', lat: 4.439, lng: -75.232, contribution: 30000000, events: [{ name: 'Música y Danza', type: 'CIRCULACIÓN' }] },
             { network: 'Organizaciones Emergentes', name: 'Víctimas Santiago', city: 'Ataco', lat: 3.581, lng: -75.390, contribution: 50000000, events: [{ name: 'Actividad Cultural', type: 'CIRCULACIÓN' }] },
-            { network: 'Organizaciones Emergentes', name: 'Centro Periferia', city: 'Bogotá', lat: 4.711, lng: -74.072, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Centro Periferia', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 128800650, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
 
             // --- CIRCULACIÓN NACIONAL E INTERNACIONAL ---
-            { network: 'Circulación Nacional e Internacional', name: 'FUNDACION MUJERES INDEPENDIENTES', city: 'Gutierrez', lat: 5.862, lng: -76.054, contribution: 20000000, events: [{ name: 'Festival Internacional Música', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'FUNDACION MUJERES INDEPENDIENTES', city: 'Gutiérrez', lat: 4.253, lng: -74.000, contribution: 20000000, events: [{ name: 'Festival Internacional Música', type: 'CIRCULACIÓN' }] },
             { network: 'Circulación Nacional e Internacional', name: 'MONICA ÁVILA BALLESTEROS', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 12327319, events: [{ name: 'Grupo Coral Perlas', type: 'CIRCULACIÓN' }] },
             { network: 'Circulación Nacional e Internacional', name: 'CORPORACION L&M (Gira)', city: 'Paipa', lat: 5.783, lng: -73.117, contribution: 70000000, events: [{ name: 'Festival Folclore Bulgaria', type: 'CIRCULACIÓN' }] },
             { network: 'Circulación Nacional e Internacional', name: 'PAULA ANDREA ARELLANO', city: 'Colombia', lat: 4.570, lng: -74.297, contribution: 10260632, events: [{ name: 'Circulación Ballet', type: 'CIRCULACIÓN' }] },
@@ -504,6 +544,177 @@
             { network: 'Circulación Nacional e Internacional', name: 'Lanzamiento Istmina', city: 'Istmina', lat: 5.160, lng: -76.683, contribution: 3200000, events: [{ name: 'Lanzamiento Artes para la Paz', type: 'CIRCULACIÓN' }] }
         ];
 
+        // Conteos y listados territoriales (según matriz de Regionalización de inversión 04-12-2025)
+        // Ajustes solicitados:
+        // - Bogotá D.C. se integra a Cundinamarca (no cuenta como departamento)
+        // - Se excluyen ARAUCA, CASANARE y VAUPÉS (sin ejecución del programa)
+        const regionalizationImpactCounts = { municipalities: 112, departments: 29 };
+
+        const regionalizationImpactLists = {
+            departments: ["AMAZONAS", "ANTIOQUIA", "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "ATLÁNTICO", "BOLÍVAR", "BOYACÁ", "CALDAS", "CAQUETÁ", "CAUCA", "CESAR", "CHOCÓ", "CUNDINAMARCA", "CÓRDOBA", "GUAINÍA", "GUAVIARE", "HUILA", "LA GUAJIRA", "MAGDALENA", "META", "NARIÑO", "NORTE DE SANTANDER", "PUTUMAYO", "QUINDÍO", "RISARALDA", "SANTANDER", "SUCRE", "TOLIMA", "VALLE DEL CAUCA", "VICHADA"],
+            municipalitiesAndCities: ["ARACATACA — MAGDALENA", "ARMENIA — QUINDÍO", "ARMERO — TOLIMA", "BAGADÓ — CHOCÓ", "BARICHARA — SANTANDER", "BARRANCABERMEJA — SANTANDER", "BARRANQUILLA — ATLÁNTICO", "BELLO — ANTIOQUIA", "BOGOTÁ, D.C. — CUNDINAMARCA", "BUCARAMANGA — SANTANDER", "BUENAVENTURA — VALLE DEL CAUCA", "CAJICÁ — CUNDINAMARCA", "CALDAS — ANTIOQUIA", "CALOTO — CAUCA", "CAREPA — ANTIOQUIA", "CARMEN DEL DARIÉN — CHOCÓ", "CARTAGENA DE INDIAS — BOLÍVAR", "CERETÉ — CÓRDOBA", "CHIGORODÓ — ANTIOQUIA", "CHIRIGUANÁ — CESAR", "CHÍA — CUNDINAMARCA", "CONDOTO — CHOCÓ", "COROZAL — SUCRE", "DABEIBA — ANTIOQUIA", "DUITAMA — BOYACÁ", "EL BANCO — MAGDALENA", "EL RETORNO — GUAVIARE", "ENVIGADO — ANTIOQUIA", "FLORIDA — VALLE DEL CAUCA", "FUNDACIÓN — MAGDALENA", "FUNZA — CUNDINAMARCA", "GALAPA — ATLÁNTICO", "GIRARDOTA — ANTIOQUIA", "GUADALAJARA DE BUGA — VALLE DEL CAUCA", "GUTIÉRREZ — CUNDINAMARCA", "GÉNOVA — QUINDÍO", "IBAGUÉ — TOLIMA", "INÍRIDA — GUAINÍA", "IPIALES — NARIÑO", "ISTMINA — CHOCÓ", "JAMUNDÍ — VALLE DEL CAUCA", "LA BELLEZA — SANTANDER", "LA MONTAÑITA — CAQUETÁ", "LETICIA — AMAZONAS", "LURUACO — ATLÁNTICO", "LÉRIDA — TOLIMA", "MAHATES — BOLÍVAR", "MAICAO — LA GUAJIRA", "MANIZALES — CALDAS", "MEDELLÍN — ANTIOQUIA", "MEDIO BAUDÓ — CHOCÓ", "MOCOA — PUTUMAYO", "MONTELÍBANO — CÓRDOBA", "MONTERÍA — CÓRDOBA", "NECOCLÍ — ANTIOQUIA", "OCAÑA — NORTE DE SANTANDER", "PAIPA — BOYACÁ", "PASTO — NARIÑO", "PEREIRA — RISARALDA", "PEÑOL — ANTIOQUIA", "PIEDECUESTA — SANTANDER", "PINCHOTE — SANTANDER", "PITALITO — HUILA", "POPAYÁN — CAUCA", "PROVIDENCIA — ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "PUEBLO BELLO — CESAR", "PUERTO ASÍS — PUTUMAYO", "PUERTO CARREÑO — VICHADA", "PUERTO COLOMBIA — ATLÁNTICO", "PUERTO LÓPEZ — META", "PUERTO NARIÑO — AMAZONAS", "QUIBDÓ — CHOCÓ", "RIOHACHA — LA GUAJIRA", "RIOSUCIO — CALDAS", "RIVERA — HUILA", "RÍO IRÓ — CHOCÓ", "SABANETA — ANTIOQUIA", "SAMANIEGO — NARIÑO", "SAN ANDRÉS DE TUMACO — NARIÑO", "SAN ANDRÉS — ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "SAN CARLOS — ANTIOQUIA", "SAN JACINTO — BOLÍVAR", "SAN JOSÉ DE CÚCUTA — NORTE DE SANTANDER", "SAN JOSÉ DEL GUAVIARE — GUAVIARE", "SAN JUAN DE ARAMA — META", "SAN JUAN DE URABÁ — ANTIOQUIA", "SAN PELAYO — CÓRDOBA", "SAN VICENTE DE CHUCURÍ — SANTANDER", "SANTA MARTA — MAGDALENA", "SANTIAGO DE CALI — VALLE DEL CAUCA", "SEVILLA — VALLE DEL CAUCA", "SIBUNDOY — PUTUMAYO", "SOACHA — CUNDINAMARCA", "SOGAMOSO — BOYACÁ", "SONSÓN — ANTIOQUIA", "SOPÓ — CUNDINAMARCA", "SUESCA — CUNDINAMARCA", "TOCANCIPÁ — CUNDINAMARCA", "TULUÁ — VALLE DEL CAUCA", "TUNJA — BOYACÁ", "TURBACO — BOLÍVAR", "VALLEDUPAR — CESAR", "VILLA DE LEYVA — BOYACÁ", "VILLA DEL ROSARIO — NORTE DE SANTANDER", "VILLANUEVA — LA GUAJIRA", "VILLANUEVA — SANTANDER", "VILLAPINZÓN — CUNDINAMARCA", "VILLAVICENCIO — META", "VISTAHERMOSA — META", "VITERBO — CALDAS", "YACOPÍ — CUNDINAMARCA", "YUMBO — VALLE DEL CAUCA"]
+        };
+
+        // Total de inversión del grupo operativo (pagos de equipo) según SEMÁFORO.csv
+        // Filas (ACTIVIDAD):
+        // - CESAR AUGUSTO RUBIO JIMENEZ: 48.000.000
+        // - JOHN FREDDY ARÉVALO NIAMPIRA DONATELLO: 39.000.000
+        // - FELIPE CAMACHO OTERO: 31.500.000
+        // - ANGIE MORA: 30.000.000
+        // - MERCY TATIANA ARIAS: 15.000.000
+        const operationalTeamInvestment = 163500000;
+
+        // Total de gastos operativos del convenio (cifra oficial)
+        const operationalCostsInvestment = 426439431;
+
+        // Total de inversión del convenio (cifra oficial)
+        const totalAgreementInvestment = 6518431307;
+
+        const normalizeKey = (value) => (value || '').toString().trim().toLowerCase();
+
+        const cityToDepartment = {
+            // Para conteos departamentales del informe, Bogotá se integra a Cundinamarca (según solicitud)
+            'bogotá': 'Cundinamarca',
+            'bogota': 'Cundinamarca',
+            'cali': 'Valle del Cauca',
+            'medellín': 'Antioquia',
+            'medellin': 'Antioquia',
+            'san josé del guaviare': 'Guaviare',
+            'san jose del guaviare': 'Guaviare',
+            'ibagué': 'Tolima',
+            'ibague': 'Tolima',
+            'manizales': 'Caldas',
+            'viterbo': 'Caldas',
+            'chía': 'Cundinamarca',
+            'chia': 'Cundinamarca',
+            'tocancipá': 'Cundinamarca',
+            'tocancipa': 'Cundinamarca',
+            'sopó': 'Cundinamarca',
+            'sopo': 'Cundinamarca',
+            'suesca': 'Cundinamarca',
+            'soacha': 'Cundinamarca',
+            'yacopí': 'Cundinamarca',
+            'yacopi': 'Cundinamarca',
+            'gutiérrez': 'Cundinamarca',
+            'gutierrez': 'Cundinamarca',
+            'santa marta': 'Magdalena',
+            'aracataca': 'Magdalena',
+            'fundación': 'Magdalena',
+            'fundacion': 'Magdalena',
+            'el plato': 'Magdalena',
+            'cúcuta': 'Norte de Santander',
+            'cucuta': 'Norte de Santander',
+            'ocaña': 'Norte de Santander',
+            'ocana': 'Norte de Santander',
+            'pasto': 'Nariño',
+            'ipiales': 'Nariño',
+            'samaniego': 'Nariño',
+            'tumaco': 'Nariño',
+            'quibdó': 'Chocó',
+            'quibdo': 'Chocó',
+            'istmina': 'Chocó',
+            'río iró': 'Chocó',
+            'rio iró': 'Chocó',
+            'rio iro': 'Chocó',
+            'apartadó': 'Antioquia',
+            'apartado': 'Antioquia',
+            'mutatá': 'Antioquia',
+            'mutata': 'Antioquia',
+            'san juan de urabá': 'Antioquia',
+            'san juan de uraba': 'Antioquia',
+            'buenaventura': 'Valle del Cauca',
+            'buga': 'Valle del Cauca',
+            'cartagena': 'Bolívar',
+            'san basilio': 'Bolívar',
+            'palenque': 'Bolívar',
+            'san pelayo': 'Córdoba',
+            'corozal': 'Sucre',
+            'riohacha': 'La Guajira',
+            'villanueva': 'La Guajira',
+            'valledupar': 'Cesar',
+            'piedecuesta': 'Santander',
+            'barichara': 'Santander',
+            'barrancabermeja': 'Santander',
+            'la belleza': 'Santander',
+            'pitatilo': 'Huila',
+            'pitalito': 'Huila',
+            'pereira': 'Risaralda',
+            'armenia': 'Quindío',
+            'sibundoy': 'Putumayo',
+            'san juan de arama': 'Meta',
+            'armero guayabal': 'Tolima',
+            'ataco': 'Tolima',
+            'florencia': 'Caquetá',
+            'luruaco': 'Atlántico',
+            'puerto colombia': 'Atlántico',
+            'san andrés': 'San Andrés y Providencia',
+            'san andres': 'San Andrés y Providencia',
+            'inírida': 'Guainía',
+            'inirida': 'Guainía',
+            'puerto nariño': 'Amazonas',
+            'sogamoso': 'Boyacá',
+            'paipa': 'Boyacá',
+            'suesca': 'Cundinamarca',
+            'tijuana': 'Internacional',
+            'londres': 'Internacional',
+            'brasil': 'Internacional',
+            'colombia': null,
+            'amazonas': 'Amazonas'
+        };
+
+        const getDepartment = (org) => {
+            const key = normalizeKey(org?.city);
+            return cityToDepartment.hasOwnProperty(key) ? cityToDepartment[key] : null;
+        };
+
+        const isColombian = (org) => {
+            const dept = getDepartment(org);
+            if (dept && dept !== 'Internacional') return true;
+            if (typeof org?.lat === 'number' && typeof org?.lng === 'number') {
+                return org.lat >= -4.5 && org.lat <= 13.5 && org.lng >= -79.5 && org.lng <= -66.5;
+            }
+            return false;
+        };
+
+        const getMunicipalityName = (org) => {
+            if (!isColombian(org)) return null;
+            const city = (org?.city || '').toString().trim();
+            if (!city) return null;
+            const key = normalizeKey(city);
+            if (key === 'colombia' || key === 'amazonas') return null;
+            if (key === 'san basilio' || key === 'palenque') return 'San Basilio de Palenque';
+            return city;
+        };
+
+        const hasFinePointer = () => {
+            try {
+                return window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+            } catch {
+                return false;
+            }
+        };
+
+        const isLandscapeLayout = () => window.innerWidth > window.innerHeight;
+        const isWideLayout = () => window.innerWidth >= 768;
+
+        const validateDataOnce = () => {
+            const missingContribution = [];
+            const missingLatLng = [];
+            const missingDepartment = [];
+
+            organizations.forEach((org) => {
+                if (typeof org.contribution !== 'number') missingContribution.push(org.name);
+                if (typeof org.lat !== 'number' || typeof org.lng !== 'number') missingLatLng.push(org.name);
+                if (isColombian(org) && !getDepartment(org) && normalizeKey(org.city) !== 'amazonas') {
+                    missingDepartment.push(`${org.city} :: ${org.name}`);
+                }
+            });
+
+            if (missingContribution.length) console.warn('[DATA] Organizaciones sin contribution numérica:', missingContribution);
+            if (missingLatLng.length) console.warn('[DATA] Organizaciones sin lat/lng:', missingLatLng);
+            if (missingDepartment.length) console.warn('[DATA] Ciudades sin departamento mapeado:', missingDepartment);
+        };
+
         // 2. CONFIGURACIÓN LEAFLET
         const map = L.map('map', { 
             zoomControl: false,
@@ -512,6 +723,14 @@
             tap: !L.Browser.mobile
         }).setView([4.5709, -74.2973], 6);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        const shouldEnableWheelZoom = () => hasFinePointer() && isWideLayout() && isLandscapeLayout();
+        const syncMapWheelZoom = () => {
+            if (shouldEnableWheelZoom()) map.scrollWheelZoom.enable();
+            else map.scrollWheelZoom.disable();
+        };
+        syncMapWheelZoom();
+        window.addEventListener('resize', syncMapWheelZoom);
 
         // Capa Estilo "Claro"
         L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -566,6 +785,21 @@
         let chartInvestment = null;
         let chartRegion = null;
 
+        const isOperationalTeamRecord = (org) => {
+            const name = (org && org.name ? String(org.name) : '').toLowerCase();
+            return (
+                name.includes('cesar augusto rubio') ||
+                name.includes('john freddy') ||
+                name.includes('donatello') ||
+                name.includes('felipe camacho') ||
+                name.includes('angie mora') ||
+                name.includes('mercy tatiana arias') ||
+                name.includes('jeimy') ||
+                name.includes('jeimmy') ||
+                name.includes('jaime')
+            );
+        };
+
         function renderMarkers(filterText = '', activeTypes = ['formacion','circulacion','publico'], activeNetworks = []) {
             markers.clearLayers();
             let totalBen = 0;
@@ -573,6 +807,9 @@
             let filteredOrgs = [];
 
             organizations.forEach(org => {
+                // Excluir rubros del equipo (personas) del mapa y de la suma de inversión por organizaciones
+                if (isOperationalTeamRecord(org)) return;
+
                 // Filtro Texto
                 const matchText = filterText === '' || 
                                   org.name.toLowerCase().includes(filterText.toLowerCase()) || 
@@ -647,7 +884,12 @@
             
             map.addLayer(markers);
             document.getElementById('total-ben-count').innerText = totalBen.toLocaleString();
-            document.getElementById('total-contribution-count').innerText = '$' + totalContribution.toLocaleString('es-CO');
+            document.getElementById('total-operational-count').innerText = '$' + operationalTeamInvestment.toLocaleString('es-CO');
+            document.getElementById('total-operational-costs-count').innerText = '$' + operationalCostsInvestment.toLocaleString('es-CO');
+            document.getElementById('total-contribution-count').innerText = '$' + (totalContribution + operationalTeamInvestment + operationalCostsInvestment).toLocaleString('es-CO');
+
+            document.getElementById('total-muni-count').innerText = regionalizationImpactCounts.municipalities.toLocaleString('es-CO');
+            document.getElementById('total-dept-count').innerText = regionalizationImpactCounts.departments.toLocaleString('es-CO');
             
             updateCharts(filteredOrgs, totalBen, totalContribution);
         }
@@ -673,8 +915,8 @@
         function updateCharts(data, totalBen, totalContribution) {
             // Stats Cards
             document.getElementById('stat-orgs').innerText = data.length;
-            const uniqueCities = [...new Set(data.map(o => o.city))].length;
-            document.getElementById('stat-cities').innerText = uniqueCities;
+            // Municipios impactados según la matriz de regionalización (no depende de la sede de la organización)
+            document.getElementById('stat-cities').innerText = regionalizationImpactCounts.municipalities;
             const totalEvents = data.reduce((acc, curr) => acc + (curr.events ? curr.events.length : 0), 0);
             document.getElementById('stat-events').innerText = totalEvents;
             const avg = data.length > 0 ? Math.round(totalContribution / data.length) : 0;
@@ -723,18 +965,34 @@
                 }
             });
 
-            // Chart 2: Capitals vs Regions
+            // Chart 2: Capitales principales vs otras capitales vs municipios
+            const normalizeText = (s) => (s || '')
+                .toString()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase();
+
+            const majorCapitals = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Santa Marta', 'Cartagena', 'Bucaramanga'];
             const capitals = ['Bogotá', 'Cali', 'Medellín', 'Barranquilla', 'Santa Marta', 'Cartagena', 'Cúcuta', 'Pereira', 'Manizales', 'Ibagué', 'Bucaramanga', 'Pasto', 'Villavicencio', 'Neiva', 'Armenia', 'Popayán', 'Valledupar', 'Montería', 'Sincelejo', 'Riohacha', 'Tunja', 'Florencia', 'Quibdó', 'San Andrés', 'Leticia', 'Inírida', 'San José del Guaviare', 'Mocoa', 'Puerto Carreño', 'Mitú', 'Arauca', 'Yopal'];
-            
-            let capInv = 0;
-            let regInv = 0;
-            
+
+            const majorCapitalsNorm = majorCapitals.map(normalizeText);
+            const otherCapitalsNorm = capitals
+                .filter((c) => !majorCapitals.includes(c))
+                .map(normalizeText);
+
+            let majorCapInv = 0;
+            let otherCapInv = 0;
+            let muniInv = 0;
+
             data.forEach(o => {
-                const isCapital = capitals.some(c => o.city.includes(c));
-                if(o.contribution) {
-                    if(isCapital) capInv += o.contribution;
-                    else regInv += o.contribution;
-                }
+                if(!o.contribution) return;
+                const cityNorm = normalizeText(o.city);
+                const isMajorCapital = majorCapitalsNorm.some(c => cityNorm.includes(c));
+                const isOtherCapital = otherCapitalsNorm.some(c => cityNorm.includes(c));
+
+                if (isMajorCapital) majorCapInv += o.contribution;
+                else if (isOtherCapital) otherCapInv += o.contribution;
+                else muniInv += o.contribution;
             });
 
             const ctxReg = document.getElementById('chart-region').getContext('2d');
@@ -743,11 +1001,11 @@
             chartRegion = new Chart(ctxReg, {
                 type: 'bar',
                 data: {
-                    labels: ['Capitales', 'Municipios / Regiones'],
+                    labels: ['7 capitales principales', 'Otras capitales', 'Municipios'],
                     datasets: [{
                         label: 'Inversión (COP)',
-                        data: [capInv, regInv],
-                        backgroundColor: ['#1A1A3A', '#886FFF'],
+                        data: [majorCapInv, otherCapInv, muniInv],
+                        backgroundColor: ['#1A1A3A', '#886FFF', '#5BC6FB'],
                         borderRadius: 5
                     }]
                 },
@@ -787,6 +1045,107 @@
         window.toggleFilters = () => {
             mapControls.classList.add('hidden');
         };
+
+        const escapeHtml = (value) => {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        };
+
+        let impactListsRendered = false;
+
+        const renderImpactListsOnce = () => {
+            if (impactListsRendered) return;
+
+            const muniUl = document.getElementById('impact-muni-list');
+            const deptUl = document.getElementById('impact-dept-list');
+
+            if (muniUl) {
+                muniUl.innerHTML = regionalizationImpactLists.municipalitiesAndCities
+                    .map((item) => `<li class="text-gray-700">${escapeHtml(item)}</li>`)
+                    .join('');
+            }
+
+            if (deptUl) {
+                deptUl.innerHTML = regionalizationImpactLists.departments
+                    .map((item) => `<li class="text-gray-700">${escapeHtml(item)}</li>`)
+                    .join('');
+            }
+
+            // Internacional (se muestra separado y no cuenta como departamento)
+            const intlMap = {
+                'tijuana': 'Tijuana (México)',
+                'londres': 'Londres (Reino Unido)',
+                'brasil': 'Brasil'
+            };
+            const intlList = [...new Set(
+                organizations
+                    .filter((org) => getDepartment(org) === 'Internacional')
+                    .map((org) => intlMap[normalizeKey(org.city)] || org.city)
+                    .filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b, 'es'));
+
+            const intlTarget = document.getElementById('impact-international');
+            if (intlTarget) {
+                intlTarget.textContent = intlList.length ? intlList.join(' · ') : 'Sin registros.';
+            }
+
+            impactListsRendered = true;
+        };
+
+        window.closeImpactLists = () => {
+            document.getElementById('impact-lists')?.classList.add('hidden');
+            document.getElementById('impact-muni-panel')?.classList.add('hidden');
+            document.getElementById('impact-dept-panel')?.classList.add('hidden');
+
+            const container = document.getElementById('impact-lists');
+            if (container) container.onclick = null;
+        };
+
+        const shouldCloseImpactListsOnContainerClick = () => hasFinePointer() && isWideLayout() && isLandscapeLayout();
+        const syncImpactListCloseBehavior = () => {
+            const container = document.getElementById('impact-lists');
+            if (!container) return;
+            if (container.classList.contains('hidden')) {
+                container.onclick = null;
+                return;
+            }
+
+            // En pantallas horizontales (desktop), se puede cerrar haciendo clic en el \u00e1rea del listado.
+            // En m\u00f3vil/vertical, se evita ese comportamiento para poder recorrer el listado sin cierres accidentales.
+            if (shouldCloseImpactListsOnContainerClick()) {
+                container.onclick = () => window.closeImpactLists && window.closeImpactLists();
+            } else {
+                container.onclick = null;
+            }
+        };
+
+        window.toggleImpactList = (kind) => {
+            renderImpactListsOnce();
+
+            const container = document.getElementById('impact-lists');
+            const muniPanel = document.getElementById('impact-muni-panel');
+            const deptPanel = document.getElementById('impact-dept-panel');
+            if (!container || !muniPanel || !deptPanel) return;
+
+            container.classList.remove('hidden');
+            if (kind === 'muni') {
+                muniPanel.classList.remove('hidden');
+                deptPanel.classList.add('hidden');
+            } else {
+                deptPanel.classList.remove('hidden');
+                muniPanel.classList.add('hidden');
+            }
+
+            syncImpactListCloseBehavior();
+        };
+
+        window.addEventListener('resize', () => {
+            syncImpactListCloseBehavior();
+        });
 
         // Generar Filtros de Red
         const nets = [...new Set(organizations.map(o => o.network))];
@@ -870,6 +1229,8 @@
                 updateAll();
             }
         };
+
+        validateDataOnce();
 
         // Initial Render
         renderMarkers('', ['formacion','circulacion','publico'], nets);
