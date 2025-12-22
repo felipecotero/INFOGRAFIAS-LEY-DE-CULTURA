@@ -177,7 +177,7 @@
             </h1>
             
             <p class="text-lg font-light text-gray-300 max-w-4xl mx-auto">
-                <span id="total-processes-count">91</span> procesos fortalecidos. Un ecosistema de <strong class="text-palette-lightblue">trabajo colectivo y organización social</strong> para las artes, las culturas y los saberes de base comunitaria.
+                <span id="total-processes-count">150</span> procesos fortalecidos. Un ecosistema de <strong class="text-palette-lightblue">trabajo colectivo y organización social</strong> para las artes, las culturas y los saberes de base comunitaria.
             </p>
         </div>
     </header>
@@ -203,9 +203,23 @@
                         <div class="text-lg md:text-xl font-black text-palette-dark leading-none" id="total-ben-count">0</div>
                         <div class="text-[8px] md:text-[9px] uppercase opacity-60 font-bold mt-1 leading-tight">Beneficiarios</div>
                     </div>
-                    <div id="muni-card" onclick="toggleImpactList('muni')" class="bg-gray-50 border border-gray-200 p-2 px-3 rounded-xl text-center shadow-sm flex flex-col justify-center cursor-pointer select-none md:w-28 hover:bg-gray-100 transition-colors">
-                        <div class="text-lg md:text-xl font-black text-palette-dark leading-none" id="total-muni-count">0</div>
-                        <div class="text-[8px] md:text-[9px] uppercase opacity-60 font-bold mt-1 leading-tight">Entidades territoriales</div>
+                    <div id="muni-card" onclick="toggleImpactList('muni')" class="bg-gray-50 border border-gray-200 p-2 px-3 rounded-xl text-center shadow-sm flex flex-col justify-center cursor-pointer select-none md:w-auto min-w-[100px] hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="text-center">
+                                <div class="text-lg md:text-xl font-black text-palette-dark leading-none" id="total-dept-display">30</div>
+                                <div class="text-[7px] md:text-[8px] uppercase opacity-60 font-bold mt-1 leading-tight">Dptos.</div>
+                            </div>
+                            <div class="text-palette-dark opacity-40">|</div>
+                            <div class="text-center">
+                                <div class="text-lg md:text-xl font-black text-palette-dark leading-none" id="total-muni-count">112</div>
+                                <div class="text-[7px] md:text-[8px] uppercase opacity-60 font-bold mt-1 leading-tight">Mpios.</div>
+                            </div>
+                        </div>
+                        <div class="text-[8px] md:text-[9px] uppercase opacity-60 font-bold mt-1 leading-tight">Territorios alcanzados</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-palette-blue to-palette-purple text-white p-2 px-3 rounded-xl text-center shadow-sm flex flex-col justify-center md:w-28">
+                        <div class="text-lg md:text-xl font-black leading-none">105</div>
+                        <div class="text-[8px] md:text-[9px] uppercase opacity-80 font-bold mt-1 leading-tight">Org. de base fortalecidas</div>
                     </div>
                     <div id="dept-card" class="bg-gray-50 border border-gray-200 p-2 px-3 rounded-xl text-center shadow-sm flex flex-col justify-center md:w-28">
                         <div class="text-lg md:text-xl font-black text-palette-dark leading-none" id="total-dept-count">0</div>
@@ -226,14 +240,22 @@
                 </div>
             </div>
 
-            <!-- LISTADOS (se despliegan al hacer clic en Entidades territoriales) -->
+            <!-- LISTADOS (se despliegan al hacer clic en Territorios alcanzados) -->
             <div id="impact-lists" class="hidden mt-2 bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs">
                 <div class="flex items-start justify-between gap-2">
                     <div class="font-bold text-palette-dark">Listado de cobertura territorial</div>
                     <button type="button" onclick="closeImpactLists()" class="text-gray-500 hover:text-gray-700">Cerrar</button>
                 </div>
                 <div id="impact-muni-panel" class="hidden mt-3">
-                    <div class="font-bold text-palette-dark mb-2">Entidades territoriales</div>
+                    <!-- Departamentos -->
+                    <div class="font-bold text-palette-dark mb-2">Departamentos (30)</div>
+                    <div class="bg-white rounded-lg border border-gray-200 p-2 mb-4">
+                        <div class="max-h-40 overflow-y-auto pr-1">
+                            <ul id="impact-dept-list" class="space-y-1 columns-2 md:columns-3"></ul>
+                        </div>
+                    </div>
+                    <!-- Municipios/Ciudades -->
+                    <div class="font-bold text-palette-dark mb-2">Municipios y Ciudades (112)</div>
                     <div class="bg-white rounded-lg border border-gray-200 p-2">
                         <div class="max-h-60 overflow-y-auto pr-1">
                             <ul id="impact-combined-list" class="space-y-1"></ul>
@@ -323,15 +345,18 @@
             </div>
         </section>
 
-        <!-- 4. LO QUE PROPONEMOS -->
+        <!-- 4. LO QUE PROPONEMOS (COLAPSABLE) -->
         <section>
-            <div class="flex items-center gap-4 mb-8">
+            <div class="flex items-center gap-4 mb-8 cursor-pointer" onclick="toggleProponemos()">
                 <div class="h-px bg-palette-dark flex-1 opacity-20"></div>
-                <h2 class="text-3xl font-black text-palette-dark uppercase text-center">Lo que proponemos entonces...</h2>
+                <h2 class="text-3xl font-black text-palette-dark uppercase text-center flex items-center gap-3">
+                    Lo que proponemos entonces...
+                    <i id="proponemos-icon" class="fas fa-chevron-down text-xl transition-transform duration-300"></i>
+                </h2>
                 <div class="h-px bg-palette-dark flex-1 opacity-20"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8">
+            <div id="proponemos-content" class="grid md:grid-cols-2 gap-8 transition-all duration-500 overflow-hidden">
                 <!-- PREGUNTA 1: LA PERSPECTIVA -->
                 <div class="glass-dark rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 bg-palette-pink w-32 h-32 rounded-bl-[100%] opacity-20 transition-all group-hover:scale-110"></div>
@@ -411,25 +436,53 @@
             </div>
         </section>
 
+        <script>
+        function toggleProponemos() {
+            const content = document.getElementById('proponemos-content');
+            const icon = document.getElementById('proponemos-icon');
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+        // Inicializar colapsado
+        document.addEventListener('DOMContentLoaded', function() {
+            const content = document.getElementById('proponemos-content');
+            if (content) {
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                document.getElementById('proponemos-icon').style.transform = 'rotate(0deg)';
+            }
+        });
+        </script>
+
     </main>
 
     <!-- FICHA PLATAFORMA PUENTE -->
-    <section class="bg-palette-pink py-10 md:py-16 px-4 md:px-8">
+    <a href="https://www.canva.com/design/DAG8MAjIFG8/weho4u_KkA5rmRxbUlOmCA/edit?utm_content=DAG8MAjIFG8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank" rel="noopener noreferrer" class="block">
+    <section class="bg-palette-pink py-10 md:py-16 px-4 md:px-8 hover:bg-palette-pink/90 transition-colors cursor-pointer">
         <div class="max-w-4xl mx-auto flex flex-col items-center">
             <div class="text-left w-full max-w-[90vw] md:max-w-none">
                 <p class="text-white uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold mb-0 text-[10pt] md:text-[15pt]" style="font-family: 'Montserrat', sans-serif;">PLATAFORMA</p>
                 <h2 class="text-palette-yellow drop-shadow-lg mb-3 md:mb-4 text-[60pt] md:text-[90pt] lg:text-[120pt]" style="font-family: 'LanceAPLP', 'Impact', sans-serif; line-height: 0.9;">Puente</h2>
                 <p class="text-white text-center text-[12pt] md:text-[15pt] leading-relaxed max-w-md md:max-w-none" style="font-family: 'Merriweather Sans', sans-serif;">Plataforma de fortalecimiento y agencia<br class="md:hidden"> de organizaciones en territorio</p>
+                <p class="text-white/80 text-center text-[10pt] md:text-[12pt] mt-4 flex items-center justify-center gap-2" style="font-family: 'Montserrat', sans-serif;"><i class="fas fa-external-link-alt"></i> Ver presentación completa</p>
             </div>
         </div>
     </section>
+    </a>
 
     <footer class="text-center py-8 text-palette-dark opacity-60 text-xs">
         <p>Equipo de Fortalecimiento del Ecosistema Cultural y Comunitario • Diciembre 2025</p>
     </footer>
 
     <!-- DASHBOARD MODAL -->
-    <div id="dashboard-modal" class="fixed inset-0 z-[2000] hidden bg-palette-dark/90 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div id="dashboard-modal" class="fixed inset-0 z-[2000] hidden bg-palette-dark/90 backdrop-blur-sm items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none" style="display: none;">
         <div class="bg-white rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl transform scale-95 transition-transform duration-300">
             <button onclick="toggleDashboard()" class="absolute top-4 right-4 text-palette-dark hover:text-palette-pink text-2xl transition-colors"><i class="fas fa-times"></i></button>
             
@@ -445,22 +498,26 @@
             </div>
             
             <!-- Stats Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                 <div class="bg-palette-pink/10 p-4 rounded-xl text-center border border-palette-pink/20">
-                    <div class="text-2xl font-black text-palette-pink" id="stat-orgs">0</div>
-                    <div class="text-[10px] uppercase font-bold opacity-60">Organizaciones</div>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-8">
+                 <div class="bg-palette-pink/10 p-3 rounded-xl text-center border border-palette-pink/20">
+                    <div class="text-xl md:text-2xl font-black text-palette-pink" id="stat-orgs">105</div>
+                    <div class="text-[9px] md:text-[10px] uppercase font-bold opacity-60">Org. fortalecidas</div>
                  </div>
-                 <div class="bg-palette-blue/10 p-4 rounded-xl text-center border border-palette-blue/20">
-                    <div class="text-2xl font-black text-palette-blue" id="stat-cities">0</div>
-                    <div class="text-[10px] uppercase font-bold opacity-60">Entidades territoriales</div>
+                 <div class="bg-green-100 p-3 rounded-xl text-center border border-green-200">
+                    <div class="text-xl md:text-2xl font-black text-green-600">45</div>
+                    <div class="text-[9px] md:text-[10px] uppercase font-bold opacity-60">Otros apoyos</div>
                  </div>
-                 <div class="bg-palette-yellow/10 p-4 rounded-xl text-center border border-palette-yellow/20">
-                    <div class="text-2xl font-black text-palette-yellow" id="stat-events">0</div>
-                    <div class="text-[10px] uppercase font-bold opacity-60">Eventos</div>
+                 <div class="bg-palette-blue/10 p-3 rounded-xl text-center border border-palette-blue/20">
+                    <div class="text-xl md:text-2xl font-black text-palette-blue" id="stat-cities">0</div>
+                    <div class="text-[9px] md:text-[10px] uppercase font-bold opacity-60">Territorios</div>
                  </div>
-                 <div class="bg-palette-purple/10 p-4 rounded-xl text-center border border-palette-purple/20">
-                    <div class="text-xl font-black text-palette-purple" id="stat-avg">$0</div>
-                          <div class="text-[10px] uppercase font-bold opacity-60" title="Valor total del convenio (cifra fija).">Total convenio (COP)</div>
+                 <div class="bg-palette-yellow/10 p-3 rounded-xl text-center border border-palette-yellow/20">
+                    <div class="text-xl md:text-2xl font-black text-palette-yellow" id="stat-events">0</div>
+                    <div class="text-[9px] md:text-[10px] uppercase font-bold opacity-60">Eventos</div>
+                 </div>
+                 <div class="bg-palette-purple/10 p-3 rounded-xl text-center border border-palette-purple/20 col-span-2 md:col-span-1">
+                    <div class="text-sm md:text-base font-black text-palette-purple truncate" id="stat-avg">$0</div>
+                    <div class="text-[9px] md:text-[10px] uppercase font-bold opacity-60" title="Valor total del convenio (cifra fija).">Total convenio</div>
                  </div>
             </div>
         </div>
@@ -794,6 +851,7 @@
             { network: 'Red de mujeres artistas y gestoras REMAG', name: 'Fundación el hogar de tota', city: 'Montería', lat: 8.755, lng: -75.887, contribution: 20000000, events: [{ name: 'Cadenas de Libertad', type: 'CIRCULACIÓN' }] },
             { network: 'Red de mujeres artistas y gestoras REMAG', name: 'asociacion de mujeres casa del sembrador', city: 'Arauca', lat: 7.084, lng: -70.759, contribution: 20000000, events: [{ name: 'Retazos de Vida', type: 'CIRCULACIÓN' }] },
             { network: 'Red de mujeres artistas y gestoras REMAG', name: 'Corporación violeta en movimiento', city: 'Pasto', lat: 1.213, lng: -77.281, contribution: 20000000, events: [{ name: 'Venus Fest', type: 'CIRCULACIÓN' }] },
+            { network: 'Red de mujeres artistas y gestoras REMAG', name: 'Fundación Atrapa-sueños', city: 'Arauca', lat: 7.084, lng: -70.759, contribution: 20000000, events: [{ name: 'Actividades culturales', type: 'CIRCULACIÓN' }] },
 
             // --- RED INTERCULTURAL JUVENIL ---
             { network: 'Red Intercultural Juvenil', name: 'ASOCIACION RESONANCIA', city: 'Tocancipá', lat: 4.966, lng: -73.916, contribution: 45000000, events: [{ name: 'Mapeo participativo', type: 'FORMACIÓN', ben: 30 }, { name: 'Jornadas formativas', type: 'FORMACIÓN', ben: 40 }, { name: 'Evento de cierre: Redes que Fluyen', type: 'CIRCULACIÓN', ben: 300 }] },
@@ -813,7 +871,6 @@
             { network: 'Red Intercultural Juvenil', name: 'The Giants Community', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 80000000, events: [{ name: 'Encuentro Danza Urbana', type: 'CIRCULACIÓN', ben: 300 }, { name: 'Showcase / Batallas', type: 'CIRCULACIÓN', ben: 1000 }, { name: 'Conversatorios', type: 'FORMACIÓN', ben: 80 }] },
             { network: 'Red Intercultural Juvenil', name: 'Corporación Emergiendo', city: 'Viterbo', lat: 5.066, lng: -75.883, contribution: 50000000, events: [{ name: 'Intervenciones murales', type: 'PUBLICO', ben: 150 }, { name: 'Talleres formación', type: 'FORMACIÓN', ben: 25 }, { name: 'Exposición FNU', type: 'CIRCULACIÓN', ben: 200 }] },
             { network: 'Red Intercultural Juvenil', name: 'La Tigra', city: 'Piedecuesta', lat: 6.988, lng: -73.048, contribution: 70000000, events: [{ name: 'Talleres artísticos', type: 'FORMACIÓN', ben: 25 }, { name: 'Festival La Tigra', type: 'CIRCULACIÓN', ben: 1500 }, { name: 'Muralismo y Mapping', type: 'PUBLICO', ben: 300 }] },
-            { network: 'Red Intercultural Juvenil', name: 'Danzantes Janshan', city: 'Sibundoy', lat: 1.205, lng: -76.920, contribution: 45000000, events: [{ name: 'Talleres Evocar', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorios poética', type: 'FORMACIÓN', ben: 20 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }, { name: 'Feria economía', type: 'PUBLICO', ben: 300 }] },
             { network: 'Red Intercultural Juvenil', name: 'KOMBILESA MI', city: 'San Basilio', lat: 10.105, lng: -75.198, contribution: 40000000, events: [{ name: 'Talleres música/lengua', type: 'FORMACIÓN', ben: 40 }] },
             { network: 'Red Intercultural Juvenil', name: 'YUKUTA SONIDO NATIVO', city: 'Inírida', lat: 3.865, lng: -67.923, contribution: 35000000, events: [{ name: 'Talleres Música', type: 'FORMACIÓN', ben: 35 }, { name: 'Festival King Yakaré', type: 'CIRCULACIÓN', ben: 450 }] },
             { network: 'Red Intercultural Juvenil', name: 'Vida-Paz', city: 'San José del Guaviare', lat: 2.572, lng: -72.645, contribution: 100000000, events: [{ name: 'Talleres Bioculturales', type: 'FORMACIÓN', ben: 100 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }] },
@@ -821,7 +878,7 @@
             { network: 'Red Intercultural Juvenil', name: 'D Three Studio', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 20000000, events: [{ name: 'Cypher y Funciones', type: 'CIRCULACIÓN', ben: 250 }, { name: 'Festival Batallas', type: 'CIRCULACIÓN', ben: 400 }] },
             { network: 'Red Intercultural Juvenil', name: 'MANGLARIA DIVERSA', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 40000000, events: [{ name: 'Talleres Danza/Música', type: 'FORMACIÓN', ben: 45 }, { name: 'Encuentro socialización', type: 'PUBLICO', ben: 250 }] },
             { network: 'Red Intercultural Juvenil', name: 'RITMO EXTREMO', city: 'Apartadó', lat: 7.883, lng: -76.633, contribution: 30000000, events: [{ name: 'Laboratorios Danza', type: 'FORMACIÓN', ben: 120 }, { name: 'Circulación intercambio', type: 'CIRCULACIÓN', ben: 200 }] },
-            { network: 'Red Intercultural Juvenil', name: 'ESCUELA LA ESFERA', city: 'San Andrés', lat: 12.584, lng: -81.700, contribution: 60000000, events: [{ name: 'Formación orquestal', type: 'FORMACIÓN', ben: 40 }, { name: 'Lanzamiento Video', type: 'CIRCULACIÓN', ben: 50 }] },
+            { network: 'Red Intercultural Juvenil', name: 'FUNDACIÓN MUSIQULTURA - Escuela la Esfera', city: 'San Andrés', lat: 12.584, lng: -81.700, contribution: 60000000, events: [{ name: 'Formación orquestal', type: 'FORMACIÓN', ben: 40 }, { name: 'Lanzamiento Video', type: 'CIRCULACIÓN', ben: 50 }] },
             { network: 'Red Intercultural Juvenil', name: 'Arreglando el País', city: 'Pitalito', lat: 1.853, lng: -76.048, contribution: 30000000, events: [{ name: 'Diplomado Vientos', type: 'FORMACIÓN', ben: 30 }, { name: 'Evento muestra final', type: 'CIRCULACIÓN', ben: 300 }] },
             { network: 'Red Intercultural Juvenil', name: 'KHUYAY', city: 'Pereira', lat: 4.813, lng: -75.694, contribution: 30000000, events: [{ name: 'Festival Pereira', type: 'CIRCULACIÓN', ben: 600 }, { name: 'Ciclo formación', type: 'FORMACIÓN', ben: 20 }] },
             { network: 'Red Intercultural Juvenil', name: 'PACIFICA CULTURAL', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 90000000, events: [{ name: 'Laboratorios Creación', type: 'FORMACIÓN', ben: 40 }, { name: 'Conciertos Cacerolazo', type: 'CIRCULACIÓN', ben: 350 }] },
@@ -829,9 +886,11 @@
             { network: 'Red Intercultural Juvenil', name: 'LINDEROS DE PAZ', city: 'Bogotá', lat: 4.550, lng: -74.150, contribution: 45000000, events: [{ name: 'Sesiones Formativas', type: 'FORMACIÓN', ben: 25 }, { name: 'Muestra Artística', type: 'CIRCULACIÓN', ben: 150 }] },
             { network: 'Red Intercultural Juvenil', name: 'PARCHEMOS POR YACOPI', city: 'Yacopí', lat: 5.456, lng: -74.348, contribution: 40000000, events: [{ name: 'Laboratorio Muralismo', type: 'FORMACIÓN', ben: 25 }, { name: 'Sancocho Master', type: 'PUBLICO', ben: 500 }] },
             { network: 'Red Intercultural Juvenil', name: 'ATICOYA', city: 'Puerto Nariño', lat: -3.774, lng: -70.383, contribution: 14579439, events: [{ name: 'Talleres y Ritual', type: 'FORMACIÓN', ben: 40 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 300 }] },
-            { network: 'Red Intercultural Juvenil', name: 'HUELLAS DE MI TIERRA', city: 'Cúcuta', lat: 7.893, lng: -72.507, contribution: 80000000, events: [{ name: 'Bari Rock Fest', type: 'CIRCULACIÓN', ben: 1000 }] },
-            { network: 'Red Intercultural Juvenil', name: 'AMAHIA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 30000000, events: [{ name: 'Talleres rurales', type: 'FORMACIÓN', ben: 30 }, { name: 'Fiesta Infancias', type: 'PUBLICO', ben: 80 }] },
+            { network: 'Red Intercultural Juvenil', name: 'CORPORACIÓN ARTÍSTICA Y CULTURAL HUELLAS DE MI TIERRA', city: 'Cúcuta', lat: 7.893, lng: -72.507, contribution: 80000000, events: [{ name: 'Bari Rock Fest', type: 'CIRCULACIÓN', ben: 1000 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Fundación AMAHIA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 30000000, events: [{ name: 'Talleres rurales', type: 'FORMACIÓN', ben: 30 }, { name: 'Fiesta Infancias', type: 'PUBLICO', ben: 80 }] },
             { network: 'Red Intercultural Juvenil', name: 'Corporación Elements', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 0, events: [{ name: 'Crew Peligrosos', type: 'CIRCULACIÓN' }] },
+            { network: 'Red Intercultural Juvenil', name: 'Danzantes Janshan', city: 'Sibundoy', lat: 1.205, lng: -76.920, contribution: 45000000, events: [{ name: 'Talleres Evocar', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorios poética', type: 'FORMACIÓN', ben: 20 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }, { name: 'Feria economía', type: 'PUBLICO', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Corporación Cultural Barule', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 50000000, events: [{ name: 'Talleres formación', type: 'FORMACIÓN', ben: 50 }, { name: 'Evento cultural', type: 'CIRCULACIÓN', ben: 200 }] },
 
             // --- RED HIP HOP ---
             { network: 'Red Hip Hop', name: '5TA CON 5TA CREW', city: 'Cúcuta', lat: 7.907, lng: -72.504, contribution: 28450000, events: [{ name: 'Proceso Pedagógico', type: 'FORMACIÓN', ben: 1000 }, { name: 'Cierre Proceso', type: 'CIRCULACIÓN' }, { name: 'Festival 5ta con 5ta', type: 'PUBLICO' }] },
@@ -882,6 +941,14 @@
             { network: 'Organizaciones Emergentes', name: 'Esquina del Barrio', city: 'Ibagué', lat: 4.439, lng: -75.232, contribution: 30000000, events: [{ name: 'Música y Danza', type: 'CIRCULACIÓN' }] },
             { network: 'Organizaciones Emergentes', name: 'Víctimas Santiago', city: 'Ataco', lat: 3.581, lng: -75.390, contribution: 50000000, events: [{ name: 'Actividad Cultural', type: 'CIRCULACIÓN' }] },
             { network: 'Organizaciones Emergentes', name: 'Centro Periferia', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 128800650, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Centro de Altos Estudios en Tradición Contemporánea', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 0, events: [{ name: 'Actividades culturales', type: 'FORMACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Asociación de Víctimas Núcleo Santiago Pérez', city: 'Ataco', lat: 3.581, lng: -75.390, contribution: 0, events: [{ name: 'Actividades culturales', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'ONG de Liderazgo Juvenil y Participativo', city: 'Armero', lat: 5.030, lng: -74.883, contribution: 0, events: [{ name: 'Actividades culturales', type: 'FORMACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Corporación Kanda Docarí', city: 'Ocaña', lat: 8.237, lng: -73.355, contribution: 0, events: [{ name: 'Actividades culturales', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Corporación Elemental Ecosistema Cultural', city: 'San Vicente de Chucurí', lat: 6.881, lng: -73.410, contribution: 0, events: [{ name: 'Actividades culturales', type: 'FORMACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Asociación de Artistas Cluster Nómadas Amazonas', city: 'Leticia', lat: -4.215, lng: -69.941, contribution: 0, events: [{ name: 'Actividades culturales', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Corporación Artística Ecos Pacífico', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 0, events: [{ name: 'Actividades culturales', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Asociación Red de Defensores y Defensoras de Derechos Humanos', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 0, events: [{ name: 'Actividades culturales', type: 'FORMACIÓN' }] },
 
             // --- CIRCULACIÓN NACIONAL E INTERNACIONAL ---
             { network: 'Circulación Nacional e Internacional', name: 'FUNDACION MUJERES INDEPENDIENTES', city: 'Gutiérrez', lat: 4.253, lng: -74.000, contribution: 20000000, events: [{ name: 'Festival Internacional Música', type: 'CIRCULACIÓN' }] },
@@ -916,20 +983,19 @@
         ];
 
         // Conteos y listados territoriales (según matriz de Regionalización de inversión 04-12-2025)
-        // Ajustes solicitados:
-        // - Bogotá D.C. se integra a Cundinamarca (no cuenta como departamento)
-        // - Se excluyen ARAUCA, CASANARE y VAUPÉS (sin ejecución del programa)
-        const regionalizationImpactCounts = { municipalities: 112, departments: 29 };
+        // Ajustes: Bogotá D.C. se integra a Cundinamarca (no cuenta como departamento)
+        // Arauca incluido por organizaciones de Red de Mujeres
+        const regionalizationImpactCounts = { municipalities: 112, departments: 30 };
 
         const regionalizationImpactLists = {
-            departments: ["AMAZONAS", "ANTIOQUIA", "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "ATLÁNTICO", "BOLÍVAR", "BOYACÁ", "CALDAS", "CAQUETÁ", "CAUCA", "CESAR", "CHOCÓ", "CUNDINAMARCA", "CÓRDOBA", "GUAINÍA", "GUAVIARE", "HUILA", "LA GUAJIRA", "MAGDALENA", "META", "NARIÑO", "NORTE DE SANTANDER", "PUTUMAYO", "QUINDÍO", "RISARALDA", "SANTANDER", "SUCRE", "TOLIMA", "VALLE DEL CAUCA", "VICHADA"],
+            departments: ["AMAZONAS", "ANTIOQUIA", "ARAUCA", "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "ATLÁNTICO", "BOLÍVAR", "BOYACÁ", "CALDAS", "CAQUETÁ", "CAUCA", "CESAR", "CHOCÓ", "CUNDINAMARCA", "CÓRDOBA", "GUAINÍA", "GUAVIARE", "HUILA", "LA GUAJIRA", "MAGDALENA", "META", "NARIÑO", "NORTE DE SANTANDER", "PUTUMAYO", "QUINDÍO", "RISARALDA", "SANTANDER", "SUCRE", "TOLIMA", "VALLE DEL CAUCA", "VICHADA"],
             municipalitiesAndCities: ["ARACATACA — MAGDALENA", "ARMENIA — QUINDÍO", "ARMERO — TOLIMA", "BAGADÓ — CHOCÓ", "BARICHARA — SANTANDER", "BARRANCABERMEJA — SANTANDER", "BARRANQUILLA — ATLÁNTICO", "BELLO — ANTIOQUIA", "BOGOTÁ, D.C. — CUNDINAMARCA", "BUCARAMANGA — SANTANDER", "BUENAVENTURA — VALLE DEL CAUCA", "CAJICÁ — CUNDINAMARCA", "CALDAS — ANTIOQUIA", "CALOTO — CAUCA", "CAREPA — ANTIOQUIA", "CARMEN DEL DARIÉN — CHOCÓ", "CARTAGENA DE INDIAS — BOLÍVAR", "CERETÉ — CÓRDOBA", "CHIGORODÓ — ANTIOQUIA", "CHIRIGUANÁ — CESAR", "CHÍA — CUNDINAMARCA", "CONDOTO — CHOCÓ", "COROZAL — SUCRE", "DABEIBA — ANTIOQUIA", "DUITAMA — BOYACÁ", "EL BANCO — MAGDALENA", "EL RETORNO — GUAVIARE", "ENVIGADO — ANTIOQUIA", "FLORIDA — VALLE DEL CAUCA", "FUNDACIÓN — MAGDALENA", "FUNZA — CUNDINAMARCA", "GALAPA — ATLÁNTICO", "GIRARDOTA — ANTIOQUIA", "GUADALAJARA DE BUGA — VALLE DEL CAUCA", "GUTIÉRREZ — CUNDINAMARCA", "GÉNOVA — QUINDÍO", "IBAGUÉ — TOLIMA", "INÍRIDA — GUAINÍA", "IPIALES — NARIÑO", "ISTMINA — CHOCÓ", "JAMUNDÍ — VALLE DEL CAUCA", "LA BELLEZA — SANTANDER", "LA MONTAÑITA — CAQUETÁ", "LETICIA — AMAZONAS", "LURUACO — ATLÁNTICO", "LÉRIDA — TOLIMA", "MAHATES — BOLÍVAR", "MAICAO — LA GUAJIRA", "MANIZALES — CALDAS", "MEDELLÍN — ANTIOQUIA", "MEDIO BAUDÓ — CHOCÓ", "MOCOA — PUTUMAYO", "MONTELÍBANO — CÓRDOBA", "MONTERÍA — CÓRDOBA", "NECOCLÍ — ANTIOQUIA", "OCAÑA — NORTE DE SANTANDER", "PAIPA — BOYACÁ", "PASTO — NARIÑO", "PEREIRA — RISARALDA", "PEÑOL — ANTIOQUIA", "PIEDECUESTA — SANTANDER", "PINCHOTE — SANTANDER", "PITALITO — HUILA", "POPAYÁN — CAUCA", "PROVIDENCIA — ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "PUEBLO BELLO — CESAR", "PUERTO ASÍS — PUTUMAYO", "PUERTO CARREÑO — VICHADA", "PUERTO COLOMBIA — ATLÁNTICO", "PUERTO LÓPEZ — META", "PUERTO NARIÑO — AMAZONAS", "QUIBDÓ — CHOCÓ", "RIOHACHA — LA GUAJIRA", "RIOSUCIO — CALDAS", "RIVERA — HUILA", "RÍO IRÓ — CHOCÓ", "SABANETA — ANTIOQUIA", "SAMANIEGO — NARIÑO", "SAN ANDRÉS DE TUMACO — NARIÑO", "SAN ANDRÉS — ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA", "SAN CARLOS — ANTIOQUIA", "SAN JACINTO — BOLÍVAR", "SAN JOSÉ DE CÚCUTA — NORTE DE SANTANDER", "SAN JOSÉ DEL GUAVIARE — GUAVIARE", "SAN JUAN DE ARAMA — META", "SAN JUAN DE URABÁ — ANTIOQUIA", "SAN PELAYO — CÓRDOBA", "SAN VICENTE DE CHUCURÍ — SANTANDER", "SANTA MARTA — MAGDALENA", "SANTIAGO DE CALI — VALLE DEL CAUCA", "SEVILLA — VALLE DEL CAUCA", "SIBUNDOY — PUTUMAYO", "SOACHA — CUNDINAMARCA", "SOGAMOSO — BOYACÁ", "SONSÓN — ANTIOQUIA", "SOPÓ — CUNDINAMARCA", "SUESCA — CUNDINAMARCA", "TOCANCIPÁ — CUNDINAMARCA", "TULUÁ — VALLE DEL CAUCA", "TUNJA — BOYACÁ", "TURBACO — BOLÍVAR", "VALLEDUPAR — CESAR", "VILLA DE LEYVA — BOYACÁ", "VILLA DEL ROSARIO — NORTE DE SANTANDER", "VILLANUEVA — LA GUAJIRA", "VILLANUEVA — SANTANDER", "VILLAPINZÓN — CUNDINAMARCA", "VILLAVICENCIO — META", "VISTAHERMOSA — META", "VITERBO — CALDAS", "YACOPÍ — CUNDINAMARCA", "YUMBO — VALLE DEL CAUCA"]
         };
 
-        // Ajuste solicitado: la Red de Mujeres pasa de 7 a 11 según la última matriz de beneficiarios.
+        // Ajuste: la Red de Mujeres tiene 15 organizaciones (incluye Atrapa-sueños de Arauca)
         // Este override afecta el contador mostrado en el filtro; el mapa seguirá dependiendo de los puntos con lat/lng.
         const beneficiariesNetworkCountOverrides = {
-            'Red de mujeres artistas y gestoras REMAG': 14
+            'Red de mujeres artistas y gestoras REMAG': 15
         };
 
         // Cobertura territorial mostrada (veredas/municipios/ciudades).
@@ -997,6 +1063,15 @@
             'quibdó': 'Chocó',
             'quibdo': 'Chocó',
             'istmina': 'Chocó',
+            // Ciudades adicionales
+            'arauca': 'Arauca',
+            'leticia': 'Amazonas',
+            'montería': 'Córdoba',
+            'monteria': 'Córdoba',
+            'cartagena': 'Bolívar',
+            'san vicente de chucurí': 'Santander',
+            'san vicente de chucuri': 'Santander',
+            'armero': 'Tolima',
             'río iró': 'Chocó',
             'rio iró': 'Chocó',
             'rio iro': 'Chocó',
@@ -1031,14 +1106,34 @@
             'florencia': 'Caquetá',
             'luruaco': 'Atlántico',
             'puerto colombia': 'Atlántico',
-            'san andrés': 'San Andrés y Providencia',
-            'san andres': 'San Andrés y Providencia',
+            'san andrés': 'Archipiélago de San Andrés',
+            'san andres': 'Archipiélago de San Andrés',
             'inírida': 'Guainía',
             'inirida': 'Guainía',
             'puerto nariño': 'Amazonas',
             'sogamoso': 'Boyacá',
             'paipa': 'Boyacá',
-            'suesca': 'Cundinamarca',
+            'puerto carreño': 'Vichada',
+            'puerto carreno': 'Vichada',
+            'popayán': 'Cauca',
+            'popayan': 'Cauca',
+            'caloto': 'Cauca',
+            'villavicencio': 'Meta',
+            'puerto lópez': 'Meta',
+            'puerto lopez': 'Meta',
+            'cereté': 'Córdoba',
+            'cerete': 'Córdoba',
+            'montelíbano': 'Córdoba',
+            'montelibano': 'Córdoba',
+            'barranquilla': 'Atlántico',
+            'galapa': 'Atlántico',
+            'tunja': 'Boyacá',
+            'duitama': 'Boyacá',
+            'mocoa': 'Putumayo',
+            'puerto asís': 'Putumayo',
+            'puerto asis': 'Putumayo',
+            'la montañita': 'Caquetá',
+            'la montanita': 'Caquetá',
             'tijuana': 'Internacional',
             'londres': 'Internacional',
             'brasil': 'Internacional',
@@ -1759,9 +1854,9 @@
 
             const net = (network || '').toLowerCase();
             if(net.includes('hip hop')) { iconUrl = '../assets/img/REDDEHIPHOP.png'; size = [24, 24]; }
-            else if(net.includes('emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES EMERGENTES.png'; size = [24, 24]; }
-            else if(net.includes('juvenil')) { iconUrl = '../assets/img/RED JUVENIL.png'; size = [24, 24]; }
-            else if(net.includes('mujer')) { iconUrl = '../assets/img/ORGANIZACIONES DE MUJERES.png'; size = [24, 24]; }
+            else if(net.includes('emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES%20EMERGENTES.png'; size = [24, 24]; }
+            else if(net.includes('juvenil')) { iconUrl = '../assets/img/RED%20JUVENIL.png'; size = [24, 24]; }
+            else if(net.includes('mujer')) { iconUrl = '../assets/img/ORGANIZACIONES%20DE%20MUJERES.png'; size = [24, 24]; }
             else if(net.includes('festiva')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png'; }
             else if(net.includes('narrativas')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png'; }
             
@@ -1915,7 +2010,28 @@
             document.getElementById('total-operational-costs-count').innerText = totalBenPublic.toLocaleString('es-CO');
             document.getElementById('total-contribution-count').innerText = formatCop(totalAgreementInvestment, 2);
 
-            document.getElementById('total-muni-count').innerText = territorialCoverage.municipalitiesAndCitiesCount.toLocaleString('es-CO');
+            // Calcular territorios dinámicamente basado en organizaciones filtradas
+            const filteredDepartments = new Set();
+            const filteredMunicipalities = new Set();
+            
+            filteredOrgs.forEach(org => {
+                const dept = getDepartment(org);
+                if (dept && dept !== 'Internacional') {
+                    filteredDepartments.add(dept);
+                }
+                const muni = getMunicipalityName(org);
+                if (muni) {
+                    filteredMunicipalities.add(muni);
+                }
+            });
+
+            // Actualizar contadores de territorios
+            // Siempre mostrar 30 departamentos y 112 municipios (datos oficiales del programa)
+            const deptCount = regionalizationImpactLists.departments.length; // Siempre 30
+            const muniCount = regionalizationImpactLists.municipalitiesAndCities.length; // Siempre 112
+            
+            document.getElementById('total-dept-display').innerText = deptCount.toLocaleString('es-CO');
+            document.getElementById('total-muni-count').innerText = muniCount.toLocaleString('es-CO');
             
             updateCharts(filteredOrgs, totalBen, totalContribution);
         }
@@ -1925,28 +2041,52 @@
             const modal = document.getElementById('dashboard-modal');
             if(modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
+                modal.style.display = 'flex';
                 setTimeout(() => {
                     modal.classList.remove('opacity-0', 'pointer-events-none');
                     modal.querySelector('div').classList.remove('scale-95');
                     modal.querySelector('div').classList.add('scale-100');
-                }, 10);
+                    // Siempre re-crear el gráfico cuando el modal sea visible
+                    const filtered = organizations.filter(o => !isOperationalTeamRecord(o));
+                    const totalBen = filtered.reduce((acc, o) => acc + (o.beneficiaries || 0), 0);
+                    const totalContribution = filtered.reduce((acc, o) => acc + (o.contribution || 0), 0);
+                    updateCharts(filtered, totalBen, totalContribution);
+                }, 100);
             } else {
                 modal.classList.add('opacity-0', 'pointer-events-none');
                 modal.querySelector('div').classList.remove('scale-100');
                 modal.querySelector('div').classList.add('scale-95');
-                setTimeout(() => modal.classList.add('hidden'), 300);
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }, 300);
             }
         };
 
         function updateCharts(data, totalBen, totalContribution) {
-            // Stats Cards
-            document.getElementById('stat-orgs').innerText = data.length;
-            // Municipios impactados según la matriz de regionalización (no depende de la sede de la organización)
-            document.getElementById('stat-cities').innerText = territorialCoverage.municipalitiesAndCitiesCount;
+            try {
+            // Stats Cards - valor fijo de 105 organizaciones de base fortalecidas
+            const statOrgsEl = document.getElementById('stat-orgs');
+            if (statOrgsEl) statOrgsEl.innerText = '105';
+            
+            // Calcular territorios dinámicamente para el dashboard
+            const dashDepts = new Set();
+            const dashMunis = new Set();
+            data.forEach(org => {
+                const dept = getDepartment(org);
+                if (dept && dept !== 'Internacional') dashDepts.add(dept);
+                const muni = getMunicipalityName(org);
+                if (muni) dashMunis.add(muni);
+            });
+            const statCitiesEl = document.getElementById('stat-cities');
+            if (statCitiesEl) statCitiesEl.innerText = dashMunis.size;
+            
             const totalEvents = data.reduce((acc, curr) => acc + (curr.events ? curr.events.length : 0), 0);
-            document.getElementById('stat-events').innerText = totalEvents;
-            // Valor fijo del convenio (no por organización)
-            document.getElementById('stat-avg').innerText = formatCop(totalAgreementInvestment, 2);
+            const statEventsEl = document.getElementById('stat-events');
+            if (statEventsEl) statEventsEl.innerText = totalEvents;
+            // Valor fijo del convenio (no por organización) - formato compacto sin decimales
+            const statAvgEl = document.getElementById('stat-avg');
+            if (statAvgEl) statAvgEl.innerText = formatCop(totalAgreementInvestment, 0);
 
             // Chart 1: Investment by Network
             const netData = {};
@@ -1955,7 +2095,9 @@
                 if(o.contribution) netData[o.network] += o.contribution;
             });
 
-            const ctxInv = document.getElementById('chart-investment').getContext('2d');
+            const canvasEl = document.getElementById('chart-investment');
+            if (!canvasEl) return;
+            const ctxInv = canvasEl.getContext('2d');
             if(chartInvestment) chartInvestment.destroy();
             
             chartInvestment = new Chart(ctxInv, {
@@ -1964,7 +2106,7 @@
                     labels: Object.keys(netData),
                     datasets: [{
                         data: Object.values(netData),
-                        backgroundColor: ['#E940B4', '#F3C746', '#0066FF', '#886FFF', '#5BC6FB', '#1A1A3A'],
+                        backgroundColor: ['#E940B4', '#F3C746', '#0066FF', '#886FFF', '#5BC6FB', '#1A1A3A', '#2DD4BF', '#F97316'],
                         borderWidth: 0
                     }]
                 },
@@ -1994,6 +2136,9 @@
                     }
                 }
             });
+            } catch (err) {
+                console.error('Error en updateCharts:', err);
+            }
         }
 
         // 6. INICIALIZACIÓN Y EVENTOS
@@ -2044,8 +2189,16 @@
             if (impactListsRendered) return;
 
             const combinedUl = document.getElementById('impact-combined-list');
+            const deptUl = document.getElementById('impact-dept-list');
             
-            // Combine all lists
+            // Renderizar departamentos
+            if (deptUl && regionalizationImpactLists.departments.length) {
+                deptUl.innerHTML = regionalizationImpactLists.departments
+                    .map((item) => `<li class="text-gray-700 text-xs py-0.5">${escapeHtml(item)}</li>`)
+                    .join('');
+            }
+            
+            // Combine all lists for municipalities
             const allItems = [
                 ...territorialCoverage.veredas, 
                 ...territorialCoverage.municipios, 
@@ -2111,13 +2264,14 @@
         const boot = async () => {
             await hydrateBeneficiariosYTerritorio();
 
-            // Update total processes count in header
-            const totalProcesses = organizations.filter(o => !isOperationalTeamRecord(o)).length;
+            // Update total processes count in header - valor fijo de 150 procesos fortalecidos
             const totalProcessesEl = document.getElementById('total-processes-count');
-            if (totalProcessesEl) totalProcessesEl.innerText = totalProcesses;
+            if (totalProcessesEl) totalProcessesEl.innerText = '150';
 
             // Generar Filtros de Red
-            const nets = [...new Set(organizations.map(o => o.network))];
+            // Excluir redes que no deben mostrarse como filtros
+            const excludedNetworks = ['Circulación Nacional e Internacional', 'Cultura Festiva del Territorio', 'Narrativas Artísticas y Bioculturales'];
+            const nets = [...new Set(organizations.map(o => o.network))].filter(n => !excludedNetworks.includes(n));
             const filtersList = document.getElementById('filters-list');
             if (filtersList) filtersList.innerHTML = '';
             
@@ -2127,9 +2281,9 @@
 
             const nn = (n || '').toLowerCase();
             if(nn.includes('hip hop')) { iconUrl = '../assets/img/REDDEHIPHOP.png'; iconClass = 'w-3 h-3'; }
-            else if(nn.includes('emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES EMERGENTES.png'; iconClass = 'w-3 h-3'; }
-            else if(nn.includes('juvenil')) { iconUrl = '../assets/img/RED JUVENIL.png'; iconClass = 'w-3 h-3'; }
-            else if(nn.includes('mujer')) { iconUrl = '../assets/img/ORGANIZACIONES DE MUJERES.png'; iconClass = 'w-3 h-3'; }
+            else if(nn.includes('emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES%20EMERGENTES.png'; iconClass = 'w-3 h-3'; }
+            else if(nn.includes('juvenil')) { iconUrl = '../assets/img/RED%20JUVENIL.png'; iconClass = 'w-3 h-3'; }
+            else if(nn.includes('mujer')) { iconUrl = '../assets/img/ORGANIZACIONES%20DE%20MUJERES.png'; iconClass = 'w-3 h-3'; }
             else if(nn.includes('festiva')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png'; }
             else if(nn.includes('narrativas')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png'; }
             
