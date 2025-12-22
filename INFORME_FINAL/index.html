@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortalecimiento del Ecosistema Cultural y Comunitario - Convenio 1022-2025</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        lance: ['Impact', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        palette: {
+                            dark: '#1A1A3A',
+                            purple: '#886FFF',
+                            deepPurple: '#5D3FD3',
+                            blue: '#0066FF',
+                            lightblue: '#5BC6FB',
+                            yellow: '#F3C746',
+                            pink: '#E940B4',
+                            white: '#FFFFFF',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Leaflet (Mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" crossorigin=""/>
+
+    <!-- Fuentes e Iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'LanceAPLP';
+            src: url('../assets/fonts/Lance-RegularAPLP.woff2') format('woff2');
+        }
+        body { font-family: 'Montserrat', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'LanceAPLP', 'Impact', sans-serif; letter-spacing: 0.05em; }
+        
+        /* Glassmorphism Global */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        .glass-dark {
+            background: rgba(26, 26, 58, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        /* --- ESTILOS DEL MAPA INTEGRADO --- */
+        #map-wrapper {
+            position: relative;
+            height: 700px;
+            width: 100%;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            z-index: 1;
+        }
+        #map { width: 100%; height: 100%; z-index: 1; }
+        
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            max-width: 320px;
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        /* Clusters Personalizados */
+        .marker-cluster div {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #886FFF;
+            color: #1A1A3A; font-weight: bold; font-size: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        /* Colores por Red */
+        .marker-cluster-hiphop div { border-color: #E940B4; color: #E940B4; } 
+        .marker-cluster-emergentes div { border-color: #0066FF; color: #0066FF; } 
+        .marker-cluster-juvenil div { border-color: #F3C746; color: #F3C746; } 
+        .marker-cluster-mujeres div { border-color: #886FFF; color: #886FFF; }
+        .marker-cluster-circulacion div { border-color: #5BC6FB; color: #5BC6FB; }
+
+        /* Animación suave */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating { animation: float 5s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-palette-yellow via-white to-palette-lightblue min-h-screen text-palette-dark antialiased">
+
+    <!-- 1. HEADER -->
+    <header class="bg-palette-dark text-white pt-8 pb-32 px-6 rounded-b-[4rem] shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
+        <div class="absolute -right-20 -top-20 w-96 h-96 bg-palette-purple opacity-30 rounded-full blur-[100px]"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto text-center">
+            
+            <!-- Logos -->
+            <div class="flex justify-between items-center mb-12 px-4">
+                <a href="https://www.mincultura.gov.co/areas/artes/artes-para-la-paz" target="_blank" class="hover:opacity-80 transition-opacity">
+                    <img src="../assets/img/aplp_morado.png" alt="Artes para la Paz" class="h-12 md:h-14 object-contain drop-shadow-lg">
+                </a>
+                <a href="https://www.mincultura.gov.co" target="_blank" class="hover:opacity-80 transition-opacity">
+                    <img src="../assets/img/blanco_culturas.png" alt="Colombia Potencia de la Vida" class="h-20 md:h-24 object-contain drop-shadow-lg">
+                </a>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-6">
+                <span class="bg-palette-pink px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg transform -rotate-2">
+                    Balance Mayo '25 - Ene '26
+                </span>
+                <i class="fas fa-arrow-right text-palette-yellow hidden md:block"></i>
+                <span class="bg-palette-yellow text-palette-dark px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg transform rotate-1">
+                    Proyección Feb '26 - Jun '26
+                </span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-normal mb-6 leading-none tracking-tight uppercase">
+                Fortalecimiento del<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-palette-pink to-palette-yellow">
+                    Ecosistema Cultural y Comunitario
+                </span>
+                <span class="block mt-3 text-sm sm:text-base md:text-2xl font-bold text-gray-200 tracking-widest">Convenio 1022-2025</span>
+                <span class="block mt-2 font-montserrat text-[10px] sm:text-xs md:text-sm font-semibold text-gray-200 tracking-wide normal-case">Ministerio de las Culturas, las Artes y los Saberes - Fondo Mixto de Promoción de la Cultura y las Artes de Nariño</span>
+            </h1>
+            
+            <p class="text-lg font-light text-gray-300 max-w-4xl mx-auto">
+                91 procesos fortalecidos. Un ecosistema de <strong class="text-palette-lightblue">trabajo colectivo y organización social</strong> para las artes, las culturas y los saberes de base comunitaria.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 -mt-24 relative z-20 pb-24 space-y-16">
+
+        <!-- 2. MAPA INTERACTIVO -->
+        <section class="glass-card bg-white rounded-[2rem] p-4 shadow-xl ring-4 ring-white/50 relative">
+            <div class="absolute -top-6 left-8 bg-palette-blue text-white px-6 py-2 rounded-lg shadow-lg z-20 font-bold flex items-center gap-2">
+                <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Montanas_Sin_Marco.png" class="h-6 w-6 object-contain brightness-0 invert"> Territorio & Inversión
+            </div>
+            
+            <div id="map-wrapper">
+                
+                <!-- BOTÓN HAMBURGUESA (Móvil) -->
+                <button id="filter-toggle" class="md:hidden absolute top-4 left-4 z-[1001] bg-white text-palette-dark p-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- PANEL DE FILTROS (Responsive) -->
+                <div id="map-controls" class="map-controls glass-card p-4 rounded-xl m-2 hidden md:block absolute top-14 left-2 md:top-2 md:left-2 z-[1000] w-64 md:w-72 max-h-[60vh] overflow-y-auto transition-all duration-300">
+                    <div class="flex justify-between items-center md:hidden mb-4">
+                        <h3 class="font-bold text-palette-dark">Filtros</h3>
+                        <button onclick="toggleFilters()" class="text-gray-500"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    <h3 class="font-bold text-palette-dark mb-3 text-sm border-b border-gray-300 pb-2">Filtros de Red</h3>
+                    <div id="filters-list" class="space-y-2 text-xs font-medium"></div>
+                    
+                    <h3 class="font-bold text-palette-dark mt-4 mb-3 text-sm border-b border-gray-300 pb-2">Actividad</h3>
+                    <div class="space-y-1 text-xs">
+                        <label class="flex items-center cursor-pointer hover:bg-palette-blue/10 p-1 rounded"><input type="checkbox" class="activity-check mr-2" value="formacion" checked> Formación</label>
+                        <label class="flex items-center cursor-pointer hover:bg-palette-pink/10 p-1 rounded"><input type="checkbox" class="activity-check mr-2" value="circulacion" checked> Circulación</label>
+                        <label class="flex items-center cursor-pointer hover:bg-palette-yellow/10 p-1 rounded"><input type="checkbox" class="activity-check mr-2" value="publico" checked> Eventos Públicos</label>
+                    </div>
+                </div>
+
+                <!-- BARRA DE ESTADÍSTICAS (Persistente) -->
+                <div id="persistent-stats" class="absolute bottom-4 left-4 right-4 md:left-4 md:right-auto md:w-72 z-[1000] flex flex-col gap-2">
+                    <!-- DASHBOARD BUTTON -->
+                    <button onclick="toggleDashboard()" class="w-full bg-palette-dark text-white py-2 rounded-lg font-bold text-[10px] hover:bg-palette-purple transition-colors shadow-lg flex items-center justify-center gap-2 uppercase tracking-wider">
+                        <i class="fas fa-chart-pie"></i> Ver Estadísticas
+                    </button>
+
+                    <!-- STATS CARDS -->
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="glass-card bg-white/90 p-2 rounded-lg text-center shadow-md backdrop-blur-md">
+                            <div class="text-lg font-black text-palette-dark" id="total-ben-count">0</div>
+                            <h4 class="font-bold text-center mb-4 text-palette-deepPurple text-sm uppercase tracking-wider">Porcentaje de inversión por rubro</h4>
+                        </div>
+                        <div class="bg-gradient-to-br from-palette-pink to-palette-purple text-white p-2 rounded-lg text-center shadow-md">
+                <!-- Buscador Flotante -->
+                <div class="absolute top-4 right-4 left-16 md:left-auto z-[1000] md:w-64">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="Buscar..." class="w-full pl-4 pr-10 py-2 rounded-full shadow-lg border-none focus:ring-2 focus:ring-palette-purple text-sm bg-white/90 backdrop-blur-sm">
+                        <button id="search-clear" class="absolute right-8 top-2 text-gray-400 hover:text-palette-pink hidden"><i class="fas fa-times"></i></button>
+                        <button class="absolute right-3 top-2 text-palette-purple"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div id="search-suggestions" class="hidden bg-white mt-1 rounded-lg shadow-xl max-h-40 overflow-y-auto text-sm absolute w-full z-50"></div>
+                </div>
+
+                <div id="map"></div>
+            </div>
+            <div class="text-center mt-2">
+                <p class="text-xs text-palette-dark opacity-60"><i class="fas fa-info-circle"></i> Haz clic en los clusters para desagregar. Los montos reflejan la inversión en fortalecimiento.</p>
+            </div>
+        </section>
+
+        <!-- 3. LA BRÚJULA: SER Y NECESITAR -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-px bg-palette-dark flex-1 opacity-20"></div>
+                <h2 class="text-3xl font-black text-palette-dark uppercase text-center">La Brújula Estratégica</h2>
+                <div class="h-px bg-palette-dark flex-1 opacity-20"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- PREGUNTA 1: EL SUEÑO -->
+                <div class="glass-dark rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-palette-pink w-32 h-32 rounded-bl-[100%] opacity-20 transition-all group-hover:scale-110"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-6 flex items-start gap-3">
+                            <span class="text-palette-pink text-4xl">01.</span>
+                            <div class="mt-1">
+                                <span class="block text-xs uppercase tracking-widest opacity-70 mb-1">El Sueño</span>
+                                ¿Qué organización queremos ver?
+                            </div>
+                        </h3>
+                        <ul class="space-y-6">
+                            <li class="flex gap-4">
+                                <div class="bg-palette-pink/20 p-2 rounded-xl h-fit">
+                                    <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Megafono_Sin_Marco.png" class="w-8 h-8 object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Sujeto Político Activo</h4>
+                                    <p class="text-sm text-gray-300 font-light">Organizaciones que no solo ejecutan, sino que <span class="text-white font-medium">intervienen y afectan</span> sus contextos territoriales.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="bg-palette-yellow/20 p-2 rounded-xl h-fit">
+                                    <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Resistencia_Sin_Marco.png" class="w-8 h-8 object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Autónoma & Sostenible</h4>
+                                    <p class="text-sm text-gray-300 font-light">Menos dependencia gubernamental ("papelitos"), más capacidad de cooperación internacional.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4">
+                                <div class="bg-palette-lightblue/20 p-2 rounded-xl h-fit">
+                                    <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Corazon_Sin_Marco.png" class="w-8 h-8 object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg">Cuidadora hacia Adentro</h4>
+                                    <p class="text-sm text-gray-300 font-light">Que prioriza la salud mental, reconoce los límites y aplica tecnologías del cuidado.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PREGUNTA 2: LA RUTA -->
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 border-2 border-palette-dark relative shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-6 text-palette-dark flex items-start gap-3">
+                        <span class="text-palette-purple text-4xl">02.</span>
+                        <div class="mt-1">
+                            <span class="block text-xs uppercase tracking-widest text-gray-500 mb-1">La Ruta</span>
+                            ¿Qué necesitan para lograrlo?
+                        </div>
+                    </h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-palette-purple hover:bg-purple-50 transition-colors">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-palette-dark">Educación Financiera Real</h4>
+                                <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Olla_Sin_Marco.png" class="w-6 h-6 object-contain opacity-80">
+                            </div>
+                            <p class="text-xs text-gray-600">Herramientas para manejar balances, impuestos y gestión de recursos privados/mixtos.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-palette-blue hover:bg-blue-50 transition-colors">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-palette-dark">Sistematización (SOPs)</h4>
+                                <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Libro_Sin_Marco.png" class="w-6 h-6 object-contain opacity-80">
+                            </div>
+                            <p class="text-xs text-gray-600">Dejar de reinventar la rueda. Crear manuales de procesos administrativos y metodológicos.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-palette-pink hover:bg-pink-50 transition-colors">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-palette-dark">Investigación de su Hacer</h4>
+                                <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Ojo_Sin_Marco.png" class="w-6 h-6 object-contain opacity-80">
+                            </div>
+                            <p class="text-xs text-gray-600">Tiempo y recursos para preguntarse por su historia y renovar sus apuestas pedagógicas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-palette-dark opacity-60 text-xs">
+        <p>Equipo de Fortalecimiento Artes para la Paz • Diciembre 2025</p>
+    </footer>
+
+    <!-- DASHBOARD MODAL -->
+    <div id="dashboard-modal" class="fixed inset-0 z-[2000] hidden bg-palette-dark/90 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto p-6 relative shadow-2xl transform scale-95 transition-transform duration-300">
+            <button onclick="toggleDashboard()" class="absolute top-4 right-4 text-palette-dark hover:text-palette-pink text-2xl transition-colors"><i class="fas fa-times"></i></button>
+            
+            <h2 class="text-3xl font-black text-palette-dark mb-2">RADIOGRAFÍA DE LA INVERSIÓN</h2>
+            <p class="text-gray-500 mb-8 text-sm">Distribución de recursos y beneficiarios por líneas estratégicas y territorio.</p>
+
+            <div class="grid grid-cols-1 gap-8">
+                <!-- Chart 1: Inversión por Red -->
+                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-center mb-4 text-palette-deepPurple text-sm uppercase tracking-wider">Porcentaje de inversión por rubro</h4>
+                    <div class="h-64 relative"><canvas id="chart-investment"></canvas></div>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                 <div class="bg-palette-pink/10 p-4 rounded-xl text-center border border-palette-pink/20">
+                    <div class="text-2xl font-black text-palette-pink" id="stat-orgs">0</div>
+                    <div class="text-[10px] uppercase font-bold opacity-60">Organizaciones</div>
+                 </div>
+                 <div class="bg-palette-blue/10 p-4 rounded-xl text-center border border-palette-blue/20">
+                    <div class="text-2xl font-black text-palette-blue" id="stat-cities">0</div>
+                    <div class="text-[10px] uppercase font-bold opacity-60">Municipios</div>
+                 </div>
+                 <div class="bg-palette-yellow/10 p-4 rounded-xl text-center border border-palette-yellow/20">
+                    <div class="text-2xl font-black text-palette-yellow" id="stat-events">0</div>
+                    <div class="text-[10px] uppercase font-bold opacity-60">Eventos</div>
+                 </div>
+                 <div class="bg-palette-purple/10 p-4 rounded-xl text-center border border-palette-purple/20">
+                    <div class="text-xl font-black text-palette-purple" id="stat-avg">$0</div>
+                          <div class="text-[10px] uppercase font-bold opacity-60" title="Valor total del convenio (cifra fija).">Total convenio (COP)</div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA DEL MAPA -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js" crossorigin=""></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. DATA COMPLETA (91 ORGANIZACIONES)
+        const organizations = [
+            // --- RED DE MUJERES ---
+            { network: 'Red de Mujeres', name: 'Chaibá, Fundación', city: 'Suesca', lat: 5.103, lng: -73.800, contribution: 15000000, events: [{ name: 'Festival Titúa', type: 'CIRCULACIÓN', ben: 500 }] },
+            { network: 'Red de Mujeres', name: 'FUNDACION CULTURAL KYNZA XIE', city: 'Chía', lat: 4.858, lng: -74.033, contribution: 20000000, events: [{ name: 'Muestra final Escuela', type: 'CIRCULACIÓN', ben: 256 }] },
+            { network: 'Red de Mujeres', name: 'Asociación Wiwa Abudzibu', city: 'Santa Marta', lat: 11.240, lng: -74.199, contribution: 20000000, events: [{ name: 'Encuentro danzas tradicionales', type: 'CIRCULACIÓN', ben: 43 }] },
+            { network: 'Red de Mujeres', name: 'ORVIEN (Víctimas Río Iró)', city: 'Río Iró', lat: 5.217, lng: -76.683, contribution: 20000000, events: [{ name: 'Encuentro cultural', type: 'CIRCULACIÓN', ben: 2440 }, { name: 'Conversatorios comunidad', type: 'CIRCULACIÓN' }, { name: 'Encuentro juegos', type: 'CIRCULACIÓN' }, { name: 'Encuentro sanadoras', type: 'CIRCULACIÓN' }] },
+            { network: 'Red de Mujeres', name: 'FUNDACION MICELIO', city: 'Corozal', lat: 9.316, lng: -75.294, contribution: 20000000, events: [{ name: 'Encuentro danzas ancestrales', type: 'CIRCULACIÓN', ben: 2050 }, { name: 'Conversatorio saberes', type: 'CIRCULACIÓN' }] },
+            { network: 'Red de Mujeres', name: 'COMPAÑÍA AMÉRICA DANZA', city: 'Soacha', lat: 4.580, lng: -74.217, contribution: 40000000, events: [{ name: 'Feria Comunitaria', type: 'CIRCULACIÓN', ben: 98 }] },
+            { network: 'Red de Mujeres', name: 'FUNDACION DECUPLUM', city: 'Valledupar', lat: 10.463, lng: -73.253, contribution: 50000000, events: [{ name: 'Encuentro Vallenato Femenino', type: 'CIRCULACIÓN', ben: 115 }] },
+
+            // --- RED INTERCULTURAL JUVENIL ---
+            { network: 'Red Intercultural Juvenil', name: 'ASOCIACION RESONANCIA', city: 'Tocancipá', lat: 4.966, lng: -73.916, contribution: 45000000, events: [{ name: 'Mapeo participativo', type: 'FORMACIÓN', ben: 30 }, { name: 'Jornadas formativas', type: 'FORMACIÓN', ben: 40 }, { name: 'Evento de cierre: Redes que Fluyen', type: 'CIRCULACIÓN', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'FAHRENHEIT 451', city: 'Chía', lat: 4.858, lng: -74.058, contribution: 80000000, events: [{ name: 'Talleres artísticos', type: 'FORMACIÓN', ben: 50 }, { name: 'Salidas de convivio', type: 'FORMACIÓN', ben: 50 }, { name: 'Clases de apoyo', type: 'FORMACIÓN', ben: 45 }, { name: 'Festival Pacificarte', type: 'CIRCULACIÓN', ben: 400 }] },
+            { network: 'Red Intercultural Juvenil', name: 'INFLUENCERS ETNICOS', city: 'San Basilio', lat: 10.105, lng: -75.198, contribution: 40000000, events: [{ name: 'Talleres Audiovisual', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorios creativos', type: 'FORMACIÓN', ben: 30 }, { name: 'Lanzamiento Plataformas', type: 'CIRCULACIÓN', ben: 150 }, { name: 'Encuentro comunitario', type: 'PUBLICO', ben: 60 }, { name: 'Estrategia circulación', type: 'CIRCULACIÓN', ben: 30 }, { name: 'Encuentro intergeneracional', type: 'PUBLICO', ben: 50 }, { name: 'Encuentro Red Juvenil', type: 'PUBLICO', ben: 40 }, { name: 'Taller final', type: 'PUBLICO', ben: 100 }] },
+            { network: 'Red Intercultural Juvenil', name: 'AMBIENTALISTAS DE CORAZÓN', city: 'Tocancipá', lat: 4.966, lng: -73.916, contribution: 45000000, events: [{ name: 'Festival Biohoty', type: 'FORMACIÓN', ben: 120 }, { name: 'Comparsa y Ritual', type: 'CIRCULACIÓN', ben: 500 }, { name: 'Talleres formación', type: 'FORMACIÓN', ben: 80 }, { name: 'Shows artísticos', type: 'CIRCULACIÓN', ben: 600 }, { name: 'Conversatorios cierre', type: 'FORMACIÓN', ben: 60 }] },
+            { network: 'Red Intercultural Juvenil', name: 'FUNDACIÓN RIMARTE', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 50000000, events: [{ name: 'Taller Iniciación', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorio Composición', type: 'FORMACIÓN', ben: 25 }, { name: 'Ensayo Abierto', type: 'PUBLICO', ben: 80 }, { name: 'Grabación y producción', type: 'FORMACIÓN', ben: 10 }, { name: 'Foro con Referentes', type: 'FORMACIÓN', ben: 60 }, { name: 'Evento Voces que nacen', type: 'CIRCULACIÓN', ben: 250 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ALAS Y RAÍCES', city: 'La Belleza', lat: 5.860, lng: -73.968, contribution: 45000000, events: [{ name: 'Residencias artísticas', type: 'FORMACIÓN', ben: 20 }, { name: 'Taller cartografía', type: 'FORMACIÓN', ben: 50 }, { name: 'Pintura murales', type: 'PUBLICO', ben: 150 }, { name: 'Talleres Bioculturales', type: 'FORMACIÓN', ben: 200 }, { name: 'Producción fanzines', type: 'FORMACIÓN', ben: 40 }] },
+            { network: 'Red Intercultural Juvenil', name: 'NUEVO ESTILO DANCE', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 30000000, events: [{ name: 'Talleres formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Formación avanzada', type: 'FORMACIÓN', ben: 30 }, { name: 'Ensayos show', type: 'FORMACIÓN', ben: 50 }, { name: 'Laboratorio danza', type: 'FORMACIÓN', ben: 30 }, { name: 'Ruta turística Siloé', type: 'PUBLICO', ben: 60 }, { name: 'Encuentro cultural', type: 'CIRCULACIÓN', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Guaque/Territorialidades', city: 'Sopó', lat: 4.908, lng: -73.938, contribution: 45000000, events: [{ name: 'Residencias Artísticas', type: 'FORMACIÓN', ben: 50 }, { name: 'Talleres Arte Urbano', type: 'FORMACIÓN', ben: 25 }, { name: 'Festival QUYCAGUA', type: 'CIRCULACIÓN', ben: 800 }] },
+            { network: 'Red Intercultural Juvenil', name: 'FUTURO DE LA GUAJIRA', city: 'Riohacha', lat: 11.544, lng: -72.907, contribution: 80000000, events: [{ name: 'Talleres danza', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorio oralidad', type: 'FORMACIÓN', ben: 20 }, { name: 'Fogata literaria', type: 'PUBLICO', ben: 50 }, { name: 'Laboratorios visuales', type: 'FORMACIÓN', ben: 60 }, { name: 'Exposición cierre', type: 'CIRCULACIÓN', ben: 200 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Jóvenes Creadores Chocó', city: 'Quibdó', lat: 5.694, lng: -76.661, contribution: 60000000, events: [{ name: 'Formación danza', type: 'FORMACIÓN', ben: 45 }, { name: 'Comparsa San Pacho', type: 'CIRCULACIÓN', ben: 600 }, { name: 'Evento danza', type: 'CIRCULACIÓN', ben: 200 }] },
+            { network: 'Red Intercultural Juvenil', name: 'CÓDIGO ESTILO CREW', city: 'Armenia', lat: 4.533, lng: -75.681, contribution: 50000000, events: [{ name: 'Parche de Juventudes', type: 'CIRCULACIÓN', ben: 400 }, { name: 'Caravana Juvenil', type: 'CIRCULACIÓN', ben: 250 }, { name: 'Ciclos formativos', type: 'FORMACIÓN', ben: 30 }] },
+            { network: 'Red Intercultural Juvenil', name: 'RED CEPELA', city: 'Mutatá', lat: 7.243, lng: -76.436, contribution: 50000000, events: [{ name: 'Festival Selva Adentro', type: 'CIRCULACIÓN', ben: 400 }, { name: 'Talleres danza-teatro', type: 'FORMACIÓN', ben: 35 }] },
+            { network: 'Red Intercultural Juvenil', name: 'REY DE LA SELVA', city: 'Quibdó', lat: 5.696, lng: -76.661, contribution: 40000000, events: [{ name: 'Semilleros Freestyle', type: 'FORMACIÓN', ben: 50 }, { name: 'Festival Rugido Social', type: 'CIRCULACIÓN', ben: 800 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ECOSISTEMAS CULTURALES', city: 'Luruaco', lat: 10.612, lng: -75.146, contribution: 80000000, events: [{ name: 'Talleres economía', type: 'FORMACIÓN', ben: 25 }, { name: 'Festival Música', type: 'CIRCULACIÓN', ben: 500 }, { name: 'Festival Picotero', type: 'CIRCULACIÓN', ben: 700 }, { name: 'Muralismo comunitario', type: 'PUBLICO', ben: 100 }] },
+            { network: 'Red Intercultural Juvenil', name: 'The Giants Community', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 80000000, events: [{ name: 'Encuentro Danza Urbana', type: 'CIRCULACIÓN', ben: 300 }, { name: 'Showcase / Batallas', type: 'CIRCULACIÓN', ben: 1000 }, { name: 'Conversatorios', type: 'FORMACIÓN', ben: 80 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Corporación Emergiendo', city: 'Viterbo', lat: 5.066, lng: -75.883, contribution: 50000000, events: [{ name: 'Intervenciones murales', type: 'PUBLICO', ben: 150 }, { name: 'Talleres formación', type: 'FORMACIÓN', ben: 25 }, { name: 'Exposición FNU', type: 'CIRCULACIÓN', ben: 200 }] },
+            { network: 'Red Intercultural Juvenil', name: 'La Tigra', city: 'Piedecuesta', lat: 6.988, lng: -73.048, contribution: 70000000, events: [{ name: 'Talleres artísticos', type: 'FORMACIÓN', ben: 25 }, { name: 'Festival La Tigra', type: 'CIRCULACIÓN', ben: 1500 }, { name: 'Muralismo y Mapping', type: 'PUBLICO', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Danzantes Janshan', city: 'Sibundoy', lat: 1.205, lng: -76.920, contribution: 45000000, events: [{ name: 'Talleres Evocar', type: 'FORMACIÓN', ben: 30 }, { name: 'Laboratorios poética', type: 'FORMACIÓN', ben: 20 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }, { name: 'Feria economía', type: 'PUBLICO', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'KOMBILESA MI', city: 'San Basilio', lat: 10.105, lng: -75.198, contribution: 40000000, events: [{ name: 'Talleres música/lengua', type: 'FORMACIÓN', ben: 40 }] },
+            { network: 'Red Intercultural Juvenil', name: 'YUKUTA SONIDO NATIVO', city: 'Inírida', lat: 3.865, lng: -67.923, contribution: 35000000, events: [{ name: 'Talleres Música', type: 'FORMACIÓN', ben: 35 }, { name: 'Festival King Yakaré', type: 'CIRCULACIÓN', ben: 450 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Vida-Paz', city: 'San José del Guaviare', lat: 2.572, lng: -72.645, contribution: 100000000, events: [{ name: 'Talleres Bioculturales', type: 'FORMACIÓN', ben: 100 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 400 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ARTE SHEMBASENG', city: 'Sibundoy', lat: 1.205, lng: -76.920, events: [{ name: 'Charlas y Talleres', type: 'FORMACIÓN', ben: 25 }, { name: 'Evento muralístico', type: 'CIRCULACIÓN', ben: 150 }] },
+            { network: 'Red Intercultural Juvenil', name: 'D Three Studio', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 20000000, events: [{ name: 'Cypher y Funciones', type: 'CIRCULACIÓN', ben: 250 }, { name: 'Festival Batallas', type: 'CIRCULACIÓN', ben: 400 }] },
+            { network: 'Red Intercultural Juvenil', name: 'MANGLARIA DIVERSA', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 40000000, events: [{ name: 'Talleres Danza/Música', type: 'FORMACIÓN', ben: 45 }, { name: 'Encuentro socialización', type: 'PUBLICO', ben: 250 }] },
+            { network: 'Red Intercultural Juvenil', name: 'RITMO EXTREMO', city: 'Apartadó', lat: 7.883, lng: -76.633, contribution: 30000000, events: [{ name: 'Laboratorios Danza', type: 'FORMACIÓN', ben: 120 }, { name: 'Circulación intercambio', type: 'CIRCULACIÓN', ben: 200 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ESCUELA LA ESFERA', city: 'San Andrés', lat: 12.584, lng: -81.700, contribution: 60000000, events: [{ name: 'Formación orquestal', type: 'FORMACIÓN', ben: 40 }, { name: 'Lanzamiento Video', type: 'CIRCULACIÓN', ben: 50 }] },
+            { network: 'Red Intercultural Juvenil', name: 'Arreglando el País', city: 'Pitalito', lat: 1.853, lng: -76.048, contribution: 30000000, events: [{ name: 'Diplomado Vientos', type: 'FORMACIÓN', ben: 30 }, { name: 'Evento muestra final', type: 'CIRCULACIÓN', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'KHUYAY', city: 'Pereira', lat: 4.813, lng: -75.694, contribution: 30000000, events: [{ name: 'Festival Pereira', type: 'CIRCULACIÓN', ben: 600 }, { name: 'Ciclo formación', type: 'FORMACIÓN', ben: 20 }] },
+            { network: 'Red Intercultural Juvenil', name: 'PACIFICA CULTURAL', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 90000000, events: [{ name: 'Laboratorios Creación', type: 'FORMACIÓN', ben: 40 }, { name: 'Conciertos Cacerolazo', type: 'CIRCULACIÓN', ben: 350 }] },
+            { network: 'Red Intercultural Juvenil', name: 'CALINA CUMBAY', city: 'Armero Guayabal', lat: 5.030, lng: -74.883, contribution: 30000000, events: [{ name: 'Talleres Danza/Circo', type: 'FORMACIÓN', ben: 50 }, { name: 'Lagunilla Bio Fest', type: 'CIRCULACIÓN', ben: 600 }, { name: 'Turismo y Gastronomía', type: 'PUBLICO', ben: 80 }] },
+            { network: 'Red Intercultural Juvenil', name: 'LINDEROS DE PAZ', city: 'Bogotá', lat: 4.550, lng: -74.150, contribution: 45000000, events: [{ name: 'Sesiones Formativas', type: 'FORMACIÓN', ben: 25 }, { name: 'Muestra Artística', type: 'CIRCULACIÓN', ben: 150 }] },
+            { network: 'Red Intercultural Juvenil', name: 'PARCHEMOS POR YACOPI', city: 'Yacopí', lat: 5.456, lng: -74.348, contribution: 40000000, events: [{ name: 'Laboratorio Muralismo', type: 'FORMACIÓN', ben: 25 }, { name: 'Sancocho Master', type: 'PUBLICO', ben: 500 }] },
+            { network: 'Red Intercultural Juvenil', name: 'ATICOYA', city: 'Puerto Nariño', lat: -3.774, lng: -70.383, contribution: 14579439, events: [{ name: 'Talleres y Ritual', type: 'FORMACIÓN', ben: 40 }, { name: 'Evento de cierre', type: 'CIRCULACIÓN', ben: 300 }] },
+            { network: 'Red Intercultural Juvenil', name: 'HUELLAS DE MI TIERRA', city: 'Cúcuta', lat: 7.893, lng: -72.507, contribution: 80000000, events: [{ name: 'Bari Rock Fest', type: 'CIRCULACIÓN', ben: 1000 }] },
+            { network: 'Red Intercultural Juvenil', name: 'AMAHIA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 30000000, events: [{ name: 'Talleres rurales', type: 'FORMACIÓN', ben: 30 }, { name: 'Fiesta Infancias', type: 'PUBLICO', ben: 80 }] },
+
+            // --- RED HIP HOP ---
+            { network: 'Red Hip Hop', name: '5TA CON 5TA CREW', city: 'Cúcuta', lat: 7.907, lng: -72.504, contribution: 57000000, events: [{ name: 'Proceso Pedagógico', type: 'FORMACIÓN', ben: 1000 }, { name: 'Cierre Proceso', type: 'CIRCULACIÓN' }, { name: 'Festival 5ta con 5ta', type: 'PUBLICO' }] },
+            { network: 'Red Hip Hop', name: 'SURPRISE CITY', city: 'Pasto', lat: 1.213, lng: -77.281, contribution: 57000000, events: [{ name: 'Talleres Jamondino', type: 'FORMACIÓN', ben: 3000 }, { name: 'Festival Hip Hop Paz', type: 'PUBLICO' }] },
+            { network: 'Red Hip Hop', name: 'HIP HOP PEÑA', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 28450000, events: [{ name: 'Encuentros Formativos', type: 'FORMACIÓN', ben: 100 }, { name: 'Cali Ciudad Hip Hop', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'PAZ Y TERRITORIO', city: 'Ibagué', lat: 4.438, lng: -75.232, contribution: 57000000, events: [{ name: 'Sesiones Formativas', type: 'FORMACIÓN', ben: 100 }, { name: 'Ibagué Hip Hop Fest', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'CASA KOLACHO', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 57000000, events: [{ name: 'Manifiesto Fest', type: 'PUBLICO', ben: 4000 }, { name: 'Talleres Hip Hop Vida', type: 'FORMACIÓN', ben: 80 }] },
+            { network: 'Red Hip Hop', name: 'RAPJUDESCO', city: 'Bogotá', lat: 4.711, lng: -74.072, events: [{ name: 'Rap Literario', type: 'FORMACIÓN', ben: 30 }, { name: 'Producción Musical', type: 'FORMACIÓN', ben: 30 }, { name: 'Académico Festival', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Rap Judesco', type: 'PUBLICO', ben: 4000 }] },
+            { network: 'Red Hip Hop', name: 'EL CIRCULO HIP HOP', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 57000000, events: [{ name: 'Talleres Formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Lil Concep', type: 'PUBLICO', ben: 1000 }] },
+            { network: 'Red Hip Hop', name: 'TURA HIP HOP', city: 'Buenaventura', lat: 3.877, lng: -77.025, contribution: 28450000, events: [{ name: 'Composición Lírica', type: 'FORMACIÓN', ben: 100 }] },
+            { network: 'Red Hip Hop', name: 'CASA DEL BARDO', city: 'Medellín', lat: 6.244, lng: -75.574, events: [{ name: 'Proceso Formación', type: 'FORMACIÓN', ben: 30 }, { name: 'Circulación Artistas', type: 'CIRCULACIÓN', ben: 100 }] },
+            { network: 'Red Hip Hop', name: 'MONTAÑA RECORDS', city: 'Ocaña', lat: 8.237, lng: -73.355, events: [{ name: 'Talleres y Sistematización', type: 'FORMACIÓN', ben: 100 }, { name: 'Hip Hop Campesino', type: 'PUBLICO', ben: 1000 }] },
+            { network: 'Red Hip Hop', name: 'HIP HOP POR LA VIDA', city: 'Manizales', lat: 5.068, lng: -75.517, events: [{ name: 'Talleres Creación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Hip Hop', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'EXPRESION TEJIDA', city: 'Cartagena', lat: 10.393, lng: -75.482, contribution: 28450000, events: [{ name: 'Formación Integral', type: 'FORMACIÓN', ben: 100 }, { name: 'Encuentro Nacional', type: 'PUBLICO', ben: 500 }] },
+            { network: 'Red Hip Hop', name: 'HIP HOP IPIALES', city: 'Ipiales', lat: 0.828, lng: -77.641, events: [{ name: 'Formación Hip Hop', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Binacional', type: 'PUBLICO', ben: 2000 }] },
+            { network: 'Red Hip Hop', name: 'CASA BEAT', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 28450000, events: [{ name: 'Talleres Formación', type: 'FORMACIÓN', ben: 100 }, { name: 'Festival Cali Beat', type: 'PUBLICO', ben: 3000 }] },
+            { network: 'Red Hip Hop', name: 'CASITA DE COLORES', city: 'San Juan de Arama', lat: 3.370, lng: -73.870, contribution: 28450000, events: [{ name: 'Experiencias Pedagógicas', type: 'FORMACIÓN', ben: 500 }, { name: 'Festival Georgina Ortiz', type: 'PUBLICO', ben: 1000 }] },
+            { network: 'Red Hip Hop', name: 'POR NUESTRA TIERRA', city: 'Sogamoso', lat: 5.714, lng: -72.933, contribution: 28450000, events: [{ name: 'Fortalecimiento Espacios', type: 'FORMACIÓN', ben: 200 }, { name: 'Festival COMPAS', type: 'PUBLICO', ben: 2000 }] },
+
+             // --- ORGANIZACIONES EMERGENTES ---
+            { network: 'Organizaciones Emergentes', name: 'Cuna de Acordeones', city: 'Villanueva', lat: 10.609, lng: -72.981, contribution: 100000000, events: [{ name: 'Concurso Talentos', type: 'CIRCULACIÓN', ben: 4000 }] },
+            { network: 'Organizaciones Emergentes', name: 'La Nana', city: 'Fundación', lat: 10.521, lng: -74.186, contribution: 25000000, events: [{ name: 'Festival Teatro', type: 'CIRCULACIÓN', ben: 1000 }, { name: 'Talleres Teatro', type: 'FORMACIÓN', ben: 200 }] },
+            { network: 'Organizaciones Emergentes', name: 'ASOPAMURIMAJSA', city: 'San José del Guaviare', lat: 2.573, lng: -72.641, contribution: 50000000, events: [{ name: 'Foros Saberes', type: 'FORMACIÓN', ben: 1000 }, { name: 'Muestra Cooperativa', type: 'FORMACIÓN', ben: 100 }, { name: 'Muestras Artísticas', type: 'CIRCULACIÓN', ben: 1000 }] },
+            { network: 'Organizaciones Emergentes', name: 'Cine Verde', city: 'Barichara', lat: 6.636, lng: -73.223, contribution: 120000000, events: [{ name: 'Proyecciones Parque', type: 'CIRCULACIÓN', ben: 2500 }, { name: 'Campecine', type: 'CIRCULACIÓN', ben: 800 }, { name: 'Agenda Académica', type: 'FORMACIÓN', ben: 400 }] },
+            { network: 'Organizaciones Emergentes', name: 'Sin Fronteras', city: 'Buga', lat: 3.900, lng: -76.298, contribution: 140000000, events: [{ name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 500 }, { name: 'Conciertos', type: 'CIRCULACIÓN', ben: 1800 }] },
+            { network: 'Organizaciones Emergentes', name: 'CORPACOROS', city: 'Cali', lat: 3.440, lng: -76.532, contribution: 50000000, events: [{ name: 'Encuentro Coral', type: 'CIRCULACIÓN', ben: 3000 }, { name: 'Fortalecimiento Pedagógico', type: 'FORMACIÓN', ben: 250 }] },
+            { network: 'Organizaciones Emergentes', name: 'ASOMAUCOWOT', city: 'San José del Guaviare', lat: 2.573, lng: -72.641, contribution: 50000000, events: [{ name: 'Encuentro Interétnico', type: 'FORMACIÓN', ben: 750 }, { name: 'Transmisión Saberes', type: 'FORMACIÓN', ben: 100 }] },
+            { network: 'Organizaciones Emergentes', name: 'CORARTE', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 50000000, events: [{ name: 'Armonías de Buga', type: 'CIRCULACIÓN', ben: 1000 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 300 }] },
+            { network: 'Organizaciones Emergentes', name: 'Un Mar de Voces', city: 'Puerto Colombia', lat: 10.988, lng: -74.958, contribution: 45000000, events: [{ name: 'Concierto Clausura', type: 'CIRCULACIÓN', ben: 780 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 113 }] },
+            { network: 'Organizaciones Emergentes', name: 'La Concepción', city: 'San Juan de Urabá', lat: 8.761, lng: -76.529, contribution: 50000000, events: [{ name: 'Festival Sextetos', type: 'CIRCULACIÓN', ben: 1000 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 130 }] },
+            { network: 'Organizaciones Emergentes', name: 'Coral Santa María', city: 'Manizales', lat: 5.068, lng: -75.517, contribution: 10000000, events: [{ name: 'Coro a la Plaza', type: 'CIRCULACIÓN', ben: 300 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 245 }] },
+            { network: 'Organizaciones Emergentes', name: 'Arte y Parte', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 125000000, events: [{ name: 'Socializaciones', type: 'CIRCULACIÓN', ben: 1500 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 350 }] },
+            { network: 'Organizaciones Emergentes', name: 'Afroresilientes', city: 'Santa Marta', lat: 11.240, lng: -74.211, contribution: 25000000, events: [{ name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 40 }, { name: 'Muestras', type: 'CIRCULACIÓN', ben: 150 }] },
+            { network: 'Organizaciones Emergentes', name: 'Prometeo', city: 'Medellín', lat: 6.244, lng: -75.581, contribution: 150000000, events: [{ name: 'Festival Poesía', type: 'CIRCULACIÓN', ben: 3000 }, { name: 'Espacios Formativos', type: 'FORMACIÓN', ben: 1420 }] },
+            { network: 'Organizaciones Emergentes', name: 'Banda Gutiérrez', city: 'Gutiérrez', lat: 4.253, lng: -74.000, contribution: 20000000, events: [{ name: 'Festival Internacional', type: 'CIRCULACIÓN', ben: 1200 }] },
+            { network: 'Organizaciones Emergentes', name: 'Unidos Desarrollo', city: 'San Pelayo', lat: 8.957, lng: -75.847, contribution: 20000000, events: [{ name: 'Encuentro Soy Pelayero', type: 'CIRCULACIÓN', ben: 600 }] },
+            { network: 'Organizaciones Emergentes', name: 'Identidad Despierta', city: 'Riohacha', lat: 11.544, lng: -72.907, contribution: 28400000, events: [{ name: 'Transformarte', type: 'CIRCULACIÓN', ben: 700 }] },
+            { network: 'Organizaciones Emergentes', name: 'Paz y Reconciliación', city: 'Aracataca', lat: 10.593, lng: -74.189, contribution: 200000000, events: [{ name: 'Festival Macondo', type: 'CIRCULACIÓN', ben: 600 }] },
+            { network: 'Organizaciones Emergentes', name: 'Dramático Magdalena', city: 'Santa Marta', lat: 11.240, lng: -74.211, contribution: 200000000, events: [{ name: 'Proceso Teatral', type: 'FORMACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Carmen Mantilla', city: 'El Plato', lat: 10.230, lng: -74.783, contribution: 30000000, events: [{ name: 'Actividades Musicales', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Cabildos Ipiales', city: 'Ipiales', lat: 0.828, lng: -77.641, contribution: 80000000, events: [{ name: 'Encuentro Musical', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'L&M', city: 'Paipa', lat: 5.784, lng: -73.117, contribution: 70000000, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Marcashi Group', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 80000000, events: [{ name: 'Música', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Tierra Pazífica', city: 'Cali', lat: 3.451, lng: -76.532, contribution: 200000000, events: [{ name: 'Música y Formación', type: 'FORMACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Cultura Nativa', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 80000000, events: [{ name: 'Teatro', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'CORPOULRIKA', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 150000000, events: [{ name: 'Literatura', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Transformación Social', city: 'Barrancabermeja', lat: 7.065, lng: -73.854, contribution: 40000000, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Esquina del Barrio', city: 'Ibagué', lat: 4.439, lng: -75.232, contribution: 30000000, events: [{ name: 'Música y Danza', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Víctimas Santiago', city: 'Ataco', lat: 3.581, lng: -75.390, contribution: 50000000, events: [{ name: 'Actividad Cultural', type: 'CIRCULACIÓN' }] },
+            { network: 'Organizaciones Emergentes', name: 'Centro Periferia', city: 'Bogotá', lat: 4.711, lng: -74.072, events: [{ name: 'Danza', type: 'CIRCULACIÓN' }] },
+
+            // --- CIRCULACIÓN NACIONAL E INTERNACIONAL ---
+            { network: 'Circulación Nacional e Internacional', name: 'FUNDACION MUJERES INDEPENDIENTES', city: 'Gutierrez', lat: 5.862, lng: -76.054, contribution: 20000000, events: [{ name: 'Festival Internacional Música', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'MONICA ÁVILA BALLESTEROS', city: 'Tumaco', lat: 1.805, lng: -78.764, contribution: 12327319, events: [{ name: 'Grupo Coral Perlas', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'CORPORACION L&M (Gira)', city: 'Paipa', lat: 5.783, lng: -73.117, contribution: 70000000, events: [{ name: 'Festival Folclore Bulgaria', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'PAULA ANDREA ARELLANO', city: 'Colombia', lat: 4.570, lng: -74.297, contribution: 10260632, events: [{ name: 'Circulación Ballet', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'TEATRO DANZA PIES DEL SOL', city: 'Amazonas', lat: -1.444, lng: -71.931, contribution: 10256410, events: [{ name: 'Evento Pueblos Amazónicos', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'CINE SIN FRONTERAS', city: 'Tijuana', lat: 32.514, lng: -117.038, contribution: 33743000, events: [{ name: 'Participación Tijuana', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'CONGRESO NACIONAL DE MUSICA', city: 'Ibagué', lat: 4.438, lng: -75.232, contribution: 33582000, events: [{ name: 'Congreso Nacional', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'GRUPO DE MAR Y RIO', city: 'Brasil', lat: -10.335, lng: -53.197, contribution: 5690000, events: [{ name: 'Circulación Brasil', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'JOHANA CARVAJAL', city: 'Londres', lat: 51.507, lng: -0.127, contribution: 8452426, events: [{ name: 'Participación Londres', type: 'CIRCULACIÓN' }] },
+            { network: 'Circulación Nacional e Internacional', name: 'LEANY MISLENA LAULATE', city: 'Palenque', lat: 10.105, lng: -75.198, contribution: 4000000, events: [{ name: 'Intercambio Cultural', type: 'CIRCULACIÓN' }] },
+
+            // --- CULTURA FESTIVA DEL TERRITORIO ---
+            { network: 'Cultura Festiva del Territorio', name: 'PROMETEO (Fest)', city: 'Medellín', lat: 6.244, lng: -75.574, contribution: 150000000, events: [{ name: 'Festival Poesía', type: 'PUBLICO' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'DECUPLUM (Fest)', city: 'Valledupar', lat: 10.463, lng: -73.253, contribution: 50000000, events: [{ name: 'Festival EVAFE', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'COLOMBIA BAILA', city: 'Florencia', lat: 1.614, lng: -75.606, contribution: 15000000, events: [{ name: 'Festival Colombia Baila', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'LA NANA (Fest)', city: 'Fundación', lat: 10.520, lng: -74.184, contribution: 25000000, events: [{ name: 'Festival Teatro', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'CABILDOS IPIALES (Bandas)', city: 'Samaniego', lat: 1.336, lng: -77.602, contribution: 80000000, events: [{ name: 'Concurso Bandas', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'DESARROLLO CORAL BUGA', city: 'Buga', lat: 3.900, lng: -76.300, contribution: 50000000, events: [{ name: 'Encuentro Coral', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'CUNA DE ACORDEONES (Fest)', city: 'Villanueva', lat: 10.615, lng: -72.975, contribution: 100000000, events: [{ name: 'Festival Cuna Acordeones', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'LA CONCEPCION (Sexteto)', city: 'San Pelayo', lat: 8.957, lng: -75.829, contribution: 50000000, events: [{ name: 'Encuentro Sexteto', type: 'CIRCULACIÓN' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'CINE VERDE (Fest)', city: 'Barichara', lat: 6.638, lng: -73.224, contribution: 120000000, events: [{ name: 'Festival Cine Verde', type: 'PUBLICO' }] },
+            { network: 'Cultura Festiva del Territorio', name: 'LA ESKINA DEL BARRIO (Fest)', city: 'Ibagué', lat: 4.438, lng: -75.232, contribution: 30000000, events: [{ name: 'Festival Hip Hop', type: 'CIRCULACIÓN' }] },
+
+            // --- NARRATIVAS ---
+            { network: 'Narrativas Artísticas y Bioculturales', name: 'PAZ Y RECONCILIACION-PARES', city: 'Aracataca', lat: 10.590, lng: -74.184, contribution: 200000000, events: [{ name: 'Festival Macondo', type: 'PUBLICO' }] },
+            { network: 'Narrativas Artísticas y Bioculturales', name: 'VECINOS GRANJAS SAN PABLO', city: 'Bogotá', lat: 4.711, lng: -74.072, contribution: 30000000, events: [{ name: 'Campaña Desnaturalizando', type: 'CIRCULACIÓN' }] }
+        ];
+
+        // 2. CONFIGURACIÓN LEAFLET
+        const map = L.map('map', { zoomControl: false }).setView([4.5709, -74.2973], 6);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // Capa Estilo "Claro"
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; CARTO'
+        }).addTo(map);
+
+        // 3. CLUSTERS Y MARCADORES
+        const markers = L.markerClusterGroup({
+            maxClusterRadius: 30, // Reduce el radio de agrupación para mostrar más puntos individuales
+            showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2,
+            iconCreateFunction: function(cluster) {
+                const children = cluster.getAllChildMarkers();
+                let dominant = children[0].options.network;
+                let cClass = '';
+                if(dominant.includes('Hip Hop')) cClass = 'marker-cluster-hiphop';
+                else if(dominant.includes('Emergentes')) cClass = 'marker-cluster-emergentes';
+                else if(dominant.includes('Juvenil')) cClass = 'marker-cluster-juvenil';
+                else if(dominant.includes('Mujeres')) cClass = 'marker-cluster-mujeres';
+                else if(dominant.includes('Circulación')) cClass = 'marker-cluster-circulacion';
+                
+                return new L.DivIcon({ 
+                    html: `<div>${cluster.getChildCount()}</div>`, 
+                    className: `marker-cluster ${cClass}`, 
+                    iconSize: L.point(40, 40) 
+                });
+            }
+        });
+
+        // Iconos de Imagen
+        const getIcon = (network) => {
+            let iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Cometa_Sin_Marco.png'; // Default / Circulación
+            let size = [48, 48]; // Doble tamaño para CDP
+
+            if(network.includes('Hip Hop')) { iconUrl = '../assets/img/REDDEHIPHOP.png'; size = [24, 24]; }
+            else if(network.includes('Emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES EMERGENTES.png'; size = [24, 24]; }
+            else if(network.includes('Juvenil')) { iconUrl = '../assets/img/RED JUVENIL.png'; size = [24, 24]; }
+            else if(network.includes('Mujeres')) { iconUrl = '../assets/img/ORGANIZACIONES DE MUJERES.png'; size = [24, 24]; }
+            else if(network.includes('Festiva')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png'; }
+            else if(network.includes('Narrativas')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png'; }
+            
+            return L.icon({
+                iconUrl: iconUrl,
+                iconSize: size,
+                iconAnchor: [size[0]/2, size[1]/2],
+                popupAnchor: [0, -size[1]/2],
+                className: 'custom-pin-img drop-shadow-md hover:scale-110 transition-transform'
+            });
+        };
+
+        // 4. RENDERIZADO
+        let chartInvestment = null;
+
+        // Total del convenio (cifra fija solicitada)
+        const totalAgreementInvestment = 7080670800;
+        const formatCop = (value, decimals = 0) => {
+            const n = Number.isFinite(value) ? value : Number(value || 0);
+            return '$' + n.toLocaleString('es-CO', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals,
+            });
+        };
+
+        function renderMarkers(filterText = '', activeTypes = ['formacion','circulacion','publico'], activeNetworks = []) {
+            markers.clearLayers();
+            let totalBen = 0;
+            let totalContribution = 0;
+            let filteredOrgs = [];
+
+            organizations.forEach(org => {
+                // Filtro Texto
+                const matchText = filterText === '' || 
+                                  org.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                                  org.city.toLowerCase().includes(filterText.toLowerCase());
+
+                // Filtro Red
+                const matchNetwork = activeNetworks.length === 0 || activeNetworks.includes(org.network);
+
+                // Filtro Tipo (Al menos un evento coincide)
+                let matchType = false;
+                if(org.events) {
+                    org.events.forEach(ev => {
+                        const typeKey = ev.type.toUpperCase().includes('FORMACIÓN') || ev.type.toUpperCase().includes('FORMACION') ? 'formacion' :
+                                        ev.type.toUpperCase().includes('PÚBLICO') || ev.type.toUpperCase().includes('PUBLICO') ? 'publico' : 'circulacion';
+                        if(activeTypes.includes(typeKey)) matchType = true;
+                    });
+                } else {
+                    matchType = true;
+                }
+
+                if (matchText && matchType && matchNetwork) {
+                    filteredOrgs.push(org);
+
+                    // Sumas (Solo eventos activos)
+                    if(org.events) {
+                        org.events.forEach(ev => { 
+                            const typeKey = ev.type.toUpperCase().includes('FORMACIÓN') || ev.type.toUpperCase().includes('FORMACION') ? 'formacion' :
+                                            ev.type.toUpperCase().includes('PÚBLICO') || ev.type.toUpperCase().includes('PUBLICO') ? 'publico' : 'circulacion';
+                            
+                            if(activeTypes.includes(typeKey) && ev.ben) {
+                                totalBen += ev.ben; 
+                            }
+                        });
+                    }
+                    if(org.contribution) totalContribution += org.contribution;
+
+                    const m = L.marker([org.lat, org.lng], { icon: getIcon(org.network), network: org.network });
+                    
+                    // Popup
+                    let popupContent = `<div class="p-2 font-montserrat min-w-[200px]">
+                        <h4 class="font-bold text-palette-dark border-b pb-1 mb-2 leading-tight">${org.name}</h4>
+                        <div class="flex justify-between items-center text-xs mb-2 text-gray-500">
+                            <span><i class="fas fa-city"></i> ${org.city}</span>
+                            <span class="bg-gray-100 px-2 py-0.5 rounded text-[10px]">${org.network.split(' ')[0]}...</span>
+                        </div>
+
+                        <div class="space-y-1 max-h-32 overflow-y-auto">`;
+                    
+                    if(org.events) {
+                        org.events.forEach(ev => {
+                             popupContent += `<div class="bg-gray-50 p-1.5 rounded text-xs border border-gray-100">
+                                <strong>${ev.name}</strong><br>
+                                <span class="text-[9px] text-gray-400 uppercase tracking-wider">${ev.type}</span>
+                             </div>`;
+                        });
+                    }
+                    
+                    popupContent += `</div></div>`;
+                    m.bindPopup(popupContent);
+                    markers.addLayer(m);
+                }
+            });
+            
+            map.addLayer(markers);
+            document.getElementById('total-ben-count').innerText = totalBen.toLocaleString();
+            document.getElementById('total-contribution-count').innerText = formatCop(totalAgreementInvestment, 2);
+            
+            updateCharts(filteredOrgs, totalBen, totalContribution);
+        }
+
+        // 5. DASHBOARD & CHARTS
+        window.toggleDashboard = () => {
+            const modal = document.getElementById('dashboard-modal');
+            if(modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.querySelector('div').classList.remove('scale-95');
+                    modal.querySelector('div').classList.add('scale-100');
+                }, 10);
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.querySelector('div').classList.remove('scale-100');
+                modal.querySelector('div').classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        };
+
+        function updateCharts(data, totalBen, totalContribution) {
+            // Stats Cards
+            document.getElementById('stat-orgs').innerText = data.length;
+            const uniqueCities = [...new Set(data.map(o => o.city))].length;
+            document.getElementById('stat-cities').innerText = uniqueCities;
+            const totalEvents = data.reduce((acc, curr) => acc + (curr.events ? curr.events.length : 0), 0);
+            document.getElementById('stat-events').innerText = totalEvents;
+            // Valor fijo del convenio (no por organización)
+            document.getElementById('stat-avg').innerText = formatCop(totalAgreementInvestment, 2);
+
+            // Chart 1: Investment by Network
+            const netData = {};
+            data.forEach(o => {
+                if(!netData[o.network]) netData[o.network] = 0;
+                if(o.contribution) netData[o.network] += o.contribution;
+            });
+
+            const ctxInv = document.getElementById('chart-investment').getContext('2d');
+            if(chartInvestment) chartInvestment.destroy();
+            
+            chartInvestment = new Chart(ctxInv, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(netData),
+                    datasets: [{
+                        data: Object.values(netData),
+                        backgroundColor: ['#E940B4', '#F3C746', '#0066FF', '#886FFF', '#5BC6FB', '#1A1A3A'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    const total = context.dataset.data.reduce((acc, v) => acc + (Number(v) || 0), 0);
+                                    const val = Number(context.parsed || 0);
+                                    const pct = total > 0 ? (val / total) * 100 : 0;
+                                    return `${label}: ${pct.toFixed(1)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 6. INICIALIZACIÓN Y EVENTOS
+        // Toggle Filters Mobile
+        const filterToggle = document.getElementById('filter-toggle');
+        const mapControls = document.getElementById('map-controls');
+        
+        filterToggle.addEventListener('click', () => {
+            mapControls.classList.toggle('hidden');
+        });
+
+        window.toggleFilters = () => {
+            mapControls.classList.add('hidden');
+        };
+
+        // Generar Filtros de Red
+        const nets = [...new Set(organizations.map(o => o.network))];
+        const filtersList = document.getElementById('filters-list');
+        
+        nets.forEach(n => {
+            let iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Cometa_Sin_Marco.png';
+            let iconClass = 'w-6 h-6'; // Default size
+
+            if(n.includes('Hip Hop')) { iconUrl = '../assets/img/REDDEHIPHOP.png'; iconClass = 'w-3 h-3'; }
+            else if(n.includes('Emergentes')) { iconUrl = '../assets/img/ORGANIZACIONES EMERGENTES.png'; iconClass = 'w-3 h-3'; }
+            else if(n.includes('Juvenil')) { iconUrl = '../assets/img/RED JUVENIL.png'; iconClass = 'w-3 h-3'; }
+            else if(n.includes('Mujeres')) { iconUrl = '../assets/img/ORGANIZACIONES DE MUJERES.png'; iconClass = 'w-3 h-3'; }
+            else if(n.includes('Festiva')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png'; }
+            else if(n.includes('Narrativas')) { iconUrl = '../assets/img/Iconos_Amarillo/CCDP_Icono_Arbol_Sin_Marco.png'; }
+            
+            const count = organizations.filter(o => o.network === n).length;
+
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-2 hover:bg-gray-50 p-1 rounded cursor-pointer';
+            div.innerHTML = `
+                <input type="checkbox" class="network-check accent-palette-purple" value="${n}" checked>
+                <div class="w-6 flex justify-center"><img src="${iconUrl}" class="${iconClass} object-contain"></div>
+                <span class="opacity-80 truncate text-[10px] flex-1" title="${n}">${n}</span>
+                <span class="text-[9px] font-bold opacity-60">(${count})</span>
+            `;
+            filtersList.appendChild(div);
+        });
+
+        // Listeners
+        const activityChecks = document.querySelectorAll('.activity-check');
+        const networkChecks = document.querySelectorAll('.network-check'); // Now they exist
+
+        const updateAll = () => {
+            const activeTypes = Array.from(activityChecks).filter(ch => ch.checked).map(ch => ch.value);
+            const activeNetworks = Array.from(networkChecks).filter(ch => ch.checked).map(ch => ch.value);
+            const searchVal = document.getElementById('search-input').value;
+            renderMarkers(searchVal, activeTypes, activeNetworks);
+        };
+
+        activityChecks.forEach(c => c.addEventListener('change', updateAll));
+        // Add listeners to the newly created network checks
+        document.querySelectorAll('.network-check').forEach(c => c.addEventListener('change', updateAll));
+
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        const suggestions = document.getElementById('search-suggestions');
+
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if(val.length > 0) searchClear.classList.remove('hidden');
+            else searchClear.classList.add('hidden');
+
+            if(val.length > 2) {
+                const matches = organizations.filter(o => o.name.toLowerCase().includes(val.toLowerCase()));
+                suggestions.innerHTML = matches.slice(0,5).map(m => 
+                    `<div class="p-2 hover:bg-gray-100 cursor-pointer border-b text-xs text-left" onclick="zoomTo('${m.name}')">${m.name}</div>`
+                ).join('');
+                suggestions.classList.remove('hidden');
+            } else {
+                suggestions.classList.add('hidden');
+            }
+            updateAll();
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.classList.add('hidden');
+            suggestions.classList.add('hidden');
+            map.setView([4.5709, -74.2973], 6); // Reset view
+            updateAll();
+        });
+
+        window.zoomTo = (name) => {
+            const org = organizations.find(o => o.name === name);
+            if(org) {
+                map.setView([org.lat, org.lng], 12);
+                document.getElementById('search-input').value = name;
+                document.getElementById('search-clear').classList.remove('hidden');
+                document.getElementById('search-suggestions').classList.add('hidden');
+                updateAll();
+            }
+        };
+
+        // Initial Render
+        renderMarkers('', ['formacion','circulacion','publico'], nets);
+
+    });
+    </script>
+</body>
+</html>
