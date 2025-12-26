@@ -136,6 +136,14 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+
+        /* Scrollbar para acordeones de organizaciones */
+        .network-accordion .custom-scrollbar::-webkit-scrollbar-track { background: #f3f4f6; }
+        .network-accordion .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; }
+        .network-accordion .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Transiciones suaves para acordeones */
+        .network-accordion button i { transition: transform 0.3s ease; }
     </style>
 </head>
 <body class="bg-gradient-to-br from-palette-yellow via-white to-palette-lightblue min-h-screen text-palette-dark antialiased">
@@ -308,6 +316,73 @@
             </div>
             <div class="text-center mt-2">
                 <p class="text-xs text-palette-dark opacity-60"><i class="fas fa-info-circle"></i> Haz clic en los clusters para desagregar. Los montos reflejan la inversión en fortalecimiento.</p>
+            </div>
+
+            <!-- BOTONES DESPLEGABLES DE ORGANIZACIONES POR RED -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="network-accordions">
+                <!-- Red de Hip Hop -->
+                <div class="network-accordion">
+                    <button onclick="toggleNetworkAccordion('hiphop')" class="w-full bg-gradient-to-r from-[#E940B4] to-[#c2369a] text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-between gap-2 group">
+                        <div class="flex items-center gap-2">
+                            <img src="../assets/img/REDDEHIPHOP.png" class="w-5 h-5 object-contain brightness-0 invert">
+                            <span>Red de Hip Hop</span>
+                        </div>
+                        <i id="icon-hiphop" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="accordion-hiphop" class="hidden mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                            <ul id="list-hiphop" class="divide-y divide-gray-100 text-xs"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Red de Mujeres Gestoras (REMAG) -->
+                <div class="network-accordion">
+                    <button onclick="toggleNetworkAccordion('mujeres')" class="w-full bg-gradient-to-r from-[#886FFF] to-[#6a4fd9] text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-between gap-2 group">
+                        <div class="flex items-center gap-2">
+                            <img src="../assets/img/ORGANIZACIONES%20DE%20MUJERES.png" class="w-5 h-5 object-contain brightness-0 invert">
+                            <span>Red de Mujeres Gestoras</span>
+                        </div>
+                        <i id="icon-mujeres" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="accordion-mujeres" class="hidden mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                            <ul id="list-mujeres" class="divide-y divide-gray-100 text-xs"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Red Juvenil Intercultural -->
+                <div class="network-accordion">
+                    <button onclick="toggleNetworkAccordion('juvenil')" class="w-full bg-gradient-to-r from-[#F3C746] to-[#e0b235] text-palette-dark px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-between gap-2 group">
+                        <div class="flex items-center gap-2">
+                            <img src="../assets/img/RED%20JUVENIL.png" class="w-5 h-5 object-contain">
+                            <span>Red Juvenil Intercultural</span>
+                        </div>
+                        <i id="icon-juvenil" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="accordion-juvenil" class="hidden mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                            <ul id="list-juvenil" class="divide-y divide-gray-100 text-xs"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Organizaciones Emergentes -->
+                <div class="network-accordion">
+                    <button onclick="toggleNetworkAccordion('emergentes')" class="w-full bg-gradient-to-r from-[#0066FF] to-[#0052cc] text-white px-4 py-3 rounded-xl font-bold text-sm hover:shadow-lg transition-all flex items-center justify-between gap-2 group">
+                        <div class="flex items-center gap-2">
+                            <img src="../assets/img/ORGANIZACIONES%20EMERGENTES.png" class="w-5 h-5 object-contain brightness-0 invert">
+                            <span>Org. Emergentes</span>
+                        </div>
+                        <i id="icon-emergentes" class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                    </button>
+                    <div id="accordion-emergentes" class="hidden mt-2 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden transition-all duration-300">
+                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                            <ul id="list-emergentes" class="divide-y divide-gray-100 text-xs"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -2386,6 +2461,96 @@
 
             // Initial Render
             renderMarkers('', ['formacion','circulacion','publico'], nets);
+
+            // ========================================
+            // ACORDEONES DE ORGANIZACIONES POR RED
+            // ========================================
+            const networkMapping = {
+                'hiphop': 'Red Hip Hop',
+                'mujeres': 'Red de mujeres artistas y gestoras REMAG',
+                'juvenil': 'Red Intercultural Juvenil',
+                'emergentes': 'Organizaciones Emergentes'
+            };
+
+            const networkColors = {
+                'hiphop': '#E940B4',
+                'mujeres': '#886FFF',
+                'juvenil': '#F3C746',
+                'emergentes': '#0066FF'
+            };
+
+            // Poblar las listas de organizaciones
+            Object.keys(networkMapping).forEach(key => {
+                const networkName = networkMapping[key];
+                const listEl = document.getElementById('list-' + key);
+                if (!listEl) return;
+
+                const orgs = organizations.filter(o => o.network === networkName);
+                
+                if (orgs.length === 0) {
+                    listEl.innerHTML = '<li class="p-3 text-gray-500 text-center">Sin organizaciones</li>';
+                    return;
+                }
+
+                orgs.forEach((org, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'p-3 hover:bg-gray-50 cursor-pointer transition-colors';
+                    li.innerHTML = `
+                        <div class="flex items-start gap-2">
+                            <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold text-white" style="background-color: ${networkColors[key]}">${index + 1}</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="font-semibold text-palette-dark truncate" title="${org.name}">${org.name}</div>
+                                <div class="text-gray-500 text-[10px] flex items-center gap-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${org.city}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    li.addEventListener('click', () => {
+                        // Cerrar el acordeón
+                        toggleNetworkAccordion(key);
+                        // Hacer zoom al marcador en el mapa
+                        if (window.zoomTo) {
+                            window.zoomTo(org.name);
+                        }
+                    });
+                    listEl.appendChild(li);
+                });
+
+                // Agregar contador al botón
+                const btn = listEl.closest('.network-accordion').querySelector('button');
+                if (btn) {
+                    const countSpan = document.createElement('span');
+                    countSpan.className = 'bg-white/20 px-2 py-0.5 rounded-full text-[10px] ml-1';
+                    countSpan.textContent = orgs.length;
+                    btn.querySelector('div').appendChild(countSpan);
+                }
+            });
+        };
+
+        // Función global para toggle de acordeones (fuera de boot)
+        window.toggleNetworkAccordion = function(key) {
+            const accordion = document.getElementById('accordion-' + key);
+            const icon = document.getElementById('icon-' + key);
+            
+            if (!accordion || !icon) return;
+
+            const isHidden = accordion.classList.contains('hidden');
+
+            // Cerrar todos los acordeones primero
+            ['hiphop', 'mujeres', 'juvenil', 'emergentes'].forEach(k => {
+                const acc = document.getElementById('accordion-' + k);
+                const ico = document.getElementById('icon-' + k);
+                if (acc) acc.classList.add('hidden');
+                if (ico) ico.style.transform = 'rotate(0deg)';
+            });
+
+            // Si estaba cerrado, abrirlo
+            if (isHidden) {
+                accordion.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            }
         };
 
         boot();
