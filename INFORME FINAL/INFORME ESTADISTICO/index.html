@@ -193,6 +193,23 @@
         .slideshow-nav-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
         .slideshow-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
         .expand-btn { z-index: 10; position: relative; }
+
+        /* Auto-Expand charts on Desktop Fullscreen */
+        @media (min-width: 768px) and (orientation: landscape) {
+            .fullscreen-card .relative.h-32,
+            .fullscreen-card .relative.h-40,
+            .fullscreen-card .relative.h-44,
+            .fullscreen-card .relative.h-48,
+            .fullscreen-card .relative.h-52,
+            .fullscreen-card .relative.h-56,
+            .fullscreen-card .relative.h-64 {
+                height: 60vh !important;
+                min-height: 400px !important;
+            }
+            .fullscreen-card .max-h-64 {
+                max-height: 60vh !important;
+            }
+        }
     </style>
 </head>
 
