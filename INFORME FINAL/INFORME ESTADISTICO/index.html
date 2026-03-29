@@ -89,30 +89,6 @@
         /* Anillo stat */
         .ring-stat { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 
-        /* Photo placeholder */
-        .photo-slot {
-            background: linear-gradient(135deg, rgba(136,111,255,.15), rgba(233,64,180,.1));
-            border: 2px dashed rgba(136,111,255,0.35);
-            border-radius: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: .5rem;
-            color: rgba(136,111,255,.6);
-            font-size: .75rem;
-            font-weight: 700;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            min-height: 160px;
-            cursor: pointer;
-            transition: all .3s;
-        }
-        .photo-slot:hover {
-            border-color: #886FFF;
-            background: rgba(136,111,255,.08);
-        }
-
         /* Pill de red */
         .net-pill {
             display: inline-flex;
@@ -245,7 +221,7 @@
 <main class="max-w-7xl mx-auto px-4 -mt-10 pb-24 space-y-8 relative z-10">
 
     <!-- ── FILA 1: Beneficiarios por Red + Modelo Inversión ── -->
-    <div class="grid md:grid-cols-2 gap-6 fade-up delay-1">
+    <div class="grid md:grid-cols-2 gap-6 items-start fade-up delay-1">
 
         <!-- Beneficiarios por Red -->
         <div class="glass rounded-2xl p-6">
@@ -315,18 +291,11 @@
         </div>
     </div>
 
-    <!-- ── FOTO PLACEHOLDER + Rango de Inversión ── -->
-    <div class="grid md:grid-cols-3 gap-6 fade-up delay-2">
-
-        <!-- Foto 1 -->
-        <div class="photo-slot" id="photo-1" onclick="uploadPhoto(1)">
-            <i class="fas fa-camera text-2xl"></i>
-            <span>Foto 1</span>
-            <span style="font-size:.55rem;opacity:.6">Clic para agregar imagen</span>
-        </div>
+    <!-- ── Rango de Inversión ── -->
+    <div class="grid md:grid-cols-1 gap-6 items-start fade-up delay-2">
 
         <!-- Rango de inversión por proyecto -->
-        <div class="glass rounded-2xl p-6 md:col-span-2">
+        <div class="glass rounded-2xl p-6">
             <div class="section-tag"><i class="fas fa-chart-pie"></i> Proyectos por Rango de Inversión</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 <div class="relative h-48">
@@ -371,7 +340,7 @@
     </div>
 
     <!-- ── FILA 2: Territorio + Género ── -->
-    <div class="grid md:grid-cols-3 gap-6 fade-up delay-2">
+    <div class="grid md:grid-cols-3 gap-6 items-start fade-up delay-2">
 
         <!-- Lugar de ejecución -->
         <details class="glass rounded-2xl p-6 group">
@@ -472,7 +441,7 @@
     </div>
 
     <!-- ── FILA 3: Disciplinas + Identidad de Género ── -->
-    <div class="grid md:grid-cols-2 gap-6 fade-up delay-3">
+    <div class="grid md:grid-cols-2 gap-6 items-start fade-up delay-3">
 
         <!-- Disciplinas -->
         <div class="glass rounded-2xl p-6">
@@ -555,7 +524,7 @@
     </div>
 
     <!-- ── FILA 4: Grupo Étnico + Participación ── -->
-    <div class="grid md:grid-cols-3 gap-6 fade-up delay-3">
+    <div class="grid md:grid-cols-3 gap-6 items-start fade-up delay-3">
 
         <!-- Grupo étnico -->
         <details class="glass rounded-2xl p-6 group">
@@ -669,16 +638,8 @@
         </details>
     </div>
 
-    <!-- ── FOTO PLACEHOLDERS ROW ── -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up delay-4">
-        <div class="photo-slot" onclick="uploadPhoto(2)"><i class="fas fa-camera text-xl"></i><span>Foto 2</span></div>
-        <div class="photo-slot" onclick="uploadPhoto(3)"><i class="fas fa-camera text-xl"></i><span>Foto 3</span></div>
-        <div class="photo-slot" onclick="uploadPhoto(4)"><i class="fas fa-camera text-xl"></i><span>Foto 4</span></div>
-        <div class="photo-slot" onclick="uploadPhoto(5)"><i class="fas fa-camera text-xl"></i><span>Foto 5</span></div>
-    </div>
-
     <!-- ── FILA 5: Infraestructura + Beneficiarios Top Dptos ── -->
-    <div class="grid md:grid-cols-2 gap-6 fade-up delay-4">
+    <div class="grid md:grid-cols-2 gap-6 items-start fade-up delay-4">
 
         <!-- Tipo Infraestructura -->
         <details class="glass rounded-2xl p-6 group">
