@@ -146,6 +146,50 @@
             transform: rotate(180deg);
         }
         
+        /* Slideshow Fullscreen Mode */
+        .fullscreen-card {
+            position: fixed !important;
+            top: 5vmin !important; left: 5vmin !important; right: 5vmin !important; bottom: 5vmin !important;
+            width: auto !important; height: auto !important;
+            z-index: 10000;
+            margin: 0 !important;
+            max-width: none !important;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(.4,0,.2,1);
+        }
+        #slideshow-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 25, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+        #slideshow-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .slideshow-nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            width: 3rem; height: 3rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .slideshow-nav-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+        .slideshow-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
+        .expand-btn { z-index: 10; position: relative; }
     </style>
 </head>
 
@@ -227,7 +271,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-users"></i> Beneficiarios por Red</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="relative w-full overflow-x-auto pb-2">
@@ -249,7 +298,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-coins"></i> Promedio Inversión por Red</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="space-y-4">
@@ -310,7 +364,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-chart-pie"></i> Proyectos por Rango de Inversión</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mt-4 pt-2 border-t border-gray-100">
                 <div class="relative w-full overflow-x-auto pb-2">
@@ -363,7 +422,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-map-marker-alt"></i> Lugar de Ejecución</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4 pt-2 border-t border-gray-100">
                 <!-- Urbano -->
@@ -392,7 +456,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-venus-mars"></i> Distribución por Sexo</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="relative w-full overflow-x-auto pb-2">
@@ -412,7 +481,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-network-wired"></i> Sexo por Red</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="space-y-3 mt-4 pt-2 border-t border-gray-100">
                 <!-- Hip Hop -->
@@ -471,7 +545,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-music"></i> % Beneficiarios por Disciplina</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="w-full overflow-x-auto pb-2">
@@ -486,7 +565,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-rainbow"></i> Identidad y Orientación</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             
             <div class="mt-4 pt-2 border-t border-gray-100">
@@ -559,7 +643,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-globe-americas"></i> Grupo Étnico</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="relative h-44">
@@ -589,7 +678,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-check-circle"></i> Participación en Actividades</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <!-- Gauge grande -->
@@ -639,7 +733,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-calendar-alt"></i> Constitución de Procesos</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="w-full overflow-x-auto pb-2 mb-2">
@@ -678,7 +777,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-building"></i> Infraestructura de Formación</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="w-full overflow-x-auto pb-2">
@@ -693,7 +797,12 @@
         <details class="glass rounded-2xl p-6 group min-w-0">
             <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
                 <span><i class="fas fa-map"></i> Top Departamentos — % Beneficiarios</span>
-                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                <div class="flex items-center gap-3">
+                    <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+                </div>
             </summary>
             <div class="mt-4 pt-2 border-t border-gray-100">
                 <div class="space-y-2 overflow-y-auto max-h-64 pr-1">
@@ -708,7 +817,12 @@
     <details class="glass rounded-2xl p-6 fade-up delay-5 group min-w-0">
         <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
             <span><i class="fas fa-table"></i> Disciplina Dominante por Departamento</span>
-            <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            <div class="flex items-center gap-3">
+                <button type="button" class="expand-btn text-gray-400 hover:text-p-purple transition-colors p-1" onclick="event.preventDefault(); window.openSlideshow(this.closest('details'))" title="Ver en pantalla completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </div>
         </summary>
         <div class="mt-4 pt-2 border-t border-gray-100">
             <div class="w-full overflow-x-auto">
@@ -1026,6 +1140,103 @@ document.querySelectorAll('details').forEach(detail => {
         }
     });
 });
+
+// ── SLIDESHOW ENGINE ──
+let slideshowOpenCards = [];
+let ssCurrentIndex = -1;
+
+window.openSlideshow = function(startCard) {
+    if (!startCard) return;
+    
+    // Forzar apertura si el usuario le dio clic estando cerrada
+    if (!startCard.open) {
+        startCard.open = true;
+    }
+    
+    // Recopilar únicamente las tarjetas actualmente expandidas
+    slideshowOpenCards = Array.from(document.querySelectorAll('details[open]'))
+                              .filter(d => d.querySelector('.expand-btn'));
+                              
+    if(slideshowOpenCards.length === 0) return;
+    
+    ssCurrentIndex = slideshowOpenCards.indexOf(startCard);
+    if(ssCurrentIndex === -1) ssCurrentIndex = 0;
+    
+    document.getElementById('slideshow-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden'; // bloquear scroll nativo del html
+    
+    renderSlide();
+};
+
+function renderSlide() {
+    slideshowOpenCards.forEach((c, idx) => {
+        if(idx === ssCurrentIndex) {
+            c.classList.add('fullscreen-card');
+        } else {
+            c.classList.remove('fullscreen-card');
+        }
+    });
+    
+    // Actualizar botones prev/next
+    document.getElementById('ss-prev').disabled = ssCurrentIndex <= 0;
+    document.getElementById('ss-next').disabled = ssCurrentIndex >= slideshowOpenCards.length - 1;
+    
+    // Al redimensionarse la tarjeta de cantazo completo usando css,
+    // chart.js puede necesitar un trigger manual para re-adaptar
+    setTimeout(() => {
+        const activeCard = slideshowOpenCards[ssCurrentIndex];
+        const canvases = activeCard.querySelectorAll('canvas');
+        for (let id in Chart.instances) {
+            if(Array.from(canvases).includes(Chart.instances[id].canvas)) {
+                Chart.instances[id].resize();
+            }
+        }
+    }, 350); 
+}
+
+window.closeSlideshow = function() {
+    document.getElementById('slideshow-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+    slideshowOpenCards.forEach(c => c.classList.remove('fullscreen-card'));
+    
+    setTimeout(() => {
+        for (let id in Chart.instances) { Chart.instances[id].resize(); }
+    }, 350);
+};
+
+window.nextSlide = function() {
+    if(ssCurrentIndex < slideshowOpenCards.length - 1) {
+        ssCurrentIndex++;
+        renderSlide();
+    }
+};
+
+window.prevSlide = function() {
+    if(ssCurrentIndex > 0) {
+        ssCurrentIndex--;
+        renderSlide();
+    }
+};
+
+// Listeners Teclado
+document.addEventListener('keydown', (e) => {
+    if(!document.getElementById('slideshow-overlay').classList.contains('active')) return;
+    if(e.key === 'Escape') {
+        window.closeSlideshow();
+    } else if(e.key === 'ArrowRight') {
+        window.nextSlide();
+    } else if(e.key === 'ArrowLeft') {
+        window.prevSlide();
+    }
+});
 </script>
+
+<!-- Slideshow UI Global Container -->
+<div id="slideshow-overlay">
+    <button id="ss-prev" class="slideshow-nav-btn" onclick="window.prevSlide()"><i class="fas fa-chevron-left"></i></button>
+    <button id="ss-next" class="slideshow-nav-btn" onclick="window.nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    <button id="ss-close" class="slideshow-nav-btn" onclick="window.closeSlideshow()" style="position: absolute; top: 1.5rem; right: 1.5rem;"><i class="fas fa-times"></i></button>
+</div>
+
 </body>
 </html>
