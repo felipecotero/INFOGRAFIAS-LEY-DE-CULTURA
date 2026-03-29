@@ -224,82 +224,99 @@
     <div class="grid md:grid-cols-2 gap-6 items-start fade-up delay-1">
 
         <!-- Beneficiarios por Red -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-users"></i> Beneficiarios por Red</div>
-            <div class="relative h-52">
-                <canvas id="chart-redes-ben"></canvas>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-users"></i> Beneficiarios por Red</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <div class="relative w-full overflow-x-auto pb-2">
+                    <div class="relative h-52 min-w-[260px]">
+                        <canvas id="chart-redes-ben"></canvas>
+                    </div>
+                </div>
+                <!-- Mini pills -->
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <span class="net-pill" style="background:#E940B420;color:#E940B4;">● Hip Hop &nbsp;1.047</span>
+                    <span class="net-pill" style="background:#0066FF20;color:#0066FF;">● Emergentes &nbsp;5.336</span>
+                    <span class="net-pill" style="background:#F3C74620;color:#c89600;">● Jóvenes &nbsp;3.699</span>
+                    <span class="net-pill" style="background:#886FFF20;color:#886FFF;">● Mujeres &nbsp;1.024</span>
+                </div>
             </div>
-            <!-- Mini pills -->
-            <div class="flex flex-wrap gap-2 mt-4">
-                <span class="net-pill" style="background:#E940B420;color:#E940B4;">● Hip Hop &nbsp;1.047</span>
-                <span class="net-pill" style="background:#0066FF20;color:#0066FF;">● Emergentes &nbsp;5.336</span>
-                <span class="net-pill" style="background:#F3C74620;color:#c89600;">● Jóvenes &nbsp;3.699</span>
-                <span class="net-pill" style="background:#886FFF20;color:#886FFF;">● Mujeres &nbsp;1.024</span>
-            </div>
-        </div>
+        </details>
 
         <!-- Inversión por Red →  -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-coins"></i> Promedio Inversión por Red</div>
-            <div class="space-y-4 mt-2">
-                <!-- bars -->
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span class="text-p-blue">Emergentes</span><span class="text-p-blue">$77.000.000</span>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-coins"></i> Promedio Inversión por Red</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <div class="space-y-4">
+                    <!-- bars -->
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-p-blue">Emergentes</span><span class="text-p-blue">$77.000.000</span>
+                        </div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="bar-fill bg-p-blue" style="width:100%"></div>
+                        </div>
                     </div>
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="bar-fill bg-p-blue" style="width:100%"></div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-p-yellow" style="color:#c89600">Jóvenes</span><span style="color:#c89600">$48.000.000</span>
+                        </div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="bar-fill" style="width:62%;background:#F3C746"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-p-pink">Hip Hop</span><span class="text-p-pink">$42.000.000</span>
+                        </div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="bar-fill bg-p-pink" style="width:55%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-p-purple">Mujeres</span><span class="text-p-purple">$20.000.000</span>
+                        </div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="bar-fill bg-p-purple" style="width:26%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-gray-500">Apoyo Logístico</span><span class="text-gray-500">$14.000.000</span>
+                        </div>
+                        <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="bar-fill bg-gray-400" style="width:18%"></div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span class="text-p-yellow" style="color:#c89600">Jóvenes</span><span style="color:#c89600">$48.000.000</span>
-                    </div>
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="bar-fill" style="width:62%;background:#F3C746"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span class="text-p-pink">Hip Hop</span><span class="text-p-pink">$42.000.000</span>
-                    </div>
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="bar-fill bg-p-pink" style="width:55%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span class="text-p-purple">Mujeres</span><span class="text-p-purple">$20.000.000</span>
-                    </div>
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="bar-fill bg-p-purple" style="width:26%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span class="text-gray-500">Apoyo Logístico</span><span class="text-gray-500">$14.000.000</span>
-                    </div>
-                    <div class="h-3 bg-gray-100 rounded-full overflow-hidden">
-                        <div class="bar-fill bg-gray-400" style="width:18%"></div>
-                    </div>
-                </div>
+                <p class="mt-4 text-[.65rem] text-gray-400 border-t border-gray-100 pt-3">
+                    <i class="fas fa-info-circle text-p-purple"></i>&nbsp;
+                    Modelo segmentado: Base logística → Jóvenes/Hip Hop → Emergentes como apuesta estratégica de mayor escala.
+                </p>
             </div>
-            <p class="mt-4 text-[.65rem] text-gray-400 border-t border-gray-100 pt-3">
-                <i class="fas fa-info-circle text-p-purple"></i>&nbsp;
-                Modelo segmentado: Base logística → Jóvenes/Hip Hop → Emergentes como apuesta estratégica de mayor escala.
-            </p>
-        </div>
+        </details>
     </div>
 
     <!-- ── Rango de Inversión ── -->
     <div class="grid md:grid-cols-1 gap-6 items-start fade-up delay-2">
 
         <!-- Rango de inversión por proyecto -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-chart-pie"></i> Proyectos por Rango de Inversión</div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-                <div class="relative h-48">
-                    <canvas id="chart-rangos"></canvas>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-chart-pie"></i> Proyectos por Rango de Inversión</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mt-4 pt-2 border-t border-gray-100">
+                <div class="relative w-full overflow-x-auto pb-2">
+                    <div class="relative h-48 min-w-[260px]">
+                        <canvas id="chart-rangos"></canvas>
+                    </div>
                 </div>
                 <div class="flex flex-col justify-center gap-3">
                     <div class="flex items-center gap-2">
@@ -335,7 +352,7 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </details>
 
     </div>
 
@@ -372,17 +389,24 @@
         </details>
 
         <!-- Sexo general -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-venus-mars"></i> Distribución por Sexo</div>
-            <div class="relative h-40 mt-2">
-                <canvas id="chart-sexo"></canvas>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-venus-mars"></i> Distribución por Sexo</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <div class="relative w-full overflow-x-auto pb-2">
+                    <div class="relative h-40 min-w-[260px]">
+                        <canvas id="chart-sexo"></canvas>
+                    </div>
+                </div>
+                <div class="mt-3 space-y-1 text-xs">
+                    <div class="flex justify-between"><span class="font-bold text-p-pink">Mujer</span><span class="font-black">54.99%</span></div>
+                    <div class="flex justify-between"><span class="font-bold text-p-blue">Hombre</span><span class="font-black">44.87%</span></div>
+                    <div class="flex justify-between text-gray-400"><span>No responde</span><span>0.14%</span></div>
+                </div>
             </div>
-            <div class="mt-3 space-y-1 text-xs">
-                <div class="flex justify-between"><span class="font-bold text-p-pink">Mujer</span><span class="font-black">54.99%</span></div>
-                <div class="flex justify-between"><span class="font-bold text-p-blue">Hombre</span><span class="font-black">44.87%</span></div>
-                <div class="flex justify-between text-gray-400"><span>No responde</span><span>0.14%</span></div>
-            </div>
-        </div>
+        </details>
 
         <!-- Sexo por red -->
         <details class="glass rounded-2xl p-6 group">
@@ -444,14 +468,19 @@
     <div class="grid md:grid-cols-2 gap-6 items-start fade-up delay-3">
 
         <!-- Disciplinas -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-music"></i> % Beneficiarios por Disciplina</div>
-            <div class="w-full overflow-x-auto pb-2">
-                <div class="relative h-56 min-w-[400px]">
-                    <canvas id="chart-disciplinas"></canvas>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-music"></i> % Beneficiarios por Disciplina</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <div class="w-full overflow-x-auto pb-2">
+                    <div class="relative h-56 min-w-[400px]">
+                        <canvas id="chart-disciplinas"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
+        </details>
 
         <!-- Identidad de género + Diversidad -->
         <details class="glass rounded-2xl p-6 group">
@@ -557,50 +586,54 @@
         </details>
 
         <!-- Participación en actividades -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-check-circle"></i> Participación en Actividades</div>
-
-            <!-- Gauge grande -->
-            <div class="flex flex-col items-center mt-2">
-                <div class="relative w-32 h-32">
-                    <canvas id="chart-participacion"></canvas>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span class="big-num text-3xl text-p-blue">88%</span>
-                        <span class="text-[.55rem] text-gray-400 uppercase tracking-wider">promedio</span>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-check-circle"></i> Participación en Actividades</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <!-- Gauge grande -->
+                <div class="flex flex-col items-center mt-2">
+                    <div class="relative w-32 h-32 flex-shrink-0">
+                        <canvas id="chart-participacion"></canvas>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="big-num text-3xl text-p-blue">88%</span>
+                            <span class="text-[.55rem] text-gray-400 uppercase tracking-wider">promedio</span>
+                        </div>
                     </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                    <div>
+                        <div class="flex justify-between text-[.65rem] font-bold mb-1">
+                            <span class="text-p-blue">70% – 100%</span><span>91.7%</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="bar-fill bg-p-blue h-full" style="width:91.7%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[.65rem] font-bold mb-1">
+                            <span class="text-p-yellow" style="color:#c89600">50% – 70%</span><span>6.4%</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="bar-fill h-full" style="width:6.4%;background:#F3C746"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[.65rem] font-bold mb-1">
+                            <span class="text-p-pink">0% – 50%</span><span>1.9%</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="bar-fill bg-p-pink h-full" style="width:1.9%"></div>
+                        </div>
+                    </div>
+                    <p class="text-[.58rem] text-p-blue font-bold pt-1">
+                        <i class="fas fa-arrow-up"></i> Alta participación y poca deserción
+                    </p>
                 </div>
             </div>
-
-            <div class="mt-4 space-y-2">
-                <div>
-                    <div class="flex justify-between text-[.65rem] font-bold mb-1">
-                        <span class="text-p-blue">70% – 100%</span><span>91.7%</span>
-                    </div>
-                    <div class="h-2 bg-gray-100 rounded-full">
-                        <div class="bar-fill bg-p-blue h-full" style="width:91.7%"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-[.65rem] font-bold mb-1">
-                        <span class="text-p-yellow" style="color:#c89600">50% – 70%</span><span>6.4%</span>
-                    </div>
-                    <div class="h-2 bg-gray-100 rounded-full">
-                        <div class="bar-fill h-full" style="width:6.4%;background:#F3C746"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-[.65rem] font-bold mb-1">
-                        <span class="text-p-pink">0% – 50%</span><span>1.9%</span>
-                    </div>
-                    <div class="h-2 bg-gray-100 rounded-full">
-                        <div class="bar-fill bg-p-pink h-full" style="width:1.9%"></div>
-                    </div>
-                </div>
-                <p class="text-[.58rem] text-p-blue font-bold pt-1">
-                    <i class="fas fa-arrow-up"></i> Alta participación y poca deserción
-                </p>
-            </div>
-        </div>
+        </details>
 
         <!-- Antigüedad + Campesinado + Migrantes -->
         <details class="glass rounded-2xl p-6 group">
@@ -657,32 +690,42 @@
         </details>
 
         <!-- Top Departamentos beneficiarios -->
-        <div class="glass rounded-2xl p-6">
-            <div class="section-tag"><i class="fas fa-map"></i> Top Departamentos — % Beneficiarios</div>
-            <div class="space-y-2 overflow-y-auto max-h-64 pr-1">
-                <!-- Top 10 departamentos -->
-                <div id="dept-bars"></div>
+        <details class="glass rounded-2xl p-6 group">
+            <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+                <span><i class="fas fa-map"></i> Top Departamentos — % Beneficiarios</span>
+                <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+            </summary>
+            <div class="mt-4 pt-2 border-t border-gray-100">
+                <div class="space-y-2 overflow-y-auto max-h-64 pr-1">
+                    <!-- Top 10 departamentos -->
+                    <div id="dept-bars"></div>
+                </div>
             </div>
-        </div>
+        </details>
     </div>
 
     <!-- ── FILA 6: Disciplina por Departamento (tabla elegante) ── -->
-    <div class="glass rounded-2xl p-6 fade-up delay-5">
-        <div class="section-tag"><i class="fas fa-table"></i> Disciplina Dominante por Departamento</div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs" id="tabla-disciplinas">
-                <thead>
-                    <tr class="border-b-2 border-gray-200 text-left text-[.6rem] uppercase tracking-wider text-gray-500">
-                        <th class="pb-2 pr-4 font-bold">Departamento</th>
-                        <th class="pb-2 pr-4 font-bold">Disciplina Dominante</th>
-                        <th class="pb-2 pr-4 font-bold">Intensidad</th>
-                        <th class="pb-2 font-bold hidden md:table-cell">Observación</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody-disciplinas" class="divide-y divide-gray-100"></tbody>
-            </table>
+    <details class="glass rounded-2xl p-6 fade-up delay-5 group">
+        <summary class="section-tag cursor-pointer outline-none flex justify-between items-center m-0">
+            <span><i class="fas fa-table"></i> Disciplina Dominante por Departamento</span>
+            <i class="fas fa-chevron-down dropdown-icon transition-transform"></i>
+        </summary>
+        <div class="mt-4 pt-2 border-t border-gray-100">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full text-xs" id="tabla-disciplinas">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200 text-left text-[.6rem] uppercase tracking-wider text-gray-500">
+                            <th class="pb-2 pr-4 font-bold">Departamento</th>
+                            <th class="pb-2 pr-4 font-bold">Disciplina Dominante</th>
+                            <th class="pb-2 pr-4 font-bold">Intensidad</th>
+                            <th class="pb-2 font-bold hidden md:table-cell">Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-disciplinas" class="divide-y divide-gray-100"></tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </details>
 
 </main>
 
