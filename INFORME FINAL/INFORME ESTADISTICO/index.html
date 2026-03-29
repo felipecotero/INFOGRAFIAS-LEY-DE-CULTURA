@@ -164,7 +164,7 @@
             inset: 0;
             background: rgba(10, 10, 25, 0.85);
             backdrop-filter: blur(8px);
-            z-index: 9999;
+            z-index: 99990;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
@@ -187,6 +187,8 @@
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.2);
+            z-index: 10005; /* Siempre encima de la tarjeta */
+            position: relative;
         }
         .slideshow-nav-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
         .slideshow-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
@@ -842,13 +844,12 @@
         </div>
     </details>
 
-    <!-- Slideshow UI Global Container (dentro de main para heredar stacking context) -->
+    <!-- Slideshow UI Global Container -->
     <div id="slideshow-overlay">
         <button id="ss-prev" class="slideshow-nav-btn" onclick="window.prevSlide()"><i class="fas fa-chevron-left"></i></button>
         <button id="ss-next" class="slideshow-nav-btn" onclick="window.nextSlide()"><i class="fas fa-chevron-right"></i></button>
-        <button id="ss-close" class="slideshow-nav-btn" onclick="window.closeSlideshow()" style="position: absolute; top: 1.5rem; right: 1.5rem;"><i class="fas fa-times"></i></button>
+        <button id="ss-close" class="slideshow-nav-btn" onclick="window.closeSlideshow()" style="position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10005;"><i class="fas fa-times"></i></button>
     </div>
-
 </main>
 
 <!-- Footer -->
@@ -1196,63 +1197,97 @@ document.querySelectorAll('details').forEach(detail => {
 let slideshowOpenCards = [];
 let ssCurrentIndex = -1;
 
-window.openSlideshow = function(startCard) {
-    if (!startCard) return;
+// Variables DOM Reparenting (para arreglar Z-Index)
+const ssGhostElement = document.createElement('div');
+ssGhostElement.className = 'ss-ghost hidden';
+let ssOriginalParent = null;
+let ssOriginalSibling = null;
+let currentActiveCard = null;
+
+function moveToOverlay(card) {
+    if(!card) return;
     
-    // Forzar apertura si el usuario le dio clic estando cerrada
-    if (!startCard.open) {
-        startCard.open = true;
+    // Regresar el anterior si había
+    if(currentActiveCard && currentActiveCard !== card) {
+        returnToOriginal(currentActiveCard);
     }
     
-    // Recopilar únicamente las tarjetas actualmente expandidas
+    // Guardar posición original en el document
+    ssOriginalParent = card.parentNode;
+    ssOriginalSibling = card.nextSibling;
+    
+    // Crear fantasma para que no caiga el layout
+    ssGhostElement.style.width = card.offsetWidth + 'px';
+    ssGhostElement.style.height = card.offsetHeight + 'px';
+    ssGhostElement.className = 'ss-ghost'; 
+    ssOriginalParent.insertBefore(ssGhostElement, card);
+    
+    // Mover carta al overlay encima de todo
+    document.getElementById('slideshow-overlay').appendChild(card);
+    card.classList.add('fullscreen-card');
+    currentActiveCard = card;
+}
+
+function returnToOriginal(card) {
+    if(!card) return;
+    card.classList.remove('fullscreen-card');
+    
+    // Devolver a parent original
+    if (ssOriginalParent) {
+        if(ssOriginalSibling) ssOriginalParent.insertBefore(card, ssOriginalSibling);
+        else ssOriginalParent.appendChild(card);
+        
+        // Quitar fantasma
+        if(ssGhostElement.parentNode) {
+            ssGhostElement.parentNode.removeChild(ssGhostElement);
+        }
+    }
+    currentActiveCard = null;
+}
+
+window.openSlideshow = function(startCard) {
+    if (!startCard) return;
+    if (!startCard.open) startCard.open = true;
+    
     slideshowOpenCards = Array.from(document.querySelectorAll('details[open]'))
                               .filter(d => d.querySelector('.expand-btn'));
                               
     if(slideshowOpenCards.length === 0) return;
-    
     ssCurrentIndex = slideshowOpenCards.indexOf(startCard);
     if(ssCurrentIndex === -1) ssCurrentIndex = 0;
     
     document.getElementById('slideshow-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden'; // bloquear scroll nativo del html
+    document.body.style.overflow = 'hidden'; 
     
     renderSlide();
 };
 
 function renderSlide() {
-    slideshowOpenCards.forEach((c, idx) => {
-        if(idx === ssCurrentIndex) {
-            c.classList.add('fullscreen-card');
-        } else {
-            c.classList.remove('fullscreen-card');
-        }
-    });
+    const activeCard = slideshowOpenCards[ssCurrentIndex];
+    moveToOverlay(activeCard);
     
-    // Actualizar botones prev/next
     document.getElementById('ss-prev').disabled = ssCurrentIndex <= 0;
     document.getElementById('ss-next').disabled = ssCurrentIndex >= slideshowOpenCards.length - 1;
     
-    // Al redimensionarse la tarjeta de cantazo completo usando css,
-    // chart.js puede necesitar un trigger manual para re-adaptar
     setTimeout(() => {
-        const activeCard = slideshowOpenCards[ssCurrentIndex];
         const canvases = activeCard.querySelectorAll('canvas');
         for (let id in Chart.instances) {
             if(Array.from(canvases).includes(Chart.instances[id].canvas)) {
                 Chart.instances[id].resize();
             }
         }
-    }, 350); 
+    }, 100); 
 }
 
 window.closeSlideshow = function() {
     document.getElementById('slideshow-overlay').classList.remove('active');
     document.body.style.overflow = '';
-    slideshowOpenCards.forEach(c => c.classList.remove('fullscreen-card'));
+    
+    if(currentActiveCard) returnToOriginal(currentActiveCard);
     
     setTimeout(() => {
         for (let id in Chart.instances) { Chart.instances[id].resize(); }
-    }, 350);
+    }, 100);
 };
 
 window.nextSlide = function() {
