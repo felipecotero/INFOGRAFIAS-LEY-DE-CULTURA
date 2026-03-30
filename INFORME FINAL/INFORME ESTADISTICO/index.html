@@ -234,7 +234,9 @@
             .fullscreen-card .text-sm { font-size: clamp(1.2rem, 1.4vw, 1.6rem) !important; line-height: 1.6; }
             .fullscreen-card .text-2xl { font-size: clamp(2rem, 2.5vw, 3rem) !important; }
             .fullscreen-card .text-3xl { font-size: clamp(2.5rem, 3.5vw, 4rem) !important; }
-            .fullscreen-card .text-\[\.6rem\] { font-size: clamp(0.9rem, 1vw, 1.2rem) !important; }
+            
+            /* Asegura que CUALQUIER microscala de tailwind (ej: text-[.62rem], text-[.6rem], text-[11px]) escale fuerte */
+            .fullscreen-card [class*="text-\[\."] { font-size: clamp(0.95rem, 1.1vw, 1.3rem) !important; }
             
             .fullscreen-card .section-tag { font-size: clamp(1rem, 1.2vw, 1.4rem) !important; padding: 1rem 1.8rem; margin-bottom: 3rem; }
             .fullscreen-card .disc-badge { font-size: clamp(1rem, 1.2vw, 1.4rem) !important; padding: 0.8rem 1.4rem; }
@@ -286,7 +288,7 @@
             <span class="text-[.65rem] font-bold tracking-[.15em] uppercase text-p-yellow opacity-80 break-words block">Convenio 1022-2025 · Presentación 31 de Marzo 2026</span>
         </div>
         <h1 class="text-3xl sm:text-4xl md:text-6xl font-normal uppercase leading-tight mb-2 break-words">
-            Informe <span class="text-transparent bg-clip-text bg-gradient-to-r from-p-pink to-p-yellow">Estad<span class="font-sans font-bold">í</span>stico</span>
+            Informe <span class="text-transparent bg-clip-text bg-gradient-to-r from-p-pink to-p-yellow">Estad<span class="font-sans font-bold">Í</span>stico</span>
         </h1>
         <p class="text-gray-300 text-sm font-light mb-12 max-w-full md:max-w-xl">
             Fortalecimiento del Ecosistema Cultural y Comunitario · Ministerio de las Culturas, las Artes y los Saberes
@@ -306,12 +308,12 @@
             </div>
 
             <div class="glass rounded-2xl p-4 text-center">
-                <div class="big-num text-3xl md:text-4xl text-p-lightblue">152</div>
+                <div class="big-num text-3xl md:text-4xl text-p-blue">152</div>
                 <div class="text-[.6rem] uppercase tracking-widest text-gray-400 mt-1 font-bold">Ben. Promedio / Proyecto</div>
             </div>
 
             <div class="glass rounded-2xl p-4 text-center">
-                <div class="big-num text-3xl md:text-4xl text-white">88%</div>
+                <div class="big-num text-3xl md:text-4xl text-p-purple text-shadow-md">88%</div>
                 <div class="text-[.6rem] uppercase tracking-widest text-gray-400 mt-1 font-bold">Participación promedio</div>
             </div>
 
@@ -1264,11 +1266,7 @@ document.querySelectorAll('details').forEach(detail => {
 let slideshowOpenCards = [];
 let ssCurrentIndex = -1;
 
-// Variables DOM Reparenting (para arreglar Z-Index)
-const ssGhostElement = document.createElement('div');
-ssGhostElement.className = 'ss-ghost hidden';
-let ssOriginalParent = null;
-let ssOriginalSibling = null;
+// Variables DOM Reparenting
 let currentActiveCard = null;
 
 // Rescalar tipografía y barras del canvas
@@ -1296,7 +1294,7 @@ function rescaleChartForFullscreen(chart, isFullscreen) {
     }
     
     // Aumentar densidad y área de relleno para que las barras engrosen
-    if(chart.config.type === 'bar') {
+    if (chart.config.type === 'bar') {
         chart.config.data.datasets.forEach(ds => {
             if(isFullscreen && chart.options.indexAxis === 'y') {
                 ds.barPercentage = 0.95; 
@@ -1312,19 +1310,22 @@ function rescaleChartForFullscreen(chart, isFullscreen) {
 }
 
 function moveToOverlay(card) {
-    if(!card) return;
+    if (!card) return;
     
-    if(currentActiveCard && currentActiveCard !== card) {
+    if (currentActiveCard && currentActiveCard !== card) {
         returnToOriginal(currentActiveCard);
     }
     
-    ssOriginalParent = card.parentNode;
-    ssOriginalSibling = card.nextSibling;
+    // Salvar entorno DOM directamente en la tarjeta (Evita race conditions o colapsos de variable global)
+    card._ssOriginalParent = card.parentNode;
+    card._ssOriginalSibling = card.nextSibling;
     
-    ssGhostElement.style.width = card.offsetWidth + 'px';
-    ssGhostElement.style.height = card.offsetHeight + 'px';
-    ssGhostElement.className = 'ss-ghost'; 
-    ssOriginalParent.insertBefore(ssGhostElement, card);
+    card._ssGhostElement = document.createElement('div');
+    card._ssGhostElement.className = 'ss-ghost hidden';
+    card._ssGhostElement.style.width = card.offsetWidth + 'px';
+    card._ssGhostElement.style.height = card.offsetHeight + 'px';
+    
+    card._ssOriginalParent.insertBefore(card._ssGhostElement, card);
     
     document.getElementById('slideshow-overlay').appendChild(card);
     card.classList.add('fullscreen-card');
@@ -1344,27 +1345,32 @@ function moveToOverlay(card) {
 }
 
 function returnToOriginal(card) {
-    if(!card) return;
+    if (!card) return;
     card.classList.remove('fullscreen-card');
     
-    if (ssOriginalParent) {
-        if(ssOriginalSibling) ssOriginalParent.insertBefore(card, ssOriginalSibling);
-        else ssOriginalParent.appendChild(card);
+    if (card._ssOriginalParent) {
+        if (card._ssOriginalSibling) {
+            card._ssOriginalParent.insertBefore(card, card._ssOriginalSibling);
+        } else {
+            card._ssOriginalParent.appendChild(card);
+        }
         
-        if(ssGhostElement.parentNode) {
-            ssGhostElement.parentNode.removeChild(ssGhostElement);
+        if (card._ssGhostElement && card._ssGhostElement.parentNode) {
+            card._ssGhostElement.parentNode.removeChild(card._ssGhostElement);
         }
     }
     
     // Revertir escala de los canvas hijos
     const canvases = card.querySelectorAll('canvas');
     for (let id in Chart.instances) {
-        if(Array.from(canvases).includes(Chart.instances[id].canvas)) {
-            rescaleChartForFullscreen(Chart.instances[id], false);
+        if (Array.from(canvases).includes(Chart.instances[id].canvas)) {
+            try { rescaleChartForFullscreen(Chart.instances[id], false); } catch(e) { console.error(e); }
         }
     }
     
-    currentActiveCard = null;
+    if (currentActiveCard === card) {
+        currentActiveCard = null;
+    }
 }
 
 window.openSlideshow = function(startCard) {
@@ -1395,7 +1401,7 @@ function renderSlide() {
         const canvases = activeCard.querySelectorAll('canvas');
         for (let id in Chart.instances) {
             if(Array.from(canvases).includes(Chart.instances[id].canvas)) {
-                Chart.instances[id].resize();
+                try { Chart.instances[id].resize(); } catch(e) { console.error(e); }
             }
         }
     }, 100); 
@@ -1405,10 +1411,14 @@ window.closeSlideshow = function() {
     document.getElementById('slideshow-overlay').classList.remove('active');
     document.body.style.overflow = '';
     
-    if(currentActiveCard) returnToOriginal(currentActiveCard);
+    if(currentActiveCard) {
+        returnToOriginal(currentActiveCard);
+    }
     
     setTimeout(() => {
-        for (let id in Chart.instances) { Chart.instances[id].resize(); }
+        for (let id in Chart.instances) { 
+            try { Chart.instances[id].resize(); } catch(e) { console.error(e); }
+        }
     }, 100);
 };
 
@@ -1429,13 +1439,7 @@ window.prevSlide = function() {
 // Listeners Teclado
 document.addEventListener('keydown', (e) => {
     if(!document.getElementById('slideshow-overlay').classList.contains('active')) return;
-    if(e.key === 'Escape') {
-        window.closeSlideshow();
-    } else if(e.key === 'ArrowRight') {
-        window.nextSlide();
-    } else if(e.key === 'ArrowLeft') {
-        window.prevSlide();
-    }
+    
     if(e.key === 'Escape') {
         window.closeSlideshow();
     } else if(e.key === 'ArrowRight') {
