@@ -168,10 +168,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
+            /* Container retains isolation. Buttons are explicitly absolute. */
         }
         #slideshow-overlay.active {
             opacity: 1;
@@ -179,23 +176,28 @@
         }
         .slideshow-nav-btn {
             background: rgba(255,255,255,0.1);
-            color: white;
+            color: white; font-size: 1.4rem;
             border-radius: 50%;
-            width: 3rem; height: 3rem;
+            width: 3.5rem; height: 3.5rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.2);
-            z-index: 10005; /* Siempre encima de la tarjeta */
-            position: relative;
+            z-index: 10005; /* Siempre encima */
+            position: absolute;
         }
-        .slideshow-nav-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.1); }
+        #ss-prev { left: 2rem; top: 50%; transform: translateY(-50%); }
+        #ss-next { right: 2rem; top: 50%; transform: translateY(-50%); }
+        #ss-close { right: 2rem; top: 2rem; }
+        
+        .slideshow-nav-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-50%) scale(1.1); }
+        #ss-close:hover { transform: scale(1.1); }
         .slideshow-nav-btn:disabled { opacity: 0.2; pointer-events: none; }
         .expand-btn { z-index: 10; position: relative; }
 
-        /* Auto-Expand charts on Desktop Fullscreen */
-        @media (min-width: 768px) and (orientation: landscape) {
+        /* Auto-Expand charts on Desktop Fullscreen - Balanced Height */
+        @media (min-width: 1024px) and (orientation: landscape) {
             .fullscreen-card .relative.h-32,
             .fullscreen-card .relative.h-40,
             .fullscreen-card .relative.h-44,
@@ -203,11 +205,12 @@
             .fullscreen-card .relative.h-52,
             .fullscreen-card .relative.h-56,
             .fullscreen-card .relative.h-64 {
-                height: 60vh !important;
-                min-height: 400px !important;
+                height: 48vh !important;
+                min-height: 350px !important;
+                max-height: 600px !important;
             }
             .fullscreen-card .max-h-64 {
-                max-height: 60vh !important;
+                max-height: 48vh !important;
             }
         }
         /* Custom text shadows for contrast on white glass */
@@ -220,22 +223,31 @@
         .glass.theme-purple { background-color: #F3E8FF !important; border-color: #E9D5FF !important; } /* Soft Purple */
         .glass.theme-green { background-color: #D1FAE5 !important; border-color: #A7F3D0 !important; } /* Soft Emerald */
 
-        /* Aumentar tipografías y anchos de barras HTML nativas del Card completo en escritorio */
+        /* Aumentar tipografías y anchos de barras HTML nativas con factor armónico para TVs/Displays */
         @media (min-width: 1024px) {
-            .fullscreen-card { font-size: 1.25rem !important; }
-            .fullscreen-card .text-xs { font-size: 1.1rem !important; line-height: 1.6rem; }
-            .fullscreen-card .text-sm { font-size: 1.25rem !important; line-height: 1.8rem; }
-            .fullscreen-card .text-\[\.6rem\] { font-size: 0.95rem !important; }
-            .fullscreen-card .section-tag { font-size: 1rem !important; padding: 0.8rem 1.4rem; margin-bottom: 2rem; }
-            .fullscreen-card .disc-badge { font-size: 0.9rem !important; padding: 0.5rem 1rem; }
-            .fullscreen-card .space-y-4 > div { margin-top: 2rem !important; }
+            .fullscreen-card { 
+                padding: 4rem !important; 
+                font-size: clamp(1.2rem, 1.5vw, 1.8rem) !important; 
+            }
+            .fullscreen-card .text-xs { font-size: clamp(1.05rem, 1.2vw, 1.4rem) !important; line-height: 1.6; }
+            .fullscreen-card .text-sm { font-size: clamp(1.2rem, 1.4vw, 1.6rem) !important; line-height: 1.6; }
+            .fullscreen-card .text-2xl { font-size: clamp(2rem, 2.5vw, 3rem) !important; }
+            .fullscreen-card .text-3xl { font-size: clamp(2.5rem, 3.5vw, 4rem) !important; }
+            .fullscreen-card .text-\[\.6rem\] { font-size: clamp(0.9rem, 1vw, 1.2rem) !important; }
             
-            /* Engrosamiento de las Barras Horizontales Nativas (HTML divs) para SlideShow */
-            .fullscreen-card .h-2:not(.w-2) { height: 1.5rem !important; }
-            .fullscreen-card .h-2\.5:not(.w-2\.5) { height: 1.8rem !important; }
-            .fullscreen-card .h-3:not(.w-3) { height: 2rem !important; }
-            .fullscreen-card .h-4:not(.w-4) { height: 2.2rem !important; }
-            .fullscreen-card .mb-1 { margin-bottom: 0.8rem !important; }
+            .fullscreen-card .section-tag { font-size: clamp(1rem, 1.2vw, 1.4rem) !important; padding: 1rem 1.8rem; margin-bottom: 3rem; }
+            .fullscreen-card .disc-badge { font-size: clamp(1rem, 1.2vw, 1.4rem) !important; padding: 0.8rem 1.4rem; }
+            .fullscreen-card .space-y-4 > div, .fullscreen-card .gap-4 { margin-top: 2rem !important; gap: 3rem !important; }
+            
+            /* Engrosamiento masivo de las Barras Horizontales Nativas (HTML divs) para balancear la tarjeta */
+            .fullscreen-card .h-2:not(.w-2) { height: 1.6rem !important; }
+            .fullscreen-card .h-2\.5:not(.w-2\.5) { height: 2rem !important; }
+            .fullscreen-card .h-3:not(.w-3) { height: 2.2rem !important; }
+            .fullscreen-card .h-4:not(.w-4) { height: 2.5rem !important; }
+            .fullscreen-card .mb-1 { margin-bottom: 1.2rem !important; }
+            
+            /* Ajuste de grids en fullscreen para no aplastar el texto */
+            .fullscreen-card .grid { gap: 4rem !important; }
         }
     </style>
 </head>
@@ -888,7 +900,7 @@
         </div>
     </details>
 
-    <!-- Slideshow UI Global Container -->
+    <!-- OVERLAY SLIDESHOW -->
     <div id="slideshow-overlay">
         <button id="ss-prev" class="slideshow-nav-btn" onclick="window.prevSlide()"><i class="fas fa-chevron-left"></i></button>
         <button id="ss-next" class="slideshow-nav-btn" onclick="window.nextSlide()"><i class="fas fa-chevron-right"></i></button>
