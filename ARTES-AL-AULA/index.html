@@ -143,10 +143,14 @@
             transition: all 0.3s ease;
         }
 
-        /* Títulos de cada slide — +15% sobre text-3xl/4xl, sin sombra artificial */
+        /* Títulos de cada slide — +15% sobre text-3xl/4xl
+           Resplandor blanco que levanta el texto del fondo fotográfico sin ensuciar */
         .titulo-slide {
             font-size: 2.16rem;
             line-height: 1.15;
+            text-shadow:
+                0 0 20px rgba(255,255,255,0.95),
+                0 0  8px rgba(255,255,255,0.80);
         }
         @media (min-width: 768px) {
             .titulo-slide {
@@ -154,16 +158,17 @@
             }
         }
 
-        /* Velo blanco-crema detrás del contenido de cada slide (más sólido al centro) */
+        /* Velo mínimo: deja que las fotos sean protagonistas;
+           el blanco sólo suaviza el centro donde están los títulos */
         .velo-contenido {
             position: absolute;
             inset: 0;
             z-index: 2;
             background: radial-gradient(
-                ellipse 120% 80% at 50% 50%,
-                rgba(255,255,255,0.82) 0%,
-                rgba(255,255,255,0.68) 55%,
-                rgba(255,255,255,0.40) 100%
+                ellipse 110% 70% at 50% 42%,
+                rgba(255,255,255,0.45) 0%,
+                rgba(255,255,255,0.22) 50%,
+                rgba(255,255,255,0.06) 100%
             );
             pointer-events: none;
         }
