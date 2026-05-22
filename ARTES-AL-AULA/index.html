@@ -143,18 +143,32 @@
             transition: all 0.3s ease;
         }
 
-        /* Títulos de cada slide — +15% sobre text-3xl/4xl + sombra paralela ligera */
+        /* Títulos de cada slide — +15% sobre text-3xl/4xl + sombra paralela */
         .titulo-slide {
-            font-size: 2.16rem;       /* text-3xl = 1.875rem  × 1.15 ≈ 2.16rem */
+            font-size: 2.16rem;
             line-height: 1.15;
             text-shadow:
-                0 2px 6px rgba(0, 0, 0, 0.18),
-                0 1px 0   rgba(0, 0, 0, 0.08);
+                0 2px 8px rgba(0, 0, 0, 0.28),
+                0 1px 0   rgba(0, 0, 0, 0.12);
         }
         @media (min-width: 768px) {
             .titulo-slide {
-                font-size: 2.59rem;   /* text-4xl = 2.25rem × 1.15 ≈ 2.59rem */
+                font-size: 2.59rem;
             }
+        }
+
+        /* Velo blanco suave detrás del contenido de cada slide */
+        .velo-contenido {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.60) 0%,
+                rgba(255,255,255,0.72) 40%,
+                rgba(255,255,255,0.80) 100%
+            );
+            pointer-events: none;
         }
     </style>
 </head>
@@ -195,13 +209,15 @@
                     </div>
 
                     <!-- Foto real del evento (fondo artístico) -->
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
                         <img src="img/FCO_IMG_5609_12022025.jpg"
                              alt=""
                              class="w-[1500px] h-[1500px] max-w-none object-cover object-center transform -rotate-6 sepia hue-rotate-[250deg] saturate-[2.5]">
                     </div>
+                    <!-- Velo de contraste -->
+                    <div class="velo-contenido"></div>
 
-                    <!-- Contenido — sin logo interno, pt-6 limpio -->
+                    <!-- Contenido —sin logo interno, pt-6 limpio -->
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
 
                         <h2 class="font-title titulo-slide font-black text-artesPurple leading-tight mb-2 text-center">
@@ -228,7 +244,7 @@
                         <!-- 3 puntos -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 content-start">
 
-                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent"
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors bg-white shadow-sm border border-gray-100"
                                  onclick="openModal('Ley 2555 de 2025 – Artes al Aula',
                                  'Sancionada el 2 de diciembre de 2025 en el Centro Nacional de las Artes Delia Zapata Olivella, la Ley 2555 convierte la educación artística en un derecho obligatorio y transversal en todos los colegios públicos de Colombia. Asegura que las artes sean un pilar para la convivencia, la creatividad y la paz. Con su sanción inicia la formulación y reglamentación de la política pública, liderada por MinCulturas y MinEducación a través del SINEFAC.')">
                                 <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
@@ -243,7 +259,7 @@
                                 </div>
                             </div>
 
-                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent"
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors bg-white shadow-sm border border-gray-100"
                                  onclick="openModal('RedArtes · Red Iberoamericana de Educación Artística',
                                  'En mayo de 2026, Bogotá se consolidó como epicentro de la política cultural y educativa de la región con la creación de la Red Iberoamericana de Educación Artística y Cultural (RedArtes). Bajo la secretaría técnica de la OEI y en articulación con el Ministerio de las Culturas, RedArtes fue formalizada durante el Congreso Iberoamericano de Educación y Formación Artística y Cultural – Artes para la Paz, con delegaciones de más de 20 países.')">
                                 <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
@@ -258,7 +274,7 @@
                                 </div>
                             </div>
 
-                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white/50 transition-colors bg-white/30 md:bg-transparent"
+                            <div class="interactive-point flex flex-col md:flex-row items-start gap-3 p-3 rounded-lg hover:bg-white transition-colors bg-white shadow-sm border border-gray-100"
                                  onclick="openModal('Declaración de Bogotá',
                                  'La Declaración de Bogotá, suscrita en el Teatro Colón ante delegaciones de más de 20 países con la presencia del Presidente Gustavo Petro, establece los lineamientos para el intercambio de experiencias y el fortalecimiento de políticas públicas que posicionen a las artes como pilar del desarrollo integral en toda Iberoamérica.')">
                                 <div class="w-10 h-10 bg-sonidosYellow rounded-full flex items-center justify-center shadow-sm p-1 shrink-0">
@@ -302,11 +318,12 @@
                         <img src="../assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
                         <img src="img/FCO_IMG_5593_12022025.jpg"
                              alt=""
                              class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[150deg] saturate-[2.5]">
                     </div>
+                    <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
 
@@ -323,7 +340,7 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 w-full z-10">
 
-                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-audioBlue shadow-sm flex items-center gap-3"
+                                <div class="interactive-point bg-white p-3 rounded-lg border-l-4 border-audioBlue shadow-sm flex items-center gap-3"
                                      onclick="openModal('Innovación en el Aula',
                                      'La Ley 2555 impulsa la implementación de lenguajes artísticos que trascienden la enseñanza tradicional, fomentando la transversalidad curricular. Artistas y maestros co-crean ambientes de aprendizaje que responden a los nuevos estándares de calidad del Macroproceso D (Gestión de la Calidad), subproceso D02.02.')">
                                     <div class="bg-audioBlue p-1 rounded text-white w-10 h-10 flex items-center justify-center shrink-0">
@@ -339,7 +356,7 @@
                                     </div>
                                 </div>
 
-                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-palabrasGreen shadow-sm flex items-center gap-3"
+                                <div class="interactive-point bg-white p-3 rounded-lg border-l-4 border-palabrasGreen shadow-sm flex items-center gap-3"
                                      onclick="openModal('Fortalecimiento Profesional Docente',
                                      'La ley garantiza acceso a mecanismos de formación y capacitación permanente en pedagogías de las artes, elevando la idoneidad del cuerpo docente. Los Ministerios de Educación y Culturas están autorizados para diseñar planes educativos para la formación de docentes en herramientas pedagógicas de las artes y las culturas.')">
                                     <div class="bg-palabrasGreen p-1 rounded text-teal-900 w-10 h-10 flex items-center justify-center shrink-0">
@@ -355,7 +372,7 @@
                                     </div>
                                 </div>
 
-                                <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-lg border-l-4 border-teal-600 shadow-sm flex items-center gap-3"
+                                <div class="interactive-point bg-white p-3 rounded-lg border-l-4 border-teal-600 shadow-sm flex items-center gap-3"
                                      onclick="openModal('Redes de Investigación Artística',
                                      'La ley integra a docentes y artistas en circuitos regionales de sistematización de experiencias, facilitados por la secretaría técnica de la OEI y RedArtes. La investigación en artes y culturas en el ámbito escolar es un incentivo para generar nuevo conocimiento desde el ejercicio de la docencia.')">
                                     <div class="bg-teal-600 p-1 rounded text-white w-10 h-10 flex items-center justify-center shrink-0">
@@ -397,11 +414,12 @@
                         <img src="../assets/img/Iconos_Azul/CCDP_Icono_Gota_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
                         <img src="img/FCO_IMG_5704_12022025.jpg"
                              alt=""
                              class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[200deg] saturate-[2.5]">
                     </div>
+                    <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto">
 
@@ -477,11 +495,12 @@
                         <img src="../assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
                         <img src="img/FCO_IMG_5844_12022025.jpg"
                              alt=""
                              class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[330deg] saturate-[2.5]">
                     </div>
+                    <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto">
 
@@ -557,11 +576,12 @@
                         <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
                         <img src="img/FCO_IMG_5858_12022025.jpg"
                              alt=""
                              class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[290deg] saturate-[2.5]">
                     </div>
+                    <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto">
 
@@ -572,7 +592,7 @@
 
                         <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 content-center">
 
-                            <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform"
+                            <div class="interactive-point bg-white p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform border border-gray-100"
                                  onclick="openModal('Gestión Directiva',
                                  'Las instituciones deben revisar su direccionamiento estratégico (Misión, Visión y Objetivos) para incluir el arte como eje transformador. El Plan Educativo Institucional (PEI) puede someterse a Ajuste (cambios menores) o Modificación/Resignificación (cambios sustanciales). El Manual de Convivencia debe actualizarse para reflejar los valores de diversidad y paz promovidos por RedArtes.')">
                                 <div class="timeline-dot bg-artesPurple text-white shrink-0">01</div>
@@ -583,7 +603,7 @@
                                 <img src="../assets/img/Iconos_Rosa/CCDP_Icono_Resistencia_Sin_Marco.png" alt="" class="w-8 h-8 object-contain self-center shrink-0 opacity-80">
                             </div>
 
-                            <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform"
+                            <div class="interactive-point bg-white p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform border border-gray-100"
                                  onclick="openModal('Gestión Académica',
                                  'Rediseñar el plan de estudios y los diseños curriculares de área bajo el enfoque de transversalidad. El Sistema Institucional de Evaluación de Estudiantes (SIEE) debe incorporar criterios que valoren los procesos de aprendizaje artístico de manera coherente y factible. El arte no es una asignatura extra, sino un eje que atraviesa todas las áreas del conocimiento.')">
                                 <div class="timeline-dot bg-audioBlue text-white shrink-0">02</div>
@@ -594,7 +614,7 @@
                                 <img src="../assets/img/Iconos_Azul/CCDP_Icono_Pincel_Sin_Marco.png" alt="" class="w-8 h-8 object-contain self-center shrink-0 opacity-80">
                             </div>
 
-                            <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform"
+                            <div class="interactive-point bg-white p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform border border-gray-100"
                                  onclick="openModal('Gestión Administrativa',
                                  'El Macroproceso de Gestión de la Calidad debe contemplar la disponibilidad de recursos didácticos y el mantenimiento de espacios para la práctica artística. Se debe gestionar el talento humano bajo perfiles que permitan la formación y capacitación permanente en pedagogías de las artes. Los presupuestos del POA deben reflejar el componente artístico.')">
                                 <div class="timeline-dot bg-danzaOrange text-white shrink-0">03</div>
@@ -605,7 +625,7 @@
                                 <img src="../assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png" alt="" class="w-8 h-8 object-contain self-center shrink-0 opacity-80">
                             </div>
 
-                            <div class="interactive-point bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform"
+                            <div class="interactive-point bg-white p-3 rounded-xl shadow-md flex gap-3 hover:scale-[1.02] transition-transform border border-gray-100"
                                  onclick="openModal('Gestión Comunitaria – Aula Expandida',
                                  'El Servicio Social Estudiantil y los Proyectos de Vida deben alinearse con la proyección cultural. La caracterización sociofamiliar debe servir para integrar a las familias en la agenda de RedArtes, convirtiendo a la institución en un nodo de cultura comunitaria. El aula se expande hacia los ecosistemas culturales locales: organizaciones, colectivos, sabedores y gestores culturales del territorio.')">
                                 <div class="timeline-dot bg-teatroMagenta text-white shrink-0">04</div>
