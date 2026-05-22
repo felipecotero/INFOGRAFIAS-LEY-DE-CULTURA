@@ -143,13 +143,17 @@
             transition: all 0.3s ease;
         }
 
-        /* Títulos de cada slide — +15% sobre text-3xl/4xl + sombra paralela */
+        /* Títulos de cada slide — +15% sobre text-3xl/4xl + sombra de halo oscuro (6 dir.) */
         .titulo-slide {
             font-size: 2.16rem;
             line-height: 1.15;
             text-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.28),
-                0 1px 0   rgba(0, 0, 0, 0.12);
+                0 0 18px rgba(0,0,0,0.65),
+                0 2px 10px rgba(0,0,0,0.55),
+                1px  1px 0  rgba(0,0,0,0.35),
+               -1px -1px 0  rgba(0,0,0,0.35),
+                1px -1px 0  rgba(0,0,0,0.30),
+               -1px  1px 0  rgba(0,0,0,0.30);
         }
         @media (min-width: 768px) {
             .titulo-slide {
@@ -157,16 +161,16 @@
             }
         }
 
-        /* Velo blanco suave detrás del contenido de cada slide */
+        /* Velo blanco-crema detrás del contenido de cada slide (más sólido al centro) */
         .velo-contenido {
             position: absolute;
             inset: 0;
             z-index: 2;
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.60) 0%,
-                rgba(255,255,255,0.72) 40%,
-                rgba(255,255,255,0.80) 100%
+            background: radial-gradient(
+                ellipse 120% 80% at 50% 50%,
+                rgba(255,255,255,0.82) 0%,
+                rgba(255,255,255,0.68) 55%,
+                rgba(255,255,255,0.40) 100%
             );
             pointer-events: none;
         }
@@ -209,10 +213,10 @@
                     </div>
 
                     <!-- Foto real del evento (fondo artístico) -->
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-overlay">
                         <img src="img/FCO_IMG_5609_12022025.jpg"
                              alt=""
-                             class="w-[1500px] h-[1500px] max-w-none object-cover object-center transform -rotate-6 sepia hue-rotate-[250deg] saturate-[2.5]">
+                             class="w-[1500px] h-[1500px] max-w-none object-cover object-center transform -rotate-6 sepia hue-rotate-[250deg] saturate-[3] contrast-[1.9] brightness-75">
                     </div>
                     <!-- Velo de contraste -->
                     <div class="velo-contenido"></div>
@@ -222,7 +226,7 @@
 
                         <h2 class="font-title titulo-slide font-black text-artesPurple leading-tight mb-2 text-center">
                             ¿Vives del Arte?<br>
-                            <span class="text-sonidosYellow">La Ley 2555 es para ti.</span>
+                            <span class="inline-block mt-1 bg-artesPurple/90 text-yellow-200 px-4 py-0.5 rounded-full">La Ley 2555 es para ti.</span>
                         </h2>
 
                         <!-- Cita destacada -->
@@ -318,17 +322,17 @@
                         <img src="../assets/img/Iconos_Aguamarina/CCDP_Icono_Montanas_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-overlay">
                         <img src="img/FCO_IMG_5593_12022025.jpg"
                              alt=""
-                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[150deg] saturate-[2.5]">
+                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[150deg] saturate-[3] contrast-[1.9] brightness-75">
                     </div>
                     <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full overflow-y-auto">
 
                         <h2 class="font-title titulo-slide font-black text-teal-900 leading-tight mb-4 text-center">
-                            Recursos que llegan a <span class="text-audioBlue drop-shadow-sm">tu aula.</span>
+                            Recursos que llegan a <span class="text-teal-800">tu aula.</span>
                         </h2>
 
                         <!-- Nodos -->
@@ -414,18 +418,18 @@
                         <img src="../assets/img/Iconos_Azul/CCDP_Icono_Gota_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-overlay">
                         <img src="img/FCO_IMG_5704_12022025.jpg"
                              alt=""
-                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[200deg] saturate-[2.5]">
+                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[200deg] saturate-[3] contrast-[1.9] brightness-75">
                     </div>
                     <div class="velo-contenido"></div>
 
                     <div class="relative z-10 flex-1 p-6 flex flex-col h-full text-gray-900 overflow-y-auto">
 
-                        <h2 class="font-title titulo-slide font-black leading-none mb-6 text-center text-audioBlue">
+                        <h2 class="font-title titulo-slide font-black leading-none mb-6 text-center text-sky-900">
                             Hacer arte en Colombia<br>
-                            <span class="bg-white text-audioBlue px-2">cambia vidas.</span>
+                            <span class="bg-sky-900 text-white px-3 py-0.5 rounded-full inline-block">cambia vidas.</span>
                         </h2>
 
                         <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 content-center">
@@ -495,10 +499,10 @@
                         <img src="../assets/img/Iconos_Naranja/CCDP_Icono_Fuego_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform -rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-overlay">
                         <img src="img/FCO_IMG_5844_12022025.jpg"
                              alt=""
-                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[330deg] saturate-[2.5]">
+                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform rotate-6 sepia hue-rotate-[330deg] saturate-[3] contrast-[1.9] brightness-75">
                     </div>
                     <div class="velo-contenido"></div>
 
@@ -576,10 +580,10 @@
                         <img src="../assets/img/Iconos_Amarillo/CCDP_Icono_Sol_Sin_Marco.png"
                              alt="" class="w-[500px] h-[500px] object-contain transform rotate-12">
                     </div>
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-15 pointer-events-none mix-blend-multiply">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-0 opacity-35 pointer-events-none mix-blend-overlay">
                         <img src="img/FCO_IMG_5858_12022025.jpg"
                              alt=""
-                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[290deg] saturate-[2.5]">
+                             class="w-[1500px] h-[1500px] max-w-none object-cover object-top transform -rotate-6 sepia hue-rotate-[290deg] saturate-[3] contrast-[1.9] brightness-75">
                     </div>
                     <div class="velo-contenido"></div>
 
